@@ -93,50 +93,78 @@ export default function Home() {
     if (prefersReducedMotion || !root.current) return;
 
     const context = gsap.context(() => {
-      const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-      timeline
-        .fromTo(".hero-backdrop", { scale: 1.08, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 1.65 })
-        .fromTo(".hero-route", { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: 1.1 }, "-=1.05")
-        .fromTo(".hero-kicker", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.55")
-        .fromTo(".hero-title-line", { yPercent: 110 }, { yPercent: 0, duration: 0.85, stagger: 0.12 }, "-=0.34")
-        .fromTo(".hero-copy, .hero-actions, .hero-meta", { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.55 }, "-=0.38");
+      const intro = gsap.timeline({ defaults: { ease: "power4.out" } });
+      intro
+        .set(".hero-main-image", { scale: 1.16, xPercent: -2, opacity: 0.92 })
+        .set(".hero-window", { clipPath: "inset(8% 10% 8% 10% round 17%" })
+        .set(".hero-door-left, .hero-door-right", { xPercent: 0 })
+        .to(".hero-door-left", { xPercent: -104, duration: 1.45, ease: "power4.inOut" }, 0.16)
+        .to(".hero-door-right", { xPercent: 104, duration: 1.45, ease: "power4.inOut" }, 0.16)
+        .to(".hero-window", { clipPath: "inset(0% 0% 0% 0% round 0%", duration: 1.65, ease: "power3.inOut" }, 0.3)
+        .to(".hero-main-image", { scale: 1, xPercent: 0, opacity: 1, duration: 1.9, ease: "power2.out" }, 0.3)
+        .fromTo(".hero-hud", { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 1.12)
+        .fromTo(".hero-kicker", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 }, 1.25)
+        .fromTo(".hero-title-line", { yPercent: 115 }, { yPercent: 0, duration: 0.9, stagger: 0.12, ease: "power4.out" }, 1.35)
+        .fromTo(".hero-copy, .hero-actions", { y: 22, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.55 }, 1.73)
+        .fromTo(".hero-meta", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55 }, 1.92)
+        .fromTo(".hero-side-word", { x: 32, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7 }, 1.45);
+
+      gsap.to(".hero-main-image", {
+        yPercent: 12,
+        scale: 1.1,
+        ease: "none",
+        scrollTrigger: { trigger: "#inicio", start: "top top", end: "bottom top", scrub: 0.75 },
+      });
+      gsap.to(".hero-foreground", {
+        yPercent: -17,
+        ease: "none",
+        scrollTrigger: { trigger: "#inicio", start: "top top", end: "bottom top", scrub: 0.8 },
+      });
+      gsap.to(".hero-route", {
+        scaleX: 1.3,
+        transformOrigin: "left center",
+        ease: "none",
+        scrollTrigger: { trigger: "#inicio", start: "15% top", end: "bottom top", scrub: 0.75 },
+      });
 
       gsap.utils.toArray<HTMLElement>(".reveal-up").forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 48, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: { trigger: element, start: "top 86%", once: true },
+          },
+        );
+      });
+
+      gsap.utils.toArray<HTMLElement>(".scene-image").forEach((element) => {
+        const media = element.querySelector("img");
+        const timeline = gsap.timeline({ scrollTrigger: { trigger: element, start: "top 82%", once: true } });
+        timeline
+          .fromTo(element, { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" })
+          .fromTo(media, { scale: 1.18 }, { scale: 1, duration: 1.35, ease: "power3.out" }, 0);
+      });
+
+      gsap.utils.toArray<HTMLElement>(".service-card").forEach((element, index) => {
         gsap.fromTo(
           element,
           { y: 42, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.75,
+            duration: 0.7,
+            delay: index * 0.08,
             ease: "power3.out",
-            scrollTrigger: { trigger: element, start: "top 88%", once: true },
+            scrollTrigger: { trigger: ".services-grid", start: "top 78%", once: true },
           },
         );
       });
 
-      gsap.utils.toArray<HTMLElement>(".service-card").forEach((element, index) => {
-        gsap.fromTo(
-          element,
-          { y: 34, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            delay: index * 0.06,
-            ease: "power3.out",
-            scrollTrigger: { trigger: ".services-grid", start: "top 80%", once: true },
-          },
-        );
-      });
-
-      gsap.to(".route-orb", {
-        y: -25,
-        duration: 2.8,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
+      gsap.to(".route-orb", { y: -25, duration: 2.8, ease: "sine.inOut", repeat: -1, yoyo: true });
     }, root);
 
     return () => context.revert();
@@ -213,15 +241,27 @@ export default function Home() {
       </header>
 
       <main>
-        <section id="inicio" className="relative isolate min-h-[760px] overflow-hidden bg-[#102b4d] sm:min-h-[800px] lg:min-h-[860px]">
-          <img src={assets.hero} alt="Aeronave executiva chegando a um hangar" className="hero-backdrop absolute inset-0 h-full w-full object-cover object-[66%_center]" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,20,36,0.94)_0%,rgba(7,20,36,0.74)_38%,rgba(7,20,36,0.22)_72%,rgba(7,20,36,0.2)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,20,36,0.6)_0%,transparent_32%,transparent_75%,rgba(7,20,36,0.18)_100%)]" />
-          <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#f59a24] to-transparent opacity-80" />
-          <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#f6bd37] shadow-[0_0_0_7px_rgba(245,154,36,0.12),0_0_26px_2px_rgba(245,154,36,0.6)]" />
+        <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#0b1d31] sm:min-h-[800px] lg:min-h-[860px]">
+          <div className="hero-window absolute inset-0 overflow-hidden">
+            <img src={assets.hero} alt="Aeronave executiva chegando a um hangar" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[66%_center]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,18,34,0.95)_0%,rgba(7,20,36,0.73)_39%,rgba(7,20,36,0.19)_72%,rgba(7,20,36,0.27)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,20,36,0.72)_0%,transparent_32%,transparent_75%,rgba(7,20,36,0.2)_100%)]" />
+          </div>
+          <div className="hero-foreground pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="hero-door hero-door-left"><span className="hero-door-rule" /></div>
+            <div className="hero-door hero-door-right"><span className="hero-door-rule" /></div>
+            <div className="hero-frame absolute inset-x-5 bottom-7 top-28 border border-white/10 sm:inset-x-8 lg:inset-x-10 lg:bottom-10 lg:top-32" />
+            <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#f59a24] to-transparent opacity-80" />
+            <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#f6bd37] shadow-[0_0_0_7px_rgba(245,154,36,0.12),0_0_26px_2px_rgba(245,154,36,0.6)]" />
+            <span className="hero-side-word absolute bottom-[15%] right-[-1.3rem] rotate-90 font-mono text-[9px] font-medium uppercase tracking-[0.45em] text-white/45 lg:right-[0.2rem]">Vespair / Hangar 12</span>
+          </div>
 
           <div className="relative mx-auto flex min-h-[760px] max-w-[1440px] flex-col justify-end px-5 pb-10 pt-32 sm:min-h-[800px] sm:px-8 sm:pb-14 lg:min-h-[860px] lg:px-10 lg:pb-12">
-            <div className="max-w-3xl">
+            <div className="hero-hud absolute left-5 right-5 top-28 flex items-start justify-between text-white/55 sm:left-8 sm:right-8 lg:left-10 lg:right-10 lg:top-32">
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em]">Operação em solo · 24h</span>
+              <span className="hidden font-mono text-[9px] uppercase tracking-[0.18em] sm:block">Aproximação · SIFQ</span>
+            </div>
+            <div className="relative max-w-3xl">
               <p className="hero-kicker mb-5 flex items-center gap-3 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#f7c553] sm:text-xs">
                 <span className="h-px w-8 bg-[#f59a24]" />
                 SIFQ · Flores da Cunha / RS
@@ -245,7 +285,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="hero-meta mt-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t border-white/15 pt-5 text-white/70 lg:mt-14">
+              <div className="hero-meta mt-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t border-white/15 pt-5 text-white/70 lg:mt-14">
               <div className="flex items-center gap-3">
                 <span className="grid h-8 w-8 place-items-center rounded-full border border-white/20"><Plane size={14} /></span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.13em]">Pista: 1.022 m × 20 m</span>
@@ -259,6 +299,7 @@ export default function Home() {
 
         <section id="vespair" className="relative bg-[#f5f1e8] py-20 sm:py-28 lg:py-36">
           <div className="pointer-events-none absolute left-[7%] top-0 h-32 w-px bg-[#f59a24]/60" />
+          <div className="route-chapter absolute left-5 top-8 sm:left-8 lg:left-10"><span>CAPÍTULO 01</span><span>BASE DE APOIO</span></div>
           <div className="mx-auto grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-24 lg:px-10">
             <div className="reveal-up flex flex-col justify-between">
               <div>
@@ -300,6 +341,7 @@ export default function Home() {
 
         <section id="servicos" className="relative overflow-hidden bg-[#202126] py-20 text-[#f5f1e8] sm:py-28 lg:py-32">
           <div className="absolute right-0 top-0 h-full w-[48%] bg-[#27282e] [clip-path:polygon(40%_0,100%_0,100%_100%,0_100%)]" />
+          <div className="route-chapter route-chapter-dark absolute left-5 top-8 sm:left-8 lg:left-10"><span>CAPÍTULO 02</span><span>OPERAÇÃO EM SOLO</span></div>
           <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
             <div className="reveal-up flex flex-col justify-between gap-8 border-b border-white/15 pb-10 lg:flex-row lg:items-end">
               <div>
@@ -323,13 +365,19 @@ export default function Home() {
                 );
               })}
             </div>
+            <div className="reveal-up mt-10 grid gap-px overflow-hidden border border-white/15 bg-white/10 md:grid-cols-3">
+              <div className="operational-datum"><span className="font-mono text-[10px] text-[#f7c553]">01 / HANGARAGEM</span><strong>Até 18 m de envergadura</strong></div>
+              <div className="operational-datum"><span className="font-mono text-[10px] text-[#f7c553]">02 / ESTRUTURA</span><strong>Mais de 500 m² de área útil</strong></div>
+              <div className="operational-datum"><span className="font-mono text-[10px] text-[#f7c553]">03 / AERÓDROMO</span><strong>Operação, apoio e pista 24h</strong></div>
+            </div>
           </div>
         </section>
 
         <section className="overflow-hidden bg-[#f5f1e8] py-20 sm:py-28 lg:py-36">
+          <div className="route-chapter relative left-5 top-0 w-fit sm:left-8 lg:left-10"><span>CAPÍTULO 03</span><span>HOSPITALIDADE DE SOLO</span></div>
           <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="reveal-up relative min-h-[490px] overflow-hidden bg-[#102b4d] sm:min-h-[600px]">
+              <div className="scene-image reveal-up relative min-h-[490px] overflow-hidden bg-[#102b4d] sm:min-h-[600px]">
                 <img src={assets.lounge} alt="Lounge reservado para passageiros e tripulação" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#102b4d]/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-7 text-white sm:p-10">
@@ -356,7 +404,7 @@ export default function Home() {
               </div>
             </div>
             <div className="reveal-up mt-12 grid gap-5 sm:grid-cols-[0.72fr_1.28fr] lg:mt-20">
-              <div className="relative min-h-[310px] overflow-hidden bg-[#102b4d]">
+              <div className="scene-image relative min-h-[310px] overflow-hidden bg-[#102b4d]">
                 <img src={assets.asa} alt="Detalhe da asa de uma aeronave" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-[#102b4d]/25" />
                 <div className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/80">Precisão em cada etapa</div>
@@ -372,8 +420,9 @@ export default function Home() {
         </section>
 
         <section id="aerodromo" className="relative overflow-hidden bg-[#102b4d] text-[#f5f1e8]">
+          <div className="route-chapter route-chapter-dark absolute left-5 top-8 z-10 sm:left-8 lg:left-10"><span>CAPÍTULO 04</span><span>COORDENADAS DE CHEGADA</span></div>
           <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[660px]">
+            <div className="scene-image reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[660px]">
               <img src={assets.aerodromo} alt="Vista aérea de um aeródromo na Serra Gaúcha" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-[#102b4d]/35 mix-blend-multiply" />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#102b4d]/95 to-transparent p-7 sm:p-10">
@@ -404,17 +453,19 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contato" className="relative overflow-hidden bg-[#f59a24] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-          <div className="absolute -right-16 top-0 h-full w-[42%] bg-[#f7bd2a] [clip-path:polygon(55%_0,100%_0,100%_100%,0_100%)]" />
+        <section id="contato" className="relative overflow-hidden bg-[#f5f1e8] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
+          <div className="absolute left-0 top-0 h-1 w-full bg-[#f59a24]" />
+          <div className="route-chapter absolute left-5 top-8 sm:left-8 lg:left-10"><span>CAPÍTULO 05</span><span>PRÓXIMA APROXIMAÇÃO</span></div>
           <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-end">
             <div className="reveal-up">
-              <p className="eyebrow text-[#5e3413]">PRÓXIMA APROXIMAÇÃO</p>
-              <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
-              <p className="mt-7 max-w-xl text-base leading-relaxed text-[#53300f] sm:text-lg">Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.</p>
+              <p className="eyebrow text-[#a25c17]">PRÓXIMA APROXIMAÇÃO</p>
+              <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#102b4d] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
+              <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.</p>
             </div>
-            <div className="reveal-up grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <a href="tel:+5554996588180" className="contact-link">54 99658.8180 <ArrowUpRight size={18} /></a>
-              <a href="mailto:vespair@vespair.com.br" className="contact-link">vespair@vespair.com.br <ArrowUpRight size={18} /></a>
+            <div className="reveal-up contact-panel grid gap-3 bg-[#102b4d] p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-1">
+              <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f7c553]">OPERAÇÃO VESPAIR · SIFQ</p>
+              <a href="tel:+5554996588180" className="contact-link contact-link-inverse">54 99658.8180 <ArrowUpRight size={18} /></a>
+              <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">vespair@vespair.com.br <ArrowUpRight size={18} /></a>
             </div>
           </div>
         </section>

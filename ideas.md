@@ -72,3 +72,13 @@ O símbolo será uma **formação angular em voo**, inspirado na geometria da ma
 ### Cor de assinatura
 
 **Cobre de Balizamento — `#F59A24`**.
+
+## Referência de animação — adaptação Vespair v2
+
+A referência Jesko Jets estrutura a abertura como uma cena em profundidade: uma imagem de fundo, uma moldura/elemento frontal e tipografia posicionada em camadas distintas. A sensação de movimento vem mais da relação entre essas camadas, das máscaras de recorte e do deslocamento lento associado à rolagem do que de efeitos decorativos isolados. O percurso visual alterna grandes pausas cinematográficas, títulos com entrada segmentada e trocas de cena que parecem abrir ou atravessar uma janela de aeronave.
+
+Para a Vespair, a segunda versão vai traduzir esses princípios em vez de copiar a composição: o hero passará a se comportar como uma abertura de porta de hangar, com dois painéis escuros móveis revelando a aeronave; o título entrará em blocos mascarados, com uma escala mais controlada; a imagem principal terá zoom e deslocamento de profundidade conduzidos pela rolagem; e os capítulos seguintes receberão transições de recorte, camadas de imagem e rótulos que cruzam a cena. O resultado deverá ampliar o caráter imersivo sem diluir a identidade local, a informação operacional ou a legibilidade da Vespair.
+
+## Style Decisions
+
+Cada capítulo da página deve mostrar uma marca de navegação — linha de rota, etiqueta operacional, dado de pista ou coordenada — para que a narrativa de aproximação permaneça contínua. O cobre de balizamento fica reservado a ações primárias, números e avisos operacionais, evitando campos cromáticos extensos que não tenham uma função clara de transição. A assimetria deve operar como engenharia visual: recortes e deslocamentos podem criar tensão, mas títulos e mensagens essenciais sempre permanecem integralmente enquadrados.

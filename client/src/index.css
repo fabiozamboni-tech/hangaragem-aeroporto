@@ -89,8 +89,85 @@
   .contact-link {
     @apply flex items-center justify-between border-b border-[#8f4d0c]/35 py-4 font-mono text-xs font-semibold tracking-[-0.01em] text-[#202126] transition hover:border-[#202126] hover:pl-2 sm:text-sm;
   }
+  .contact-link-inverse {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #f5f1e8;
+  }
+  .contact-link-inverse:hover { border-color: #f59a24; color: #f7c553; }
+  .route-chapter {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.54rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: #a25c17;
+  }
+  .route-chapter::before {
+    width: 2rem;
+    height: 1px;
+    content: "";
+    background: #f59a24;
+  }
+  .route-chapter span + span { color: #777168; }
+  .route-chapter-dark span + span { color: rgba(255, 255, 255, 0.52); }
+  .operational-datum {
+    display: flex;
+    min-height: 7.8rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    padding: 1.5rem;
+    background: rgba(8, 20, 35, 0.56);
+  }
+  .operational-datum strong {
+    max-width: 15rem;
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+  }
+  .hero-window {
+    will-change: clip-path;
+  }
+  .hero-main-image {
+    will-change: transform, opacity;
+  }
+  .hero-door {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    overflow: hidden;
+    background: #091928;
+    will-change: transform;
+  }
+  .hero-door::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    opacity: 0.55;
+    background-image: linear-gradient(105deg, transparent 0%, rgba(245, 154, 36, 0.12) 48%, transparent 48.3%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 58px);
+  }
+  .hero-door-left { left: 0; border-right: 1px solid rgba(245, 154, 36, 0.38); }
+  .hero-door-right { right: 0; border-left: 1px solid rgba(245, 154, 36, 0.38); }
+  .hero-door-rule {
+    position: absolute;
+    top: 18%;
+    bottom: 18%;
+    width: 1px;
+    background: rgba(245, 154, 36, 0.56);
+  }
+  .hero-door-left .hero-door-rule { right: 18%; }
+  .hero-door-right .hero-door-rule { left: 18%; }
+  .hero-frame { border-left-color: rgba(245, 154, 36, 0.42); border-right-color: rgba(245, 154, 36, 0.2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .hero-door { display: none; }
+  .hero-window { clip-path: none !important; }
 }
