@@ -13,3 +13,26 @@
 - [x] Preparar e publicar o logotipo Vespair enviado para uso no site.
 - [x] Atualizar o cabeçalho e o favicon e validar visualmente em desktop e mobile.
 - [ ] Salvar a revisão de marca e apresentar a atualização.
+
+## Logotipo com transparência
+
+- [x] Inspecionar o novo arquivo de marca em recortes panorâmicos e confirmar as áreas de fundo branco.
+- [x] Criar uma versão PNG com fundo transparente, publicar o ativo e aplicá-lo no site.
+- [x] Ajustar a cor grafite do wordmark para preservar sua leitura no hero escuro sem reintroduzir fundo.
+- [ ] Validar o resultado no hero e salvar a revisão final.
+
+## Nova variação recebida
+
+- [x] Verificar se o arquivo logo_branco.png contém elementos de marca visíveis e aproveitáveis: os dois recortes estão visualmente uniformes, sem símbolo ou wordmark identificável.
+- [ ] Definir e aplicar a versão de marca correta após a confirmação visual.
+
+## Logo vetorial definitivo
+
+- [x] Publicar o SVG completo enviado e substituir as variações anteriores no cabeçalho, rodapé e favicon.
+- [ ] Validar a leitura do logo claro sobre o hero escuro e salvar a revisão final.
+
+## Hero em laranja de marca
+
+- [x] Recalibrar o hero com o laranja oficial #F4793B e tons de sombra compatíveis.
+- [x] Ajustar rótulos, ações e camadas para garantir contraste e validar a composição atualizada em desktop e mobile.
+- [ ] Salvar a revisão cromática e de marca concluída.

@@ -30,7 +30,7 @@ const assets = {
   aerodromo: "/manus-storage/vespair-aerodromo_3cb207f6.jpg",
   lounge: "/manus-storage/vespair-lounge_e77f5d24.jpg",
   asa: "/manus-storage/vespair-asa_804a60b9.jpg",
-  logo: "/manus-storage/vespair-logo-oficial_29eafd26.png",
+  logo: "/manus-storage/vespair-logo-oficial_16e11c05.svg",
 };
 
 const serviceCards = [
@@ -237,18 +237,19 @@ export default function Home() {
       </header>
 
       <main>
-        <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#0b1d31] sm:min-h-[800px] lg:min-h-[860px]">
+        <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#43160e] sm:min-h-[800px] lg:min-h-[860px]">
           <div className="hero-window absolute inset-0 overflow-hidden">
             <img src={assets.hero} alt="Aeronave executiva chegando a um hangar" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[66%_center]" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,18,34,0.95)_0%,rgba(7,20,36,0.73)_39%,rgba(7,20,36,0.19)_72%,rgba(7,20,36,0.27)_100%)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,20,36,0.72)_0%,transparent_32%,transparent_75%,rgba(7,20,36,0.2)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(62,17,9,0.98)_0%,rgba(98,32,18,0.86)_40%,rgba(185,69,30,0.34)_72%,rgba(83,24,12,0.32)_100%)]" />
+            <div className="hero-orange-wash absolute inset-0 bg-[#f4793b]/42 mix-blend-color" />
+            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(67,22,14,0.78)_0%,transparent_35%,transparent_74%,rgba(67,22,14,0.22)_100%)]" />
           </div>
           <div className="hero-foreground pointer-events-none absolute inset-0" aria-hidden="true">
             <div className="hero-door hero-door-left"><span className="hero-door-rule" /></div>
             <div className="hero-door hero-door-right"><span className="hero-door-rule" /></div>
             <div className="hero-frame absolute inset-x-5 bottom-7 top-28 border border-white/10 sm:inset-x-8 lg:inset-x-10 lg:bottom-10 lg:top-32" />
-            <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#f59a24] to-transparent opacity-80" />
-            <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#f6bd37] shadow-[0_0_0_7px_rgba(245,154,36,0.12),0_0_26px_2px_rgba(245,154,36,0.6)]" />
+            <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#ffd4bd] to-transparent opacity-85" />
+            <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#ffd4bd] shadow-[0_0_0_7px_rgba(244,121,59,0.22),0_0_26px_2px_rgba(255,212,189,0.6)]" />
             <span className="hero-side-word absolute bottom-[15%] right-[-1.3rem] rotate-90 font-mono text-[9px] font-medium uppercase tracking-[0.45em] text-white/45 lg:right-[0.2rem]">Vespair / Hangar 12</span>
           </div>
 
@@ -258,13 +259,13 @@ export default function Home() {
               <span className="hidden font-mono text-[9px] uppercase tracking-[0.18em] sm:block">Aproximação · SIFQ</span>
             </div>
             <div className="relative max-w-3xl">
-              <p className="hero-kicker mb-5 flex items-center gap-3 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#f7c553] sm:text-xs">
-                <span className="h-px w-8 bg-[#f59a24]" />
+              <p className="hero-kicker mb-5 flex items-center gap-3 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[#ffd4bd] sm:text-xs">
+                <span className="h-px w-8 bg-[#f4793b]" />
                 SIFQ · Flores da Cunha / RS
               </p>
               <h1 className="font-display text-[clamp(3.15rem,7.4vw,7.5rem)] leading-[0.86] tracking-[-0.055em] text-[#f9f6ef]">
                 <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">Sua aeronave</span></span>
-                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block italic text-[#f6c96a]">em solo.</span></span>
+                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block italic text-[#ffd4bd]">em solo.</span></span>
                 <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">Sua agenda</span></span>
                 <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">em movimento.</span></span>
               </h1>
@@ -272,7 +273,7 @@ export default function Home() {
                 Hangaragem e atendimento aeroportuário para que você aterrisse na Serra Gaúcha com tudo pronto para seguir.
               </p>
               <div className="hero-actions mt-8 flex flex-wrap gap-3">
-                <button onClick={goToContact} className="btn-copper">
+                <button onClick={goToContact} className="btn-copper hero-primary-action">
                   Planeje sua chegada <ArrowDownRight size={17} />
                 </button>
                 <button onClick={() => scrollToId("#servicos")} className="btn-ghost">
@@ -469,7 +470,7 @@ export default function Home() {
 
       <footer className="bg-[#202126] px-5 py-9 text-white/55 sm:px-8 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-end">
-          <img src={assets.logo} alt="Vespair Serviços Aéreos" className="h-auto w-[140px] bg-white px-2 py-1.5 object-contain" />
+          <img src={assets.logo} alt="Vespair Serviços Aéreos" className="h-auto w-[150px] object-contain" />
           <p className="max-w-lg text-xs leading-relaxed md:text-right">Condomínio Aeronáutico Menega · Airport SIFQ · Hangar 12 · Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha/RS</p>
         </div>
       </footer>

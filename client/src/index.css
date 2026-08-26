@@ -76,6 +76,11 @@
   .btn-copper {
     @apply inline-flex items-center gap-2 rounded-full bg-[#f59a24] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-[#202126] transition duration-200 hover:bg-[#f6bd37] active:scale-[0.97];
   }
+  .hero-primary-action {
+    background: #f5f1e8;
+    color: #5a2014;
+  }
+  .hero-primary-action:hover { background: #ffd4bd; }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-white/25 px-5 py-3.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition duration-200 hover:border-white/50 hover:bg-white/10 active:scale-[0.97];
   }
@@ -87,9 +92,7 @@
     align-items: center;
     justify-content: center;
     min-height: 2.9rem;
-    background: #fff;
-    padding: 0.32rem 0.55rem;
-    box-shadow: 0 8px 24px rgba(2, 10, 20, 0.18);
+    padding: 0;
     transition: transform 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
   .group:hover .logo-plate { transform: translateY(-1px); }
@@ -161,20 +164,20 @@
     inset: 0;
     content: "";
     opacity: 0.55;
-    background-image: linear-gradient(105deg, transparent 0%, rgba(245, 154, 36, 0.12) 48%, transparent 48.3%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 58px);
+    background-image: linear-gradient(105deg, transparent 0%, rgba(244, 121, 59, 0.22) 48%, transparent 48.3%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 58px);
   }
-  .hero-door-left { left: 0; border-right: 1px solid rgba(245, 154, 36, 0.38); }
-  .hero-door-right { right: 0; border-left: 1px solid rgba(245, 154, 36, 0.38); }
+  .hero-door-left { left: 0; border-right: 1px solid rgba(244, 121, 59, 0.52); }
+  .hero-door-right { right: 0; border-left: 1px solid rgba(244, 121, 59, 0.52); }
   .hero-door-rule {
     position: absolute;
     top: 18%;
     bottom: 18%;
     width: 1px;
-    background: rgba(245, 154, 36, 0.56);
+    background: rgba(244, 121, 59, 0.72);
   }
   .hero-door-left .hero-door-rule { right: 18%; }
   .hero-door-right .hero-door-rule { left: 18%; }
-  .hero-frame { border-left-color: rgba(245, 154, 36, 0.42); border-right-color: rgba(245, 154, 36, 0.2); }
+  .hero-frame { border-left-color: rgba(244, 121, 59, 0.62); border-right-color: rgba(255, 212, 189, 0.3); }
 }
 
 @media (prefers-reduced-motion: reduce) {
