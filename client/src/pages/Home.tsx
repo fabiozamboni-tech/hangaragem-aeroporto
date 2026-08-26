@@ -30,7 +30,7 @@ const assets = {
   aerodromo: "/manus-storage/vespair-aerodromo_3cb207f6.jpg",
   lounge: "/manus-storage/vespair-lounge_e77f5d24.jpg",
   asa: "/manus-storage/vespair-asa_804a60b9.jpg",
-  mark: "/manus-storage/vespair-simbolo_1416894d.png",
+  logo: "/manus-storage/vespair-logo-oficial_29eafd26.png",
 };
 
 const serviceCards = [
@@ -178,14 +178,10 @@ export default function Home() {
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-10 lg:py-7">
           <button
             onClick={() => scrollToId("#inicio")}
-            className="group flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f59a24]"
+            className="group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f59a24]"
             aria-label="Ir para o início"
           >
-            <img src={assets.mark} alt="Símbolo Vespair" className="h-11 w-11 object-contain sm:h-12 sm:w-12" />
-            <span className="text-sm font-semibold tracking-[0.17em] text-white">
-              VESPAIR
-              <span className="mt-0.5 block text-[8px] font-medium tracking-[0.23em] text-white/60">SERVIÇOS AÉREOS</span>
-            </span>
+            <span className="logo-plate"><img src={assets.logo} alt="Vespair Serviços Aéreos" className="h-auto w-[142px] object-contain sm:w-[162px]" /></span>
           </button>
 
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
@@ -473,10 +469,7 @@ export default function Home() {
 
       <footer className="bg-[#202126] px-5 py-9 text-white/55 sm:px-8 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div className="flex items-center gap-3">
-            <img src={assets.mark} alt="" className="h-9 w-9 object-contain" />
-            <p className="font-mono text-[10px] uppercase tracking-[0.15em]">Vespair Serviços Aéreos</p>
-          </div>
+          <img src={assets.logo} alt="Vespair Serviços Aéreos" className="h-auto w-[140px] bg-white px-2 py-1.5 object-contain" />
           <p className="max-w-lg text-xs leading-relaxed md:text-right">Condomínio Aeronáutico Menega · Airport SIFQ · Hangar 12 · Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha/RS</p>
         </div>
       </footer>

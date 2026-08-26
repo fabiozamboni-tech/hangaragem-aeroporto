@@ -82,6 +82,17 @@
   .nav-contact {
     @apply inline-flex items-center gap-1.5 rounded-full border border-white/30 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.1em] text-white transition duration-200 hover:bg-white hover:text-[#102b4d] active:scale-[0.97];
   }
+  .logo-plate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.9rem;
+    background: #fff;
+    padding: 0.32rem 0.55rem;
+    box-shadow: 0 8px 24px rgba(2, 10, 20, 0.18);
+    transition: transform 180ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  }
+  .group:hover .logo-plate { transform: translateY(-1px); }
   .stat-block { @apply flex min-h-40 flex-col justify-end p-5 sm:p-6; }
   .stat-value { @apply font-display text-5xl leading-none tracking-[-0.06em] text-[#102b4d]; }
   .stat-value span { @apply ml-1.5 text-lg tracking-[-0.03em] text-[#a25c17]; }
