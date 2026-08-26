@@ -36,3 +36,14 @@
 - [x] Recalibrar o hero com o laranja oficial #F4793B e tons de sombra compatíveis.
 - [x] Ajustar rótulos, ações e camadas para garantir contraste e validar a composição atualizada em desktop e mobile.
 - [ ] Salvar a revisão cromática e de marca concluída.
+
+## Padronização de cores e movimento
+
+- [x] Substituir os tons azuis remanescentes pelas cores oficiais: laranja #F4793B, cinza #414042 e amarelo #F8C142.
+- [x] Definir “em solo” em amarelo de marca e revisar todos os botões com hierarquia cromática consistente.
+- [x] Remover os rótulos do hero e todos os pequenos títulos de capítulo das seções.
+- [x] Incluir parallax controlado na rolagem para imagens e composições de seção.
+- [x] Consolidar o cinza como base operacional e usar o laranja e amarelo somente como sinais funcionais da marca.
+- [x] Reforçar a rota vertical e os enquadramentos de aproximação entre os blocos da página.
+- [x] Validar a revisão em desktop e mobile.
+- [ ] Salvar o checkpoint da revisão de paleta e movimento.
