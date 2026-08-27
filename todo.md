@@ -72,3 +72,15 @@
 - [x] Remover a linha vertical laranja contínua que atravessa as seções do site.
 - [x] Validar o hero e as seções sem o elemento de rota vertical.
 - [ ] Salvar a revisão de composição atualizada.
+
+## Ativos no GitHub
+
+- [x] Identificar as imagens e o logotipo ativos usados pela Vespair.
+- [x] Copiar e organizar os ativos em uma pasta versionável do repositório.
+- [x] Enviar os arquivos de imagem e confirmar a disponibilidade no GitHub.
+
+## Sincronização do repositório principal
+
+- [ ] Verificar o repositório fabiozamboni-tech/hangaragem-aeroporto e possíveis alterações existentes.
+- [ ] Preparar código, configurações, documentação e ativos visuais para a atualização completa.
+- [ ] Enviar a versão consolidada e confirmar a atualização no GitHub.
