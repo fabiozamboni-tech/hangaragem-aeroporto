@@ -81,6 +81,6 @@
 
 ## Sincronização do repositório principal
 
-- [ ] Verificar o repositório fabiozamboni-tech/hangaragem-aeroporto e possíveis alterações existentes.
-- [ ] Preparar código, configurações, documentação e ativos visuais para a atualização completa.
-- [ ] Enviar a versão consolidada e confirmar a atualização no GitHub.
+- [x] Verificar o repositório fabiozamboni-tech/hangaragem-aeroporto e possíveis alterações existentes.
+- [x] Preparar código, configurações, documentação e ativos visuais para a atualização completa.
+- [x] Enviar a versão consolidada e confirmar a atualização no GitHub.
