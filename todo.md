@@ -63,6 +63,6 @@
 ## Repositório GitHub
 
 - [x] Confirmar com o usuário que a conta GitHub está conectada.
-- [ ] Verificar o acesso autorizado ao GitHub e o estado atual do projeto.
-- [ ] Confirmar nome e visibilidade do repositório com o usuário.
-- [ ] Criar o repositório, enviar os arquivos e compartilhar o link final.
+- [x] Verificar o acesso autorizado ao GitHub e o estado atual do projeto.
+- [x] Definir o nome Vespair e aplicar a visibilidade privada padrão.
+- [x] Criar o repositório e enviar a branch principal com os arquivos atuais do projeto.
