@@ -160,17 +160,6 @@
   .hero-door-right .hero-door-rule { left: 18%; }
   .hero-frame { border-left-color: rgba(244, 121, 59, 0.62); border-right-color: rgba(255, 212, 189, 0.3); }
   .parallax-media, .parallax-float { will-change: transform; }
-  .flight-spine {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-    left: 7%;
-    width: 1px;
-    background: linear-gradient(to bottom, rgba(244, 121, 59, 0), rgba(244, 121, 59, 0.42) 12%, rgba(244, 121, 59, 0.42) 88%, rgba(244, 121, 59, 0));
-    pointer-events: none;
-  }
-  .flight-spine-dark { background: linear-gradient(to bottom, rgba(248, 193, 66, 0), rgba(248, 193, 66, 0.28) 12%, rgba(248, 193, 66, 0.28) 88%, rgba(248, 193, 66, 0)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

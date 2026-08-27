@@ -271,7 +271,6 @@ export default function Home() {
             <div className="hero-door hero-door-left"><span className="hero-door-rule" /></div>
             <div className="hero-door hero-door-right"><span className="hero-door-rule" /></div>
             <div className="hero-frame absolute inset-x-5 bottom-7 top-28 border border-white/10 sm:inset-x-8 lg:inset-x-10 lg:bottom-10 lg:top-32" />
-            <div className="hero-aperture absolute inset-y-0 left-[7%] w-px bg-[#f4793b]/45" />
             <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#ffd4bd] to-transparent opacity-85" />
             <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#ffd4bd] shadow-[0_0_0_7px_rgba(244,121,59,0.22),0_0_26px_2px_rgba(255,212,189,0.6)]" />
             <span className="hero-side-word absolute bottom-[15%] right-[-1.3rem] rotate-90 font-mono text-[9px] font-medium uppercase tracking-[0.45em] text-white/45 lg:right-[0.2rem]">Vespair / Hangar 12</span>
@@ -314,7 +313,6 @@ export default function Home() {
         </section>
 
         <section id="vespair" className="relative bg-[#f5f1e8] py-20 sm:py-28 lg:py-36">
-          <div className="pointer-events-none absolute left-[7%] top-0 h-32 w-px bg-[#f4793b]/60" />
           <div className="mx-auto grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-24 lg:px-10">
             <div className="reveal-up flex flex-col justify-between">
               <div>
@@ -355,7 +353,6 @@ export default function Home() {
         </section>
 
         <section id="servicos" className="relative overflow-hidden bg-[#202126] py-20 text-[#f5f1e8] sm:py-28 lg:py-32">
-          <div className="flight-spine flight-spine-dark" />
           <div className="parallax-float absolute right-0 top-0 h-full w-[48%] bg-[#414042] [clip-path:polygon(40%_0,100%_0,100%_100%,0_100%)]" />
           <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
             <div className="reveal-up flex flex-col justify-between gap-8 border-b border-white/15 pb-10 lg:flex-row lg:items-end">
@@ -389,7 +386,6 @@ export default function Home() {
         </section>
 
         <section className="overflow-hidden bg-[#f5f1e8] py-20 sm:py-28 lg:py-36">
-          <div className="flight-spine" />
           <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
               <div className="scene-image parallax-frame reveal-up relative min-h-[490px] overflow-hidden bg-[#414042] sm:min-h-[600px]">
@@ -435,7 +431,6 @@ export default function Home() {
         </section>
 
         <section id="aerodromo" className="relative overflow-hidden bg-[#414042] text-[#f5f1e8]">
-          <div className="flight-spine flight-spine-dark" />
           <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.95fr_1.05fr]">
             <div className="scene-image parallax-frame reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[660px]">
               <img src={assets.aerodromo} alt="Vista aérea de um aeródromo na Serra Gaúcha" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="9" />
@@ -469,7 +464,6 @@ export default function Home() {
         </section>
 
         <section id="contato" className="relative overflow-hidden bg-[#f5f1e8] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
-          <div className="flight-spine" />
           <div className="absolute left-0 top-0 h-1 w-full bg-[#f4793b]" />
           <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-end">
             <div className="reveal-up">

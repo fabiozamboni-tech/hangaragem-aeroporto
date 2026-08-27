@@ -66,3 +66,9 @@
 - [x] Verificar o acesso autorizado ao GitHub e o estado atual do projeto.
 - [x] Definir o nome Vespair e aplicar a visibilidade privada padrão.
 - [x] Criar o repositório e enviar a branch principal com os arquivos atuais do projeto.
+
+## Ajuste de composição
+
+- [x] Remover a linha vertical laranja contínua que atravessa as seções do site.
+- [x] Validar o hero e as seções sem o elemento de rota vertical.
+- [ ] Salvar a revisão de composição atualizada.
