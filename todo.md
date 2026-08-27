@@ -47,3 +47,22 @@
 - [x] Reforçar a rota vertical e os enquadramentos de aproximação entre os blocos da página.
 - [x] Validar a revisão em desktop e mobile.
 - [ ] Salvar o checkpoint da revisão de paleta e movimento.
+
+## Proposta comercial
+
+- [x] Estruturar o escopo das modalidades estática e CMS para o site Vespair.
+- [x] Definir o serviço complementar de SEO, prazos e condições comerciais.
+- [x] Redigir o orçamento para apresentação ao cliente.
+- [ ] Entregar a proposta comercial para validação de valores e condições.
+
+## Limpeza de marca da plataforma
+
+- [x] Localizar referências visuais ao Manus no código e na interface publicada: a única ocorrência é uma rota técnica interna do arquivo de logo, que não aparece para visitantes.
+- [x] Confirmar que cabeçalho, conteúdo e rodapé exibem exclusivamente a identidade Vespair, sem assinatura visual do Manus.
+
+## Repositório GitHub
+
+- [x] Confirmar com o usuário que a conta GitHub está conectada.
+- [ ] Verificar o acesso autorizado ao GitHub e o estado atual do projeto.
+- [ ] Confirmar nome e visibilidade do repositório com o usuário.
+- [ ] Criar o repositório, enviar os arquivos e compartilhar o link final.
