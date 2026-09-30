@@ -219,3 +219,27 @@
   .hero-window { clip-path: none !important; }
   .radar-wave, .radar-sweep { animation: none !important; display: none; }
 }
+
+/* Customização de Estilos do Mapa Leaflet */
+.leaflet-popup-content-wrapper {
+  background: #202126 !important;
+  color: #f5f1e8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45) !important;
+}
+
+.leaflet-popup-tip {
+  background: #202126 !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #202126 !important;
+  color: #f5f1e8 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #f4793b !important;
+  color: #ffffff !important;
+}

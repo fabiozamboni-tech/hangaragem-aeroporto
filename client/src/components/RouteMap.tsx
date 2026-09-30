@@ -80,11 +80,13 @@ export function RouteMap() {
 
     mapInstance.current = map;
 
-    // Camada padrão (CartoDB Voyager com visual elegante e limpo)
+    // Camada padrão (OpenStreetMap 100% gratuita, sem API key e sem marca d'água)
     const streetLayer = L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
         maxZoom: 19,
+        subdomains: ["a", "b", "c"],
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }
     ).addTo(map);
 
@@ -142,19 +144,19 @@ export function RouteMap() {
     L.marker([ROUTE_POINTS.start.lat, ROUTE_POINTS.start.lng], { icon: startIcon })
       .addTo(map)
       .bindPopup(
-        `<div style="font-family:sans-serif;padding:4px;"><strong style="color:#414042;">Ponto A: ${ROUTE_POINTS.start.title}</strong><p style="margin:2px 0 0;font-size:12px;color:#666;">${ROUTE_POINTS.start.description}</p></div>`
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto A · Partida</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.start.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.start.description}</p></div>`
       );
 
     L.marker([ROUTE_POINTS.mid.lat, ROUTE_POINTS.mid.lng], { icon: midIcon })
       .addTo(map)
       .bindPopup(
-        `<div style="font-family:sans-serif;padding:4px;"><strong style="color:#202126;">Ponto B: ${ROUTE_POINTS.mid.title}</strong><p style="margin:2px 0 0;font-size:12px;color:#666;">${ROUTE_POINTS.mid.description}</p></div>`
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto B · Referência</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.mid.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.mid.description}</p></div>`
       );
 
     L.marker([ROUTE_POINTS.dest.lat, ROUTE_POINTS.dest.lng], { icon: destIcon })
       .addTo(map)
       .bindPopup(
-        `<div style="font-family:sans-serif;padding:4px;"><strong style="color:#f4793b;font-size:14px;">Destino: ${ROUTE_POINTS.dest.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#333;font-weight:600;">${ROUTE_POINTS.dest.description}</p><p style="margin:2px 0 0;font-size:11px;color:#777;">Flores da Cunha / RS · Pista SIFQ</p></div>`
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f4793b;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;font-weight:bold;">Destino · Hangar 12</span><strong style="display:block;color:#ffffff;font-size:14px;margin-top:2px;">${ROUTE_POINTS.dest.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#f3f4f6;font-weight:600;">${ROUTE_POINTS.dest.description}</p><p style="margin:2px 0 0;font-size:11px;color:#9ca3af;">Flores da Cunha / RS · Pista SIFQ (1.022m)</p></div>`
       )
       .openPopup();
 
@@ -195,13 +197,20 @@ export function RouteMap() {
     if (type === "satellite") {
       const satLayer = L.tileLayer(
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        { maxZoom: 18 }
+        {
+          maxZoom: 18,
+          attribution: "Tiles &copy; Esri",
+        }
       ).addTo(mapInstance.current);
       tileLayerRef.current = satLayer;
     } else {
       const streetLayer = L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-        { maxZoom: 19 }
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          subdomains: ["a", "b", "c"],
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }
       ).addTo(mapInstance.current);
       tileLayerRef.current = streetLayer;
     }
