@@ -2,60 +2,70 @@ import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
-  ArrowUpRight,
   Compass,
   Layers,
   MapPin,
   Navigation,
   Plane,
+  Building2,
   Share2,
   Check,
   ExternalLink,
 } from "lucide-react";
 
-// Waypoints da Rota solicitada pelo usuário
+// Waypoints oficiais da rota de acesso exclusiva
 const ROUTE_POINTS = {
   start: {
     lat: -29.0597886,
     lng: -51.1865718,
     title: "Acesso Sul / RS-122",
-    description: "Entrada principal de Flores da Cunha",
-    badge: "PONTO DE PARTIDA",
+    description: "Trevo de entrada principal de Flores da Cunha",
+    badge: "PONTO A · PARTIDA",
   },
-  mid: {
+  fiorio: {
+    lat: -29.0394005,
+    lng: -51.1809387,
+    title: "Hotel Fiorio",
+    description: "Av. 25 de Julho, 2700 · Ponto de referência e hospedagem executiva",
+    badge: "PONTO B · HOTEL FIORIO",
+  },
+  romano: {
     lat: -29.0432145,
     lng: -51.1643011,
     title: "Parque Romano · Via Vêneto",
-    description: "Referência urbana e acesso ao Vale",
-    badge: "PONTO DE REFERÊNCIA",
+    description: "Corredor direto de conexão ao vale e aeródromo",
+    badge: "PONTO C · PARQUE ROMANO",
   },
   dest: {
     lat: -29.0455836,
     lng: -51.149769,
     title: "Condomínio Aeronáutico Menega",
-    description: "Vespair Serviços Aéreos · Hangar 12",
-    badge: "DESTINO · SIFQ",
+    description: "Vespair Serviços Aéreos · Hangar 12 (Pista SIFQ)",
+    badge: "DESTINO · VESPAIR HANGAR 12",
   },
 };
 
-// Traçado realista do trajeto viário entre os pontos
+// Traçado realista do trajeto viário oficial passando pelo Hotel Fiorio e Parque Romano
 const ROUTE_PATH: [number, number][] = [
-  [-29.0597886, -51.1865718], // RS-122 / Entrada Sul
-  [-29.0578, -51.1835],
-  [-29.0545, -51.1788],
-  [-29.0512, -51.1738],
-  [-29.0482, -51.1695],
-  [-29.0455, -51.1668],
-  [-29.0432145, -51.1643011], // Parque Romano / Via Vêneto
-  [-29.0425, -51.1618],
-  [-29.0430, -51.1578],
-  [-29.0442, -51.1542],
-  [-29.0452, -51.1518],
-  [-29.0455836, -51.149769], // Menega / Vespair Hangar 12
+  [-29.0597886, -51.1865718], // Ponto A: RS-122 / Entrada Sul
+  [-29.0558, -51.1852],
+  [-29.0515, -51.1840],
+  [-29.0470, -51.1828],
+  [-29.0430, -51.1818],
+  [-29.0394005, -51.1809387], // Ponto B: Hotel Fiorio (Av. 25 de Julho, 2700)
+  [-29.0398, -51.1775],
+  [-29.0406, -51.1732],
+  [-29.0418, -51.1685],
+  [-29.0432145, -51.1643011], // Ponto C: Parque Romano (Via Vêneto)
+  [-29.0425, -51.1610],
+  [-29.0430, -51.1575],
+  [-29.0442, -51.1540],
+  [-29.0452, -51.1515],
+  [-29.0455836, -51.149769], // Ponto D: Menega / Vespair Hangar 12
 ];
 
 const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps/dir/-29.0597886,-51.1865718/Parque+Romano,+Via+V%C3%AAneto+-+Flores+da+Cunha,+RS,+95270-000,+Brasil/-29.0455836,-51.149769/@-29.0491324,-51.1789079,15z";
+  "https://www.google.com/maps/dir/-29.0597886,-51.1865718/Hotel+Fiorio,+Av.+25+de+Julho,+2700+-+Flores+da+Cunha,+RS,+95270-000/Parque+Romano,+Via+V%C3%AAneto+-+Flores+da+Cunha,+RS,+95270-000/-29.0455836,-51.149769/@-29.0491324,-51.1789079,15z";
 
 const WAZE_URL =
   "https://waze.com/ul?ll=-29.0455836,-51.149769&navigate=yes";
@@ -70,7 +80,7 @@ export function RouteMap() {
   useEffect(() => {
     if (!mapContainer.current || mapInstance.current) return;
 
-    // Inicializa o mapa Leaflet
+    // Inicializa o mapa Leaflet centrado na rota
     const map = L.map(mapContainer.current, {
       center: [-29.0491, -51.1685],
       zoom: 14,
@@ -80,7 +90,7 @@ export function RouteMap() {
 
     mapInstance.current = map;
 
-    // Camada padrão (OpenStreetMap 100% gratuita, sem API key e sem marca d'água)
+    // Camada padrão (OpenStreetMap 100% gratuita, sem API key e sem marcas d'água)
     const streetLayer = L.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -99,11 +109,11 @@ export function RouteMap() {
       })
       .addTo(map);
 
-    // Ícone de início (Acesso Sul)
+    // Ícone Ponto A (Acesso Sul)
     const startIcon = L.divIcon({
       className: "custom-map-icon",
       html: `
-        <div style="background:#414042;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:2px solid #fff;font-weight:700;font-size:12px;font-family:monospace;">
+        <div style="background:#414042;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.35);border:2px solid #fff;font-weight:800;font-size:12px;font-family:monospace;">
           A
         </div>
       `,
@@ -111,12 +121,24 @@ export function RouteMap() {
       iconAnchor: [16, 16],
     });
 
-    // Ícone de meio (Parque Romano)
-    const midIcon = L.divIcon({
+    // Ícone Ponto B (Hotel Fiorio)
+    const fiorioIcon = L.divIcon({
       className: "custom-map-icon",
       html: `
-        <div style="background:#f8c142;color:#202126;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.25);border:2px solid #fff;font-weight:700;font-size:12px;font-family:monospace;">
+        <div style="background:#f8c142;color:#202126;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:2px solid #fff;font-weight:800;font-size:12px;font-family:monospace;">
           B
+        </div>
+      `,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+    });
+
+    // Ícone Ponto C (Parque Romano)
+    const romanoIcon = L.divIcon({
+      className: "custom-map-icon",
+      html: `
+        <div style="background:#f8c142;color:#202126;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:2px solid #fff;font-weight:800;font-size:12px;font-family:monospace;">
+          C
         </div>
       `,
       iconSize: [32, 32],
@@ -140,17 +162,23 @@ export function RouteMap() {
       iconAnchor: [20, 20],
     });
 
-    // Marcadores
+    // Marcadores dos 4 pontos da rota
     L.marker([ROUTE_POINTS.start.lat, ROUTE_POINTS.start.lng], { icon: startIcon })
       .addTo(map)
       .bindPopup(
         `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto A · Partida</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.start.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.start.description}</p></div>`
       );
 
-    L.marker([ROUTE_POINTS.mid.lat, ROUTE_POINTS.mid.lng], { icon: midIcon })
+    L.marker([ROUTE_POINTS.fiorio.lat, ROUTE_POINTS.fiorio.lng], { icon: fiorioIcon })
       .addTo(map)
       .bindPopup(
-        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto B · Referência</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.mid.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.mid.description}</p></div>`
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto B · Hospedagem</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.fiorio.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.fiorio.description}</p></div>`
+      );
+
+    L.marker([ROUTE_POINTS.romano.lat, ROUTE_POINTS.romano.lng], { icon: romanoIcon })
+      .addTo(map)
+      .bindPopup(
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f8c142;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;">Ponto C · Acesso ao Vale</span><strong style="display:block;color:#ffffff;margin-top:2px;font-size:13px;">${ROUTE_POINTS.romano.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#d1d5db;">${ROUTE_POINTS.romano.description}</p></div>`
       );
 
     L.marker([ROUTE_POINTS.dest.lat, ROUTE_POINTS.dest.lng], { icon: destIcon })
@@ -168,7 +196,7 @@ export function RouteMap() {
       lineCap: "round",
     }).addTo(map);
 
-    // Linha principal da rota em laranja Vespair
+    // Linha principal da rota oficial
     L.polyline(ROUTE_PATH, {
       color: "#f4793b",
       weight: 4.5,
@@ -177,9 +205,9 @@ export function RouteMap() {
       lineCap: "round",
     }).addTo(map);
 
-    // Ajusta o enquadramento do mapa na rota
+    // Enquadra a rota inteira na visão do mapa
     const bounds = L.latLngBounds(ROUTE_PATH);
-    map.fitBounds(bounds, { padding: [40, 40] });
+    map.fitBounds(bounds, { padding: [45, 45] });
 
     return () => {
       map.remove();
@@ -234,15 +262,16 @@ export function RouteMap() {
         <div className="reveal-up max-w-3xl">
           <p className="eyebrow text-[#f8c142] flex items-center gap-2">
             <Compass size={14} className="text-[#f4793b]" />
-            ACESSO &amp; LOGÍSTICA · SIFQ
+            ROTA OFICIAL DE ACESSO · SIFQ
           </p>
           <h2 className="mt-5 font-display text-4xl leading-[0.94] tracking-[-0.045em] text-white sm:text-6xl">
-            Como chegar à Vespair: do acesso urbano ao hangar.
+            Como chegar à Vespair: trajeto oficial pelo Hotel Fiorio e Parque Romano.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
-            A rota terrestre conecta a entrada de Flores da Cunha (RS-122) ao Condomínio
-            Aeronáutico Menega passando pela Via Vêneto e Parque Romano, garantindo acesso
-            rápido, pavimentado e seguro até o Hangar 12.
+            A rota terrestre oficial e recomendada conecta a entrada de Flores da Cunha (RS-122) ao
+            Condomínio Aeronáutico Menega, passando pela <strong>Av. 25 de Julho (Hotel Fiorio)</strong> e
+            pela <strong>Via Vêneto (Parque Romano)</strong>, garantindo acesso direto, pavimentado e seguro
+            até o Hangar 12.
           </p>
         </div>
 
@@ -253,15 +282,15 @@ export function RouteMap() {
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#f8c142]">
-                  TRAJETO DETALHADO
+                  ROTA EXCLUSIVA DE ACESSO
                 </span>
                 <span className="rounded-full bg-[#f4793b]/20 px-3 py-1 font-mono text-[10px] font-semibold text-[#f4793b]">
-                  ~6,8 km · 10 min
+                  ~7,6 km · 11 min
                 </span>
               </div>
 
               {/* Passos da Rota */}
-              <div className="mt-6 space-y-6">
+              <div className="mt-6 space-y-5">
                 {/* Ponto A */}
                 <div className="flex items-start gap-4">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#414042] font-mono text-xs font-bold text-white border border-white/20">
@@ -280,29 +309,49 @@ export function RouteMap() {
                   </div>
                 </div>
 
-                <div className="ml-4 h-6 border-l-2 border-dashed border-white/20" />
+                <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
 
-                {/* Ponto B */}
+                {/* Ponto B - Hotel Fiorio */}
                 <div className="flex items-start gap-4">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
                     B
                   </div>
                   <div>
                     <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
-                      {ROUTE_POINTS.mid.badge}
+                      {ROUTE_POINTS.fiorio.badge}
                     </span>
                     <h4 className="text-sm font-semibold text-white">
-                      {ROUTE_POINTS.mid.title}
+                      {ROUTE_POINTS.fiorio.title}
                     </h4>
                     <p className="text-xs text-white/60">
-                      {ROUTE_POINTS.mid.description}
+                      {ROUTE_POINTS.fiorio.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="ml-4 h-6 border-l-2 border-dashed border-[#f4793b]/40" />
+                <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
 
-                {/* Ponto Destino */}
+                {/* Ponto C - Parque Romano */}
+                <div className="flex items-start gap-4">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
+                    C
+                  </div>
+                  <div>
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
+                      {ROUTE_POINTS.romano.badge}
+                    </span>
+                    <h4 className="text-sm font-semibold text-white">
+                      {ROUTE_POINTS.romano.title}
+                    </h4>
+                    <p className="text-xs text-white/60">
+                      {ROUTE_POINTS.romano.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="ml-4 h-4 border-l-2 border-dashed border-[#f4793b]/40" />
+
+                {/* Ponto D - Destino */}
                 <div className="flex items-start gap-4">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4793b] text-white shadow-[0_0_15px_rgba(244,121,59,0.5)]">
                     <Plane size={16} />
@@ -318,7 +367,7 @@ export function RouteMap() {
                       {ROUTE_POINTS.dest.description}
                     </p>
                     <p className="mt-1 text-[11px] text-white/50">
-                      Rua Via Local Municipal, 1070 · Travessão Cavour
+                      Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha / RS
                     </p>
                   </div>
                 </div>
@@ -438,7 +487,7 @@ export function RouteMap() {
 
             {/* Badge de Dica Interativa */}
             <div className="absolute bottom-4 left-4 z-[1000] hidden sm:block rounded-full bg-[#202126]/85 px-3 py-1 text-[10px] font-mono text-white/70 backdrop-blur-md border border-white/10">
-              💡 Arraste e use o zoom para explorar o relevo e acessos
+              💡 Rota oficial de acesso passando pelo Hotel Fiorio e Parque Romano
             </div>
 
             {/* Elemento do Mapa Leaflet */}
