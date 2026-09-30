@@ -5,9 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Building,
-  Sparkles,
-  ShieldCheck,
-  Clock3,
 } from "lucide-react";
 
 interface HangarPhoto {
@@ -18,8 +15,7 @@ interface HangarPhoto {
   title: string;
   subtitle: string;
   description: string;
-  category: "all" | "fachada" | "interior" | "entardecer";
-  highlights: string[];
+  category: "all" | "fachada" | "interior" | "seguranca";
 }
 
 const HANGAR_PHOTOS: HangarPhoto[] = [
@@ -28,12 +24,11 @@ const HANGAR_PHOTOS: HangarPhoto[] = [
     src: "./images/vespair-hangar-fachada.jpg",
     alt: "Fachada frontal do Hangar 12 da Vespair Serviços Aéreos no Aeródromo Menega",
     tag: "FACHADA PRINCIPAL",
-    title: "Arquitetura & Identidade Visual",
-    subtitle: "Hangar 12 · Aeródromo Condomínio Menega (SIFQ)",
+    title: "Fachada Principal do Hangar 12",
+    subtitle: "Aeródromo Condomínio Menega · SIFQ",
     description:
-      "Fachada contemporânea com painéis amadeirados termoacústicos, letreiro corporativo em LED, vidros panorâmicos e portões automáticos deslizantes de alta amplitude para movimentação segura de aeronaves com até 18 m de envergadura.",
+      "Arquitetura contemporânea com painéis amadeirados termoacústicos, letreiro corporativo em LED, vidros panorâmicos e portões automáticos deslizantes para movimentação de aeronaves.",
     category: "fachada",
-    highlights: ["Portões automatizados", "Painéis termoacústicos", "Acesso direto à Taxiway"],
   },
   {
     id: "interior",
@@ -43,27 +38,25 @@ const HANGAR_PHOTOS: HangarPhoto[] = [
     title: "Vão Livre & Piso Espelhado",
     subtitle: "Piso Epóxi Industrial de Alta Resistência",
     description:
-      "Mais de 500 m² de vão livre sem colunas centrais, piso em epóxi de alto brilho que garante assepsia total, iluminação natural zenital por claraboias e mezanino corporativo com salas técnicas e de apoio.",
+      "Mais de 500 m² de vão livre sem colunas centrais, piso em epóxi de alto brilho que garante assepsia total, iluminação natural zenital por claraboias e mezanino executivo de apoio.",
     category: "interior",
-    highlights: ["Piso epóxi espelhado", "Vão livre sem colunas", "Mezanino executivo & apoio"],
   },
   {
-    id: "por-do-sol",
+    id: "seguranca-conforto",
     src: "./images/vespair-hangar-por-do-sol.jpg",
-    alt: "Vista do pôr do sol na Serra Gaúcha a partir de dentro do Hangar Vespair",
-    tag: "ENTARDECER NO HANGAR",
-    title: "Operação 24 Horas & Vista Panorâmica",
-    subtitle: "Segurança e Conforto em Qualquer Horário",
+    alt: "Vista do entardecer na Serra Gaúcha a partir de dentro do Hangar Vespair",
+    tag: "Segurança e Conforto 24h",
+    title: "Segurança e Conforto 24h",
+    subtitle: "Operação Contínua & Proteção Térmica",
     description:
-      "Estrutura pronta para recepção diurna e noturna. O interior do hangar proporciona ambiente protegido contra o frio e intempéries da serra, com visão privilegiada para o relevo de Flores da Cunha.",
-    category: "entardecer",
-    highlights: ["Operação VFR Noturno", "Climatização & Proteção", "Vigilância e Monitoramento"],
+      "Estrutura completa pronta para recepção diurna e noturna. Ambiente interno protegido contra intempéries climáticas da serra com vista privilegiada para o vale de Flores da Cunha.",
+    category: "seguranca",
   },
 ];
 
 export function HangarGallery() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [activeFilter, setActiveFilter] = useState<"all" | "fachada" | "interior" | "entardecer">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "fachada" | "interior" | "seguranca">("all");
 
   const filteredPhotos =
     activeFilter === "all"
@@ -82,7 +75,7 @@ export function HangarGallery() {
     setSelectedPhotoIndex((prev) => ((prev ?? 0) - 1 + HANGAR_PHOTOS.length) % HANGAR_PHOTOS.length);
   }, [selectedPhotoIndex]);
 
-  // Navegação por teclado
+  // Navegação por teclado no Lightbox
   useEffect(() => {
     if (selectedPhotoIndex === null) return;
 
@@ -129,7 +122,7 @@ export function HangarGallery() {
                 { key: "all", label: `Todas as fotos (${HANGAR_PHOTOS.length})` },
                 { key: "fachada", label: "Fachada Principal" },
                 { key: "interior", label: "Interior & Piso Epóxi" },
-                { key: "entardecer", label: "Entardecer & 24h" },
+                { key: "seguranca", label: "Segurança e Conforto 24h" },
               ].map((tab) => (
                 <button
                   key={tab.key}
@@ -149,7 +142,7 @@ export function HangarGallery() {
         </div>
 
         {/* =========================================================================
-            GRID DAS 3 FOTOS PRINCIPAIS DO HANGAR
+            GRID DE FOTOS DO HANGAR (Apenas imagens + tags sobrepostas)
            ========================================================================= */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredPhotos.map((photo, index) => {
@@ -158,54 +151,36 @@ export function HangarGallery() {
               <div
                 key={photo.id}
                 onClick={() => setSelectedPhotoIndex(originalIndex >= 0 ? originalIndex : index)}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl cursor-pointer"
+                className="group relative aspect-[16/11] w-full cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#1a1a1e] shadow-xl transition-all duration-500 hover:border-[#f4793b] hover:shadow-2xl hover:shadow-[#f4793b]/10 sm:aspect-[4/3] lg:min-h-[380px]"
               >
-                {/* Imagem com Overlay */}
-                <div className="relative aspect-[16/11] w-full overflow-hidden bg-[#1a1a1e]">
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/25 to-transparent" />
+                {/* Imagem */}
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                />
 
-                  {/* Tag Superior */}
-                  <div className="absolute left-4 top-4 z-10">
-                    <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f8c142] backdrop-blur-md">
-                      {photo.tag}
-                    </span>
-                  </div>
+                {/* Gradientes sutis sobrepostos */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 opacity-80 transition-opacity duration-300 group-hover:opacity-60" />
 
-                  {/* Botão de Zoom Hover */}
-                  <div className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-[#202126]/80 text-white backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110">
-                    <Maximize2 size={15} />
-                  </div>
+                {/* Tag Sobreposta na Imagem (Canto Superior Esquerdo) */}
+                <div className="absolute left-4 top-4 z-10 sm:left-5 sm:top-5">
+                  <span className="inline-flex items-center rounded-md border border-white/25 bg-[#202126]/90 px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#f8c142] shadow-lg backdrop-blur-md transition-colors group-hover:border-[#f4793b]/60">
+                    {photo.tag}
+                  </span>
                 </div>
 
-                {/* Conteúdo Descritivo */}
-                <div className="flex flex-1 flex-col justify-between p-6">
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">
-                      {photo.subtitle}
-                    </p>
-                    <h3 className="mt-1.5 font-display text-2xl text-white">
-                      {photo.title}
-                    </h3>
-                    <p className="mt-2.5 text-xs leading-relaxed text-white/70 sm:text-sm">
-                      {photo.description}
-                    </p>
-                  </div>
+                {/* Botão de Zoom Hover (Canto Superior Direito) */}
+                <div className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-[#202126]/85 text-white shadow-lg backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 sm:right-5 sm:top-5">
+                  <Maximize2 size={15} />
+                </div>
 
-                  <div className="mt-6 flex flex-wrap gap-2 border-t border-white/10 pt-4">
-                    {photo.highlights.map((hl) => (
-                      <span
-                        key={hl}
-                        className="rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[10px] text-white/80"
-                      >
-                        ✓ {hl}
-                      </span>
-                    ))}
-                  </div>
+                {/* Dica de Clique Hover (Canto Inferior) */}
+                <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:bottom-5 sm:left-5 sm:right-5">
+                  <span className="font-mono text-[10px] text-white/80">
+                    Clique para ampliar em alta resolução
+                  </span>
+                  <Maximize2 size={13} className="text-[#f4793b]" />
                 </div>
               </div>
             );
@@ -342,16 +317,6 @@ export function HangarGallery() {
                   <p className="text-xs leading-relaxed text-white/80 sm:text-sm">
                     {activePhoto.description}
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {activePhoto.highlights.map((hl) => (
-                      <span
-                        key={hl}
-                        className="rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[10px] text-[#f8c142]"
-                      >
-                        ✓ {hl}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Lista de Miniaturas para Troca Rápida */}
