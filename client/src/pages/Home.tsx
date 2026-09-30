@@ -479,11 +479,16 @@ export default function Home() {
         <section id="aerodromo" className="relative overflow-hidden bg-[#414042] text-[#f5f1e8]">
           <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.95fr_1.05fr]">
             <div className="scene-image parallax-frame reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[720px]">
-              <img src={assets.aerodromo} alt="Vista aérea da pista e instalações da Vespair no Aeródromo Menega" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="9" />
-              <div className="absolute inset-0 bg-[#414042]/35 mix-blend-multiply" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#414042]/95 to-transparent p-7 sm:p-10">
+              <img
+                src={assets.aerodromo}
+                alt="Vista aérea real da pista asfaltada de 1.022m e condomínio aeronáutico Menega SIFQ em Flores da Cunha"
+                className="parallax-media absolute inset-0 h-full w-full object-cover"
+                data-parallax="9"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#414042]/95 via-[#414042]/20 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-7 sm:p-10">
                 <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#f8c142]">COND. AERONÁUTICO MENEGA · SIFQ</p>
-                <p className="mt-2 text-sm text-white/70">Pista Asfaltada 1.022m · Hangar 12 · Flores da Cunha / RS</p>
+                <p className="mt-2 text-sm text-white/80 font-medium">Pista Asfaltada 1.022m · Cabeceira 10 · Flores da Cunha / RS</p>
               </div>
             </div>
             <div className="reveal-up flex flex-col justify-center p-7 sm:p-12 lg:p-20">
