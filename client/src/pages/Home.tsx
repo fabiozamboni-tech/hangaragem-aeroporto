@@ -601,23 +601,31 @@ export default function Home() {
               <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
               <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.</p>
 
-              {/* Informação Operacional e Atendimento */}
-              <div className="mt-8 rounded-2xl border border-[#414042]/15 bg-white/85 p-5 shadow-sm backdrop-blur-sm sm:p-6">
-                <div className="flex items-start gap-3.5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f4793b]/15 text-[#f4793b]">
-                    <Clock3 size={20} />
+              {/* Informação Operacional e Atendimento com Destaque */}
+              <div className="mt-8 rounded-2xl border-2 border-[#414042]/15 bg-white p-6 shadow-md backdrop-blur-sm sm:p-7">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#414042]/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f4793b] text-white shadow-sm">
+                      <Clock3 size={22} />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#f4793b]">
+                        REGIME DE OPERAÇÃO
+                      </span>
+                      <h3 className="font-display text-lg font-bold text-[#202126] sm:text-xl">
+                        Operação 24h <span className="text-sm font-normal text-[#5f6c7b]">(mediante agendamento prévio)</span>
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#414042]">
-                      HORÁRIOS DE OPERAÇÃO &amp; ATENDIMENTO
-                    </h3>
-                    <p className="mt-1 text-sm font-semibold text-[#202126]">
-                      Operação 24h mediante a agendamento prévio.
-                    </p>
-                    <p className="mt-0.5 text-xs text-[#5f6c7b]">
-                      Horário de atendimento para agendamento e informações das 8h às 18h.
-                    </p>
-                  </div>
+                </div>
+
+                <div className="mt-4 rounded-xl bg-[#f5f1e8] border border-[#f4793b]/25 p-4 sm:p-5">
+                  <span className="block font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#f4793b]">
+                    AGENDAMENTOS &amp; INFORMAÇÕES
+                  </span>
+                  <p className="mt-1.5 text-base font-bold text-[#202126] sm:text-lg leading-snug">
+                    Horário de atendimento para agendamento e informações das 8h às 18h.
+                  </p>
                 </div>
               </div>
 
