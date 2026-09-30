@@ -13,7 +13,7 @@ import {
   Eye,
 } from "lucide-react";
 
-export interface HangarPhoto {
+interface HangarPhoto {
   id: string;
   src: string;
   alt: string;
@@ -26,7 +26,7 @@ export interface HangarPhoto {
   highlights: string[];
 }
 
-export const HANGAR_PHOTOS: HangarPhoto[] = [
+const HANGAR_PHOTOS: HangarPhoto[] = [
   {
     id: "fachada",
     src: "./images/vespair-hangar-fachada.jpg",
