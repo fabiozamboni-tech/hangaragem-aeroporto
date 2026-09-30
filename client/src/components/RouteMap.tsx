@@ -11,6 +11,10 @@ import {
   Share2,
   Check,
   ExternalLink,
+  Maximize2,
+  X,
+  Radio,
+  Route,
 } from "lucide-react";
 
 // Waypoints oficiais da rota de acesso exclusiva
@@ -89,11 +93,11 @@ const WAZE_URL =
   "https://waze.com/ul?ll=-29.0455836,-51.149769&navigate=yes";
 
 export function RouteMap() {
+  const [activeTab, setActiveTab] = useState<"terrestre" | "hangar">("terrestre");
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
-  const polylineRef = useRef<L.Polyline | null>(null);
-  const glowPolylineRef = useRef<L.Polyline | null>(null);
   const [mapType, setMapType] = useState<"streets" | "satellite">("streets");
   const [copied, setCopied] = useState(false);
 
@@ -209,7 +213,7 @@ export function RouteMap() {
       .openPopup();
 
     // Linha de contorno (Glow pelas vias reais)
-    const glowPolyline = L.polyline(PRECISE_STREET_PATH, {
+    L.polyline(PRECISE_STREET_PATH, {
       color: "#f4793b",
       weight: 8,
       opacity: 0.35,
@@ -217,10 +221,8 @@ export function RouteMap() {
       lineJoin: "round",
     }).addTo(map);
 
-    glowPolylineRef.current = glowPolyline;
-
     // Linha principal da rota viária real (curva a curva)
-    const polyline = L.polyline(PRECISE_STREET_PATH, {
+    L.polyline(PRECISE_STREET_PATH, {
       color: "#f4793b",
       weight: 5,
       opacity: 0.95,
@@ -228,8 +230,6 @@ export function RouteMap() {
       lineCap: "round",
       lineJoin: "round",
     }).addTo(map);
-
-    polylineRef.current = polyline;
 
     // Enquadra a rota inteira perfeitamente na visão do mapa
     const bounds = L.latLngBounds(PRECISE_STREET_PATH);
@@ -240,6 +240,17 @@ export function RouteMap() {
       mapInstance.current = null;
     };
   }, []);
+
+  // Quando o usuário clica na aba "terrestre", força recálculo do tamanho do Leaflet
+  useEffect(() => {
+    if (activeTab === "terrestre" && mapInstance.current) {
+      setTimeout(() => {
+        mapInstance.current?.invalidateSize();
+        const bounds = L.latLngBounds(PRECISE_STREET_PATH);
+        mapInstance.current?.fitBounds(bounds, { padding: [45, 45] });
+      }, 100);
+    }
+  }, [activeTab]);
 
   // Alterna entre visual de ruas e satélite
   const toggleMapType = (type: "streets" | "satellite") => {
@@ -285,120 +296,239 @@ export function RouteMap() {
 
       <div className="mx-auto max-w-[1440px]">
         {/* Cabeçalho da Seção */}
-        <div className="reveal-up max-w-3xl">
-          <p className="eyebrow text-[#f8c142] flex items-center gap-2">
-            <Compass size={14} className="text-[#f4793b]" />
-            ROTA OFICIAL DE ACESSO · SIFQ
-          </p>
-          <h2 className="mt-5 font-display text-4xl leading-[0.94] tracking-[-0.045em] text-white sm:text-6xl">
-            Como chegar à Vespair: trajeto oficial pelas vias asfaltadas.
-          </h2>
-          <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
-            A rota terrestre oficial segue rigorosamente as vias pavimentadas de Flores da Cunha: da entrada
-            pela RS-122, passando pela <strong>Av. 25 de Julho (Hotel Fiorio)</strong> e pela <strong>Via Vêneto (Parque Romano)</strong> até a entrada do Condomínio Aeronáutico Menega (Hangar 12).
-          </p>
+        <div className="reveal-up flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="max-w-3xl">
+            <p className="eyebrow text-[#f8c142] flex items-center gap-2">
+              <Compass size={14} className="text-[#f4793b]" />
+              LOCALIZAÇÃO &amp; OPERAÇÃO DE SOLO · SIFQ
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[0.94] tracking-[-0.045em] text-white sm:text-6xl">
+              Como chegar à Vespair: rota viária e planta do aeródromo.
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
+              Consulte a <strong>rota terrestre oficial</strong> para chegada de veículos e a{" "}
+              <strong>planta interna de taxiamento</strong> para aeronaves desde a Cabeceira 10 até o Hangar 12.
+            </p>
+          </div>
+
+          {/* Seletor de Abas / Visões */}
+          <div className="flex shrink-0 gap-2 rounded-xl border border-white/15 bg-[#2b2c31] p-1.5 backdrop-blur-md">
+            <button
+              type="button"
+              onClick={() => setActiveTab("terrestre")}
+              className={`flex items-center gap-2 rounded-lg px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider transition ${
+                activeTab === "terrestre"
+                  ? "bg-[#f4793b] text-white shadow-md"
+                  : "text-white/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Route size={15} />
+              Rota Terrestre
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("hangar")}
+              className={`flex items-center gap-2 rounded-lg px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider transition ${
+                activeTab === "hangar"
+                  ? "bg-[#f4793b] text-white shadow-md"
+                  : "text-white/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Plane size={15} />
+              Hangar no Aeródromo
+            </button>
+          </div>
         </div>
 
-        {/* Grade com Painel de Rota e Mapa Interativo */}
+        {/* Grade com Painel de Informações e Mapa Interativo / Planta */}
         <div className="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
-          {/* Card de Informações da Rota */}
+          {/* PAINEL ESQUERDO: Condicional por Aba */}
           <div className="reveal-up flex flex-col justify-between rounded-2xl border border-white/10 bg-[#2b2c31] p-6 sm:p-8">
-            <div>
-              <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#f8c142]">
-                  TRAJETO VIÁRIO OFICIAL
-                </span>
-                <span className="rounded-full bg-[#f4793b]/20 px-3 py-1 font-mono text-[10px] font-semibold text-[#f4793b]">
-                  6,5 km · ~10 min
-                </span>
+            {activeTab === "terrestre" ? (
+              /* Informações da Rota Terrestre */
+              <div>
+                <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#f8c142]">
+                    TRAJETO VIÁRIO OFICIAL
+                  </span>
+                  <span className="rounded-full bg-[#f4793b]/20 px-3 py-1 font-mono text-[10px] font-semibold text-[#f4793b]">
+                    6,5 km · ~10 min
+                  </span>
+                </div>
+
+                {/* Passos da Rota */}
+                <div className="mt-6 space-y-5">
+                  {/* Ponto A */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#414042] font-mono text-xs font-bold text-white border border-white/20">
+                      A
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">
+                        {ROUTE_POINTS.start.badge}
+                      </span>
+                      <h4 className="text-sm font-semibold text-white">
+                        {ROUTE_POINTS.start.title}
+                      </h4>
+                      <p className="text-xs text-white/60">
+                        {ROUTE_POINTS.start.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
+
+                  {/* Ponto B - Hotel Fiorio */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
+                      B
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
+                        {ROUTE_POINTS.fiorio.badge}
+                      </span>
+                      <h4 className="text-sm font-semibold text-white">
+                        {ROUTE_POINTS.fiorio.title}
+                      </h4>
+                      <p className="text-xs text-white/60">
+                        {ROUTE_POINTS.fiorio.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
+
+                  {/* Ponto C - Parque Romano */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
+                      C
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
+                        {ROUTE_POINTS.romano.badge}
+                      </span>
+                      <h4 className="text-sm font-semibold text-white">
+                        {ROUTE_POINTS.romano.title}
+                      </h4>
+                      <p className="text-xs text-white/60">
+                        {ROUTE_POINTS.romano.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="ml-4 h-4 border-l-2 border-dashed border-[#f4793b]/40" />
+
+                  {/* Ponto D - Destino */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4793b] text-white shadow-[0_0_15px_rgba(244,121,59,0.5)]">
+                      <Plane size={16} />
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f4793b] font-bold">
+                        {ROUTE_POINTS.dest.badge}
+                      </span>
+                      <h4 className="text-base font-bold text-white">
+                        {ROUTE_POINTS.dest.title}
+                      </h4>
+                      <p className="text-xs text-white/80 font-medium">
+                        {ROUTE_POINTS.dest.description}
+                      </p>
+                      <p className="mt-1 text-[11px] text-white/50">
+                        Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha / RS
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
+            ) : (
+              /* Informações da Planta do Hangar no Aeródromo */
+              <div>
+                <div className="flex items-center justify-between border-b border-white/10 pb-5">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#f8c142]">
+                    PLANTA DE SOLO · AERÓDROMO SIFQ
+                  </span>
+                  <span className="rounded-full bg-[#f4793b]/20 px-3 py-1 font-mono text-[10px] font-semibold text-[#f4793b]">
+                    HANGAR 12 · VESPAIR
+                  </span>
+                </div>
 
-              {/* Passos da Rota */}
-              <div className="mt-6 space-y-5">
-                {/* Ponto A */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#414042] font-mono text-xs font-bold text-white border border-white/20">
-                    A
+                <div className="mt-6 space-y-5">
+                  {/* Cabeceira 10 */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#414042] font-mono text-xs font-bold text-[#f8c142] border border-[#f8c142]/40">
+                      10
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
+                        POUSO / CABECEIRA
+                      </span>
+                      <h4 className="text-sm font-semibold text-white">
+                        Pista Asfaltada 10/28 (1.022 m)
+                      </h4>
+                      <p className="text-xs text-white/60">
+                        Após o pouso na Cabeceira 10, livrar a pista à esquerda na Taxiway Norte.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">
-                      {ROUTE_POINTS.start.badge}
-                    </span>
-                    <h4 className="text-sm font-semibold text-white">
-                      {ROUTE_POINTS.start.title}
-                    </h4>
-                    <p className="text-xs text-white/60">
-                      {ROUTE_POINTS.start.description}
-                    </p>
+
+                  <div className="ml-4 h-4 border-l-2 border-dashed border-[#f4793b]/40" />
+
+                  {/* Taxiway */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f4793b]/20 font-mono text-xs font-bold text-[#f4793b] border border-[#f4793b]/40">
+                      TWY
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f4793b]">
+                        TAXIWAY &amp; TAXILINE
+                      </span>
+                      <h4 className="text-sm font-semibold text-white">
+                        Linha Guia de Taxiamento
+                      </h4>
+                      <p className="text-xs text-white/60">
+                        Siga a linha amarela demarcada da Taxiway paralela à pista em direção ao pátio norte.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="ml-4 h-4 border-l-2 border-dashed border-[#f4793b]/40" />
+
+                  {/* Hangar 12 */}
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4793b] text-white shadow-[0_0_15px_rgba(244,121,59,0.5)]">
+                      <Building2 size={16} />
+                    </div>
+                    <div>
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142] font-bold">
+                        PÁTIO &amp; HANGAR PRIVATIVO
+                      </span>
+                      <h4 className="text-base font-bold text-white">
+                        Hangar 12 · Vespair Serviços Aéreos
+                      </h4>
+                      <p className="text-xs text-white/80 font-medium">
+                        Piso epóxi, lounge climatizado, área de abastecimento e atendimento de solo.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
-
-                {/* Ponto B - Hotel Fiorio */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
-                    B
-                  </div>
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
-                      {ROUTE_POINTS.fiorio.badge}
-                    </span>
-                    <h4 className="text-sm font-semibold text-white">
-                      {ROUTE_POINTS.fiorio.title}
-                    </h4>
-                    <p className="text-xs text-white/60">
-                      {ROUTE_POINTS.fiorio.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="ml-4 h-4 border-l-2 border-dashed border-white/20" />
-
-                {/* Ponto C - Parque Romano */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f8c142] font-mono text-xs font-bold text-[#202126]">
-                    C
-                  </div>
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#f8c142]">
-                      {ROUTE_POINTS.romano.badge}
-                    </span>
-                    <h4 className="text-sm font-semibold text-white">
-                      {ROUTE_POINTS.romano.title}
-                    </h4>
-                    <p className="text-xs text-white/60">
-                      {ROUTE_POINTS.romano.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="ml-4 h-4 border-l-2 border-dashed border-[#f4793b]/40" />
-
-                {/* Ponto D - Destino */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4793b] text-white shadow-[0_0_15px_rgba(244,121,59,0.5)]">
-                    <Plane size={16} />
-                  </div>
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#f4793b] font-bold">
-                      {ROUTE_POINTS.dest.badge}
-                    </span>
-                    <h4 className="text-base font-bold text-white">
-                      {ROUTE_POINTS.dest.title}
-                    </h4>
-                    <p className="text-xs text-white/80 font-medium">
-                      {ROUTE_POINTS.dest.description}
-                    </p>
-                    <p className="mt-1 text-[11px] text-white/50">
-                      Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha / RS
-                    </p>
-                  </div>
+                {/* Botão de Ampliação da Planta */}
+                <div className="mt-8">
+                  <button
+                    type="button"
+                    onClick={() => setIsLightboxOpen(true)}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white/10"
+                  >
+                    <Maximize2 size={15} />
+                    Ampliar Planta do Aeródromo
+                  </button>
                 </div>
               </div>
+            )}
 
-              {/* Informações Técnicas da Pista SIFQ */}
-              <div className="mt-8 rounded-xl border border-white/10 bg-[#202126] p-4">
+            {/* Informações Técnicas da Pista SIFQ (Comum a ambas as abas) */}
+            <div className="mt-8">
+              <div className="rounded-xl border border-white/10 bg-[#202126] p-4">
                 <div className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">
                   <div>
                     <span className="block text-[10px] text-white/50 uppercase font-mono">
@@ -434,91 +564,185 @@ export function RouteMap() {
                   </div>
                 </div>
               </div>
+
+              {/* Ações de Navegação e GPS */}
+              <div className="mt-6 space-y-3 border-t border-white/10 pt-6">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <a
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-[#f4793b] px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#e0682b] active:scale-[0.98]"
+                  >
+                    <Navigation size={15} />
+                    Abrir no Google Maps
+                  </a>
+                  <a
+                    href={WAZE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white/10 active:scale-[0.98]"
+                  >
+                    <ExternalLink size={15} />
+                    Navegar com Waze
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleCopyCoords}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-transparent py-2.5 font-mono text-[11px] text-white/60 transition hover:bg-white/5 hover:text-white"
+                >
+                  {copied ? (
+                    <>
+                      <Check size={14} className="text-[#25D366]" />
+                      <span>Coordenadas copiadas para a área de transferência!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Share2 size={13} />
+                      <span>Copiar Coordenadas GPS (-29.04558, -51.14976)</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* PAINEL DIREITO: Alterna entre Mapa Interativo Leaflet e Planta do Hangar */}
+          <div className="reveal-up relative min-h-[460px] overflow-hidden rounded-2xl border border-white/15 bg-[#1a1a1e] shadow-2xl lg:min-h-[580px]">
+            {/* Visualização 1: Rota Terrestre (Leaflet) */}
+            <div
+              className={`h-full w-full min-h-[460px] lg:min-h-[580px] transition-opacity duration-300 ${
+                activeTab === "terrestre" ? "block opacity-100" : "hidden opacity-0"
+              }`}
+            >
+              {/* Controles do Tipo de Mapa */}
+              <div className="absolute left-4 top-4 z-[1000] flex gap-1 rounded-lg border border-white/15 bg-[#202126]/90 p-1 backdrop-blur-md">
+                <button
+                  type="button"
+                  onClick={() => toggleMapType("streets")}
+                  className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs transition ${
+                    mapType === "streets"
+                      ? "bg-[#f4793b] text-white font-semibold"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  <MapPin size={13} />
+                  Mapa
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleMapType("satellite")}
+                  className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs transition ${
+                    mapType === "satellite"
+                      ? "bg-[#f4793b] text-white font-semibold"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  <Layers size={13} />
+                  Satélite
+                </button>
+              </div>
+
+              {/* Badge de Dica Interativa */}
+              <div className="absolute bottom-4 left-4 z-[1000] hidden sm:block rounded-full bg-[#202126]/85 px-3 py-1 text-[10px] font-mono text-white/70 backdrop-blur-md border border-white/10">
+                🛣️ Traçado viário de precisão passando pelo Hotel Fiorio e Parque Romano
+              </div>
+
+              {/* Elemento do Mapa Leaflet */}
+              <div ref={mapContainer} className="h-full w-full min-h-[460px] lg:min-h-[580px]" />
             </div>
 
-            {/* Ações de Navegação e GPS */}
-            <div className="mt-8 space-y-3 pt-6 border-t border-white/10">
-              <div className="grid gap-3 sm:grid-cols-2">
-                <a
-                  href={GOOGLE_MAPS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg bg-[#f4793b] px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#e0682b] active:scale-[0.98]"
-                >
-                  <Navigation size={15} />
-                  Abrir no Google Maps
-                </a>
-                <a
-                  href={WAZE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/5 px-4 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white/10 active:scale-[0.98]"
-                >
-                  <ExternalLink size={15} />
-                  Navegar com Waze
-                </a>
+            {/* Visualização 2: Planta do Hangar no Aeródromo */}
+            <div
+              className={`relative flex h-full w-full min-h-[460px] flex-col items-center justify-center bg-[#52604d] p-4 lg:min-h-[580px] ${
+                activeTab === "hangar" ? "block" : "hidden"
+              }`}
+            >
+              {/* Badges e Legendas sobre a imagem da planta */}
+              <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2">
+                <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[11px] font-bold text-[#f8c142] backdrop-blur-md">
+                  SIFQ · CABECEIRA 10
+                </span>
+                <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[11px] font-bold text-[#f4793b] backdrop-blur-md">
+                  TAXIWAY ➔ HANGAR 12
+                </span>
               </div>
 
               <button
                 type="button"
-                onClick={handleCopyCoords}
-                className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-transparent py-2.5 font-mono text-[11px] text-white/60 transition hover:bg-white/5 hover:text-white"
+                onClick={() => setIsLightboxOpen(true)}
+                className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1.5 font-mono text-xs font-medium text-white backdrop-blur-md transition hover:bg-[#f4793b]"
+                aria-label="Ampliar mapa do hangar"
               >
-                {copied ? (
-                  <>
-                    <Check size={14} className="text-[#25D366]" />
-                    <span>Coordenadas copiadas para a área de transferência!</span>
-                  </>
-                ) : (
-                  <>
-                    <Share2 size={13} />
-                    <span>Copiar Coordenadas GPS (-29.04558, -51.14976)</span>
-                  </>
-                )}
+                <Maximize2 size={13} />
+                Ampliar
               </button>
-            </div>
-          </div>
 
-          {/* Container do Mapa Interativo */}
-          <div className="reveal-up relative min-h-[440px] overflow-hidden rounded-2xl border border-white/15 bg-[#1a1a1e] shadow-2xl lg:min-h-[560px]">
-            {/* Controles do Tipo de Mapa */}
-            <div className="absolute left-4 top-4 z-[1000] flex gap-1 rounded-lg border border-white/15 bg-[#202126]/90 p-1 backdrop-blur-md">
-              <button
-                type="button"
-                onClick={() => toggleMapType("streets")}
-                className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs transition ${
-                  mapType === "streets"
-                    ? "bg-[#f4793b] text-white font-semibold"
-                    : "text-white/70 hover:text-white"
-                }`}
+              {/* Imagem Oficial da Planta do Aeródromo */}
+              <div
+                onClick={() => setIsLightboxOpen(true)}
+                className="group relative cursor-pointer overflow-hidden rounded-xl border border-white/20 shadow-2xl transition hover:border-[#f4793b]"
               >
-                <MapPin size={13} />
-                Mapa
-              </button>
-              <button
-                type="button"
-                onClick={() => toggleMapType("satellite")}
-                className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 font-mono text-xs transition ${
-                  mapType === "satellite"
-                    ? "bg-[#f4793b] text-white font-semibold"
-                    : "text-white/70 hover:text-white"
-                }`}
-              >
-                <Layers size={13} />
-                Satélite
-              </button>
-            </div>
+                <img
+                  src="./images/vespair-mapa-hangar.png"
+                  alt="Planta de localização do Hangar 12 da Vespair dentro do Aeródromo Menega (SIFQ) com trajeto de Taxiway desde a Cabeceira 10"
+                  className="max-h-[520px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="flex items-center gap-2 rounded-full bg-[#f4793b] px-4 py-2 font-mono text-xs font-bold text-white shadow-xl">
+                    <Maximize2 size={14} /> Clique para ver em alta resolução
+                  </span>
+                </div>
+              </div>
 
-            {/* Badge de Dica Interativa */}
-            <div className="absolute bottom-4 left-4 z-[1000] hidden sm:block rounded-full bg-[#202126]/85 px-3 py-1 text-[10px] font-mono text-white/70 backdrop-blur-md border border-white/10">
-              🛣️ Traçado viário de precisão seguindo as curvas das ruas reais
+              {/* Rodapé descritivo da imagem */}
+              <div className="absolute bottom-4 inset-x-4 z-10 flex justify-between rounded-lg border border-white/15 bg-[#202126]/85 px-4 py-2 text-[11px] font-mono text-white/80 backdrop-blur-md">
+                <span>Pista Asfaltada 1.022m · Taxiway Norte</span>
+                <span className="text-[#f8c142]">Hangar 12 · Vespair Serviços Aéreos</span>
+              </div>
             </div>
-
-            {/* Elemento do Mapa Leaflet */}
-            <div ref={mapContainer} className="h-full w-full min-h-[440px] lg:min-h-[560px]" />
           </div>
         </div>
       </div>
+
+      {/* Modal / Lightbox de Alta Resolução da Planta do Aeródromo */}
+      {isLightboxOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          <div
+            className="relative max-h-[95vh] max-w-[95vw] overflow-hidden rounded-2xl border border-white/20 bg-[#2b2c31] p-2 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-white">
+                <Plane size={16} className="text-[#f4793b]" />
+                <span className="font-bold">Planta de Taxiamento e Localização do Hangar 12 · SIFQ</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsLightboxOpen(false)}
+                className="rounded-full p-1.5 text-white/70 transition hover:bg-white/10 hover:text-white"
+                aria-label="Fechar"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="flex items-center justify-center p-2 bg-[#52604d] rounded-b-xl overflow-auto max-h-[80vh]">
+              <img
+                src="./images/vespair-mapa-hangar.png"
+                alt="Planta detalhada do Hangar 12 Vespair no Aeródromo Menega"
+                className="max-h-[78vh] w-auto object-contain rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
