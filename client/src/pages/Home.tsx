@@ -23,6 +23,7 @@ import {
   X,
 } from "lucide-react";
 import { RouteMap } from "@/components/RouteMap";
+import { HangarGallery } from "@/components/HangarGallery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,6 +77,7 @@ const serviceDetails = [
 
 const navItems = [
   ["A Vespair", "#vespair"],
+  ["Estrutura", "#estrutura"],
   ["Serviços", "#servicos"],
   ["Aeródromo", "#aerodromo"],
   ["Localização", "#localizacao"],
@@ -353,6 +355,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <HangarGallery />
 
         <section id="servicos" className="relative overflow-hidden bg-[#202126] py-20 text-[#f5f1e8] sm:py-28 lg:py-32">
           <div className="parallax-float absolute right-0 top-0 h-full w-[48%] bg-[#414042] [clip-path:polygon(40%_0,100%_0,100%_100%,0_100%)]" />
