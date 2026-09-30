@@ -33,8 +33,8 @@ const assets = {
   loungeCompleto: "./images/vespair-lounge-completo.jpg",
   loungeBar: "./images/vespair-lounge-bar.jpg",
   lounge: "./images/vespair-lounge-completo.jpg",
-  aviaoPatio: "./images/vespair-aviao-patio-real.png",
-  asa: "./images/vespair-aviao-patio-real.png",
+  aviaoPatio: "./images/vespair-aviao-patio-real.jpg",
+  asa: "./images/vespair-aviao-patio-real.jpg",
   logo: "./images/vespair-logo.svg",
 };
 
@@ -466,7 +466,7 @@ export default function Home() {
                 <img
                   src={assets.aviaoPatio}
                   alt="Aeronave turboélice no pátio pavimentado em frente à fachada do Hangar 12 Vespair"
-                  className="parallax-media absolute inset-0 h-full w-full object-cover object-[center_60%]"
+                  className="parallax-media absolute inset-0 h-full w-full object-cover object-center"
                   data-parallax="6"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/90 via-[#202126]/15 to-transparent" />
