@@ -22,15 +22,16 @@ import {
   Wifi,
   X,
 } from "lucide-react";
+import { RouteMap } from "@/components/RouteMap";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const assets = {
-  hero: "/manus-storage/vespair-hero_be88f5bb.jpg",
-  aerodromo: "/manus-storage/vespair-aerodromo_3cb207f6.jpg",
-  lounge: "/manus-storage/vespair-lounge_e77f5d24.jpg",
-  asa: "/manus-storage/vespair-asa_804a60b9.jpg",
-  logo: "/manus-storage/vespair-logo-oficial_16e11c05.svg",
+  hero: "./images/vespair-hero.jpg",
+  aerodromo: "./images/vespair-aerodromo.jpg",
+  lounge: "./images/vespair-lounge.jpg",
+  asa: "./images/vespair-asa.jpg",
+  logo: "./images/vespair-logo.svg",
 };
 
 const serviceCards = [
@@ -77,6 +78,7 @@ const navItems = [
   ["A Vespair", "#vespair"],
   ["Serviços", "#servicos"],
   ["Aeródromo", "#aerodromo"],
+  ["Localização", "#localizacao"],
 ];
 
 function scrollToId(id: string) {
@@ -432,36 +434,99 @@ export default function Home() {
 
         <section id="aerodromo" className="relative overflow-hidden bg-[#414042] text-[#f5f1e8]">
           <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="scene-image parallax-frame reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[660px]">
-              <img src={assets.aerodromo} alt="Vista aérea de um aeródromo na Serra Gaúcha" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="9" />
+            <div className="scene-image parallax-frame reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[720px]">
+              <img src={assets.aerodromo} alt="Vista aérea da pista e instalações da Vespair no Aeródromo Menega" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="9" />
               <div className="absolute inset-0 bg-[#414042]/35 mix-blend-multiply" />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#414042]/95 to-transparent p-7 sm:p-10">
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#f8c142]">COND. AERONÁUTICO MENEGA</p>
-                <p className="mt-2 text-sm text-white/70">Hangar 12 · Flores da Cunha / RS</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#f8c142]">COND. AERONÁUTICO MENEGA · SIFQ</p>
+                <p className="mt-2 text-sm text-white/70">Pista Asfaltada 1.022m · Hangar 12 · Flores da Cunha / RS</p>
               </div>
             </div>
             <div className="reveal-up flex flex-col justify-center p-7 sm:p-12 lg:p-20">
-              <p className="eyebrow text-[#f8c142]">PONTO DE CHEGADA</p>
+              <p className="eyebrow text-[#f8c142]">PONTO DE CHEGADA · SIFQ</p>
               <h2 className="mt-5 max-w-xl font-display text-5xl leading-[0.93] tracking-[-0.045em] sm:text-6xl">No centro da Serra. Próximo ao que importa.</h2>
-              <p className="mt-7 max-w-lg text-base leading-relaxed text-white/67">O Aeródromo de Flores da Cunha está em uma posição privilegiada, com acesso aos polos industriais, empresariais e turísticos da região.</p>
-              <div className="mt-9 grid max-w-lg grid-cols-2 gap-x-7 gap-y-4 border-y border-white/15 py-6 sm:grid-cols-3">
-                {[
-                  ["Caxias do Sul", "22,5 km"],
-                  ["Bento Gonçalves", "60,4 km"],
-                  ["Gramado", "68,5 km"],
-                  ["Vacaria", "98,6 km"],
-                  ["Porto Alegre", "148 km"],
-                ].map(([city, distance]) => (
-                  <div key={city}>
-                    <span className="block text-[11px] text-white/55">{city}</span>
-                    <span className="mt-1 block font-mono text-[11px] tracking-[0.08em] text-[#f8c142]">{distance}</span>
+              <p className="mt-7 max-w-lg text-base leading-relaxed text-white/67">O Aeródromo Condomínio Menega (SIFQ) oferece infraestrutura completa com pista asfaltada de 1.022 metros para pousos e decolagens com segurança e agilidade no coração da Serra Gaúcha.</p>
+
+              {/* Ficha Técnica Aeronáutica da Pista */}
+              <div className="mt-8 rounded-xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">DADOS TÉCNICOS DA PISTA</span>
+                  <span className="rounded bg-[#f4793b]/20 px-2 py-0.5 font-mono text-[10px] font-semibold text-[#f4793b]">ICAO: SIFQ</span>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Dimensões</span>
+                    <strong className="mt-0.5 block font-mono text-sm text-white font-semibold">1.022 × 20 m</strong>
                   </div>
-                ))}
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Cabeceiras</span>
+                    <strong className="mt-0.5 block font-mono text-sm text-[#f8c142] font-semibold">10 / 28</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Superfície</span>
+                    <strong className="mt-0.5 block font-mono text-sm text-white font-semibold">Asfalto (ASPH)</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Elevação</span>
+                    <strong className="mt-0.5 block font-mono text-sm text-white font-semibold">763 m (2.503 ft)</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Operação</span>
+                    <strong className="mt-0.5 block font-mono text-xs text-white font-medium">VFR Diurno / Not.</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Circuito</span>
+                    <strong className="mt-0.5 block font-mono text-xs text-white font-medium">Setor E (Leste)</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Frequência</span>
+                    <strong className="mt-0.5 block font-mono text-xs text-[#f8c142] font-bold">135.70 MHz</strong>
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[10px] uppercase text-white/50">Tipo</span>
+                    <strong className="mt-0.5 block font-mono text-xs text-white font-medium">Privado (PRIV)</strong>
+                  </div>
+                </div>
               </div>
-              <div className="mt-8 flex items-center gap-3 text-sm text-white/70"><span className="h-2 w-2 rounded-full bg-[#f4793b]" /> Frequência ATIS 135.70</div>
+
+              {/* Distâncias Regionais */}
+              <div className="mt-8 border-t border-white/15 pt-6">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.15em] text-white/50">DISTÂNCIAS TERRESTRES</span>
+                <div className="mt-3 grid max-w-lg grid-cols-2 gap-x-7 gap-y-3 sm:grid-cols-3">
+                  {[
+                    ["Caxias do Sul", "22,5 km"],
+                    ["Bento Gonçalves", "60,4 km"],
+                    ["Gramado", "68,5 km"],
+                    ["Vacaria", "98,6 km"],
+                    ["Porto Alegre", "148 km"],
+                  ].map(([city, distance]) => (
+                    <div key={city}>
+                      <span className="block text-[11px] text-white/55">{city}</span>
+                      <span className="mt-0.5 block font-mono text-[11px] tracking-[0.08em] text-[#f8c142]">{distance}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-7 flex flex-wrap items-center gap-4 text-xs text-white/70">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-[#f4793b]" />
+                  <span>Coordenadas: 29°02'44"S / 051°08'59"W</span>
+                </div>
+                <a
+                  href="https://www.flightmarket.com.br/pt/aeroportos/SIFQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#f8c142] underline-offset-4 hover:underline"
+                >
+                  Consultar no FlightMarket <ArrowUpRight size={13} />
+                </a>
+              </div>
             </div>
           </div>
         </section>
+
+        <RouteMap />
 
         <section id="contato" className="relative overflow-hidden bg-[#f5f1e8] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
           <div className="absolute left-0 top-0 h-1 w-full bg-[#f4793b]" />

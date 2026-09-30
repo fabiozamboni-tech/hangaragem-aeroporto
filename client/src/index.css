@@ -162,8 +162,60 @@
   .parallax-media, .parallax-float { will-change: transform; }
 }
 
+/* Sinais e Animações de Radar — WhatsApp Floating */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.75;
+  }
+  60% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes radar-pulse-copper {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@keyframes radar-sweep-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.radar-wave-1 {
+  animation: radar-pulse 3.8s cubic-bezier(0.15, 0.7, 0.35, 1) infinite;
+}
+
+.radar-wave-2 {
+  animation: radar-pulse 3.8s cubic-bezier(0.15, 0.7, 0.35, 1) infinite 1.3s;
+}
+
+.radar-wave-3 {
+  animation: radar-pulse-copper 3.8s cubic-bezier(0.15, 0.7, 0.35, 1) infinite 2.5s;
+}
+
+.radar-sweep {
+  animation: radar-sweep-rotate 6s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .hero-door { display: none; }
   .hero-window { clip-path: none !important; }
+  .radar-wave, .radar-sweep { animation: none !important; display: none; }
 }
