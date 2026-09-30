@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Building,
   Plane,
+  Coffee,
   Eye,
 } from "lucide-react";
 
@@ -20,7 +21,7 @@ export interface HangarPhoto {
   title: string;
   subtitle: string;
   description: string;
-  category: "all" | "fachada" | "interior" | "operacao";
+  category: "all" | "fachada" | "interior" | "lounge" | "operacao";
   badgeColor?: string;
   highlights: string[];
 }
@@ -49,6 +50,30 @@ export const HANGAR_PHOTOS: HangarPhoto[] = [
       "Mais de 500 m² de vão livre sem colunas centrais, piso em epóxi de alto brilho que garante assepsia total, iluminação natural zenital por claraboias e mezanino executivo com salas de apoio.",
     category: "interior",
     highlights: ["Piso epóxi espelhado", "Vão livre sem colunas", "Mezanino executivo & apoio"],
+  },
+  {
+    id: "lounge-completo",
+    src: "./images/vespair-lounge-completo.jpg",
+    alt: "Lounge VIP executivo Vespair com poltronas, mesa de reuniões, televisão e ambiente climatizado",
+    tag: "LOUNGE VIP EXECUTIVO",
+    title: "Espaço de Hospitalidade & Reuniões",
+    subtitle: "Conforto Climatizado para Passageiros e Pilotos",
+    description:
+      "Ambiente sofisticado e privativo com poltronas de design, mesa de reunião/trabalho, televisão, Wi-Fi ultrarrápido e vista para a área de hangaragem para aguardar voos com total conforto.",
+    category: "lounge",
+    highlights: ["Mesa de reuniões & TV", "Ambiente 100% climatizado", "Wi-Fi de alta velocidade"],
+  },
+  {
+    id: "lounge-bar",
+    src: "./images/vespair-lounge-bar.jpg",
+    alt: "Copa e bar de conveniência no Lounge VIP Vespair com frigobar e café",
+    tag: "BAR & CONVENIÊNCIA",
+    title: "Copa de Apoio & Bar Selecionado",
+    subtitle: "Café Expresso, Bebidas e Snacks",
+    description:
+      "Balcão gourmet completo com máquina de café expresso, frigobar expositor com bebidas selecionadas, acabamentos em madeira nobre e o logotipo oficial Vespair.",
+    category: "lounge",
+    highlights: ["Máquina de café expresso", "Frigobar com bebidas", "Atendimento personalizado"],
   },
   {
     id: "patio",
@@ -90,7 +115,7 @@ export const HANGAR_PHOTOS: HangarPhoto[] = [
 
 export function HangarGallery() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [activeFilter, setActiveFilter] = useState<"all" | "fachada" | "interior" | "operacao">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "fachada" | "interior" | "lounge" | "operacao">("all");
 
   const filteredPhotos =
     activeFilter === "all"
@@ -153,9 +178,10 @@ export function HangarGallery() {
             {/* Filtros de Categoria */}
             <div className="flex flex-wrap gap-2 pt-2">
               {[
-                { key: "all", label: `Todas as fotos (${HANGAR_PHOTOS.length})` },
+                { key: "all", label: `Todas (${HANGAR_PHOTOS.length})` },
                 { key: "fachada", label: "Fachada & Pátio" },
                 { key: "interior", label: "Interior & Piso Epóxi" },
+                { key: "lounge", label: "Lounge VIP & Bar" },
                 { key: "operacao", label: "Operação & Solo" },
               ].map((tab) => (
                 <button
@@ -176,7 +202,7 @@ export function HangarGallery() {
         </div>
 
         {/* =========================================================================
-            BENTO GRID / GALERIA DE FOTOS DO HANGAR
+            BENTO GRID / GALERIA DE FOTOS DO HANGAR & LOUNGE
            ========================================================================= */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
           {/* Card 1: Fachada Principal (Grande Destaque - 7 Colunas) */}
@@ -232,20 +258,20 @@ export function HangarGallery() {
 
           {/* Card 2: Pátio Frontal com Aeronave (5 Colunas) */}
           <div
-            onClick={() => setSelectedPhotoIndex(2)}
+            onClick={() => setSelectedPhotoIndex(4)}
             className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-2 lg:col-span-5"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[420px]">
               <img
-                src={HANGAR_PHOTOS[2].src}
-                alt={HANGAR_PHOTOS[2].alt}
+                src={HANGAR_PHOTOS[4].src}
+                alt={HANGAR_PHOTOS[4].alt}
                 className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/30 to-transparent" />
 
               <div className="absolute left-5 top-5 z-10">
                 <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f4793b] backdrop-blur-md">
-                  {HANGAR_PHOTOS[2].tag}
+                  {HANGAR_PHOTOS[4].tag}
                 </span>
               </div>
 
@@ -255,16 +281,16 @@ export function HangarGallery() {
 
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
-                  {HANGAR_PHOTOS[2].subtitle}
+                  {HANGAR_PHOTOS[4].subtitle}
                 </p>
                 <h3 className="mt-1 font-display text-xl text-white sm:text-2xl">
-                  {HANGAR_PHOTOS[2].title}
+                  {HANGAR_PHOTOS[4].title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-white/70 line-clamp-2">
-                  {HANGAR_PHOTOS[2].description}
+                  {HANGAR_PHOTOS[4].description}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {HANGAR_PHOTOS[2].highlights.map((hl) => (
+                  {HANGAR_PHOTOS[4].highlights.map((hl) => (
                     <span
                       key={hl}
                       className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-[10px] text-white/80"
@@ -277,22 +303,22 @@ export function HangarGallery() {
             </div>
           </div>
 
-          {/* Card 3: Interior Amplo & Piso Epóxi (5 Colunas) */}
+          {/* Card 3: Lounge VIP Completo (6 Colunas) */}
           <div
-            onClick={() => setSelectedPhotoIndex(1)}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-5"
+            onClick={() => setSelectedPhotoIndex(2)}
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-6"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[380px]">
               <img
-                src={HANGAR_PHOTOS[1].src}
-                alt={HANGAR_PHOTOS[1].alt}
+                src={HANGAR_PHOTOS[2].src}
+                alt={HANGAR_PHOTOS[2].alt}
                 className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/30 to-transparent" />
 
               <div className="absolute left-5 top-5 z-10">
                 <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f8c142] backdrop-blur-md">
-                  {HANGAR_PHOTOS[1].tag}
+                  {HANGAR_PHOTOS[2].tag}
                 </span>
               </div>
 
@@ -302,32 +328,22 @@ export function HangarGallery() {
 
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">
-                  {HANGAR_PHOTOS[1].subtitle}
+                  {HANGAR_PHOTOS[2].subtitle}
                 </p>
                 <h3 className="mt-1 font-display text-xl text-white sm:text-2xl">
-                  {HANGAR_PHOTOS[1].title}
+                  {HANGAR_PHOTOS[2].title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-white/70 line-clamp-2">
-                  {HANGAR_PHOTOS[1].description}
+                  {HANGAR_PHOTOS[2].description}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {HANGAR_PHOTOS[1].highlights.map((hl) => (
-                    <span
-                      key={hl}
-                      className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-[10px] text-white/80"
-                    >
-                      ✓ {hl}
-                    </span>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
 
-          {/* Card 4: Pôr do Sol no Hangar (3.5 Colunas) */}
+          {/* Card 4: Lounge Bar & Café (6 Colunas) */}
           <div
             onClick={() => setSelectedPhotoIndex(3)}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-3.5"
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-6"
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[380px]">
               <img
@@ -351,7 +367,7 @@ export function HangarGallery() {
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
                   {HANGAR_PHOTOS[3].subtitle}
                 </p>
-                <h3 className="mt-1 font-display text-xl text-white">
+                <h3 className="mt-1 font-display text-xl text-white sm:text-2xl">
                   {HANGAR_PHOTOS[3].title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-white/70 line-clamp-2">
@@ -361,22 +377,22 @@ export function HangarGallery() {
             </div>
           </div>
 
-          {/* Card 5: Aeronave Abrigada & Vista do Vale (3.5 Colunas) */}
+          {/* Card 5: Interior Amplo & Piso Epóxi (4 Colunas) */}
           <div
-            onClick={() => setSelectedPhotoIndex(4)}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-2 lg:col-span-3.5"
+            onClick={() => setSelectedPhotoIndex(1)}
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-4"
           >
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[380px]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[340px]">
               <img
-                src={HANGAR_PHOTOS[4].src}
-                alt={HANGAR_PHOTOS[4].alt}
+                src={HANGAR_PHOTOS[1].src}
+                alt={HANGAR_PHOTOS[1].alt}
                 className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/30 to-transparent" />
 
               <div className="absolute left-5 top-5 z-10">
                 <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f8c142] backdrop-blur-md">
-                  {HANGAR_PHOTOS[4].tag}
+                  {HANGAR_PHOTOS[1].tag}
                 </span>
               </div>
 
@@ -386,14 +402,79 @@ export function HangarGallery() {
 
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">
-                  {HANGAR_PHOTOS[4].subtitle}
+                  {HANGAR_PHOTOS[1].subtitle}
                 </p>
-                <h3 className="mt-1 font-display text-xl text-white">
-                  {HANGAR_PHOTOS[4].title}
+                <h3 className="mt-1 font-display text-lg text-white">
+                  {HANGAR_PHOTOS[1].title}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-white/70 line-clamp-2">
-                  {HANGAR_PHOTOS[4].description}
+              </div>
+            </div>
+          </div>
+
+          {/* Card 6: Pôr do Sol no Hangar (4 Colunas) */}
+          <div
+            onClick={() => setSelectedPhotoIndex(5)}
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-1 lg:col-span-4"
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[340px]">
+              <img
+                src={HANGAR_PHOTOS[5].src}
+                alt={HANGAR_PHOTOS[5].alt}
+                className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/30 to-transparent" />
+
+              <div className="absolute left-5 top-5 z-10">
+                <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f4793b] backdrop-blur-md">
+                  {HANGAR_PHOTOS[5].tag}
+                </span>
+              </div>
+
+              <div className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-[#202126]/80 text-white backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110">
+                <Maximize2 size={15} />
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
+                  {HANGAR_PHOTOS[5].subtitle}
                 </p>
+                <h3 className="mt-1 font-display text-lg text-white">
+                  {HANGAR_PHOTOS[5].title}
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 7: Aeronave Abrigada & Vista do Vale (4 Colunas) */}
+          <div
+            onClick={() => setSelectedPhotoIndex(6)}
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/15 bg-[#2b2c31] transition-all duration-500 hover:border-[#f4793b]/70 hover:shadow-2xl sm:col-span-2 lg:col-span-4"
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1e] lg:h-[340px]">
+              <img
+                src={HANGAR_PHOTOS[6].src}
+                alt={HANGAR_PHOTOS[6].alt}
+                className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141518]/95 via-[#141518]/30 to-transparent" />
+
+              <div className="absolute left-5 top-5 z-10">
+                <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#f8c142] backdrop-blur-md">
+                  {HANGAR_PHOTOS[6].tag}
+                </span>
+              </div>
+
+              <div className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-[#202126]/80 text-white backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110">
+                <Maximize2 size={15} />
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">
+                  {HANGAR_PHOTOS[6].subtitle}
+                </p>
+                <h3 className="mt-1 font-display text-lg text-white">
+                  {HANGAR_PHOTOS[6].title}
+                </h3>
               </div>
             </div>
           </div>
@@ -427,13 +508,13 @@ export function HangarGallery() {
 
           <div className="flex flex-col justify-between bg-[#2b2c31] p-6">
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
-              SEGURANÇA &amp; CLIMA
+              HOSPITALIDADE &amp; LOUNGE
             </span>
             <strong className="mt-3 font-display text-2xl text-white">
-              Proteção contra granizo e geada
+              Lounge VIP &amp; Bar Climatizado
             </strong>
             <p className="mt-2 text-xs text-white/60">
-              Fechamento com isolamento térmico e monitoramento ininterrupto.
+              Salas de espera e reunião com café expresso e Wi-Fi de alta velocidade.
             </p>
           </div>
 

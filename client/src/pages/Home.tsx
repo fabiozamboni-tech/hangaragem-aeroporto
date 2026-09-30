@@ -30,7 +30,9 @@ gsap.registerPlugin(ScrollTrigger);
 const assets = {
   hero: "./images/vespair-hero.jpg",
   aerodromo: "./images/vespair-aerodromo.jpg",
-  lounge: "./images/vespair-lounge.jpg",
+  loungeCompleto: "./images/vespair-lounge-completo.jpg",
+  loungeBar: "./images/vespair-lounge-bar.jpg",
+  lounge: "./images/vespair-lounge-completo.jpg",
   asa: "./images/vespair-asa.jpg",
   logo: "./images/vespair-logo.svg",
 };
@@ -393,13 +395,51 @@ export default function Home() {
 
         <section className="overflow-hidden bg-[#f5f1e8] py-20 sm:py-28 lg:py-36">
           <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
-            <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-              <div className="scene-image parallax-frame reveal-up relative min-h-[490px] overflow-hidden bg-[#414042] sm:min-h-[600px]">
-                <img src={assets.lounge} alt="Lounge reservado para passageiros e tripulação" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="8" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#414042]/85 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-7 text-white sm:p-10">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#f8c142]">Intervalo entre destinos</p>
-                  <p className="mt-3 max-w-sm font-display text-3xl leading-tight">Um lugar tranquilo para a sua agenda continuar em terra.</p>
+            <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+              {/* Composição Dupla: Lounge VIP Real & Bar de Apoio */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {/* Foto 1: Lounge VIP Completo */}
+                <div className="scene-image parallax-frame reveal-up relative min-h-[440px] overflow-hidden rounded-2xl bg-[#414042] sm:min-h-[560px]">
+                  <img
+                    src={assets.loungeCompleto}
+                    alt="Lounge VIP executivo da Vespair com poltronas, mesa de reuniões, televisão e ambiente climatizado"
+                    className="parallax-media absolute inset-0 h-full w-full object-cover"
+                    data-parallax="7"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/95 via-[#202126]/25 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <span className="rounded bg-[#f8c142]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f8c142]">
+                      INTERVALO ENTRE DESTINOS
+                    </span>
+                    <p className="mt-2.5 font-display text-2xl leading-tight text-white">
+                      Um lugar tranquilo para a sua agenda continuar em terra.
+                    </p>
+                    <p className="mt-1.5 text-xs text-white/70">
+                      Ambiente climatizado, Wi-Fi de alta velocidade e espaço para reuniões executivas.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Foto 2: Espaço Bar e Café com Logo Vespair */}
+                <div className="scene-image parallax-frame reveal-up relative min-h-[440px] overflow-hidden rounded-2xl bg-[#414042] sm:min-h-[560px] sm:translate-y-6">
+                  <img
+                    src={assets.loungeBar}
+                    alt="Copa, frigobar e bar de café no Lounge VIP Vespair"
+                    className="parallax-media absolute inset-0 h-full w-full object-cover"
+                    data-parallax="7"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/95 via-[#202126]/25 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <span className="rounded bg-[#f4793b]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f4793b]">
+                      BAR &amp; CONVENIÊNCIA
+                    </span>
+                    <p className="mt-2.5 font-display text-2xl leading-tight text-white">
+                      Hospitalidade e conforto para passageiros e pilotos.
+                    </p>
+                    <p className="mt-1.5 text-xs text-white/70">
+                      Café expresso, bebidas selecionadas e copa de apoio exclusiva.
+                    </p>
+                  </div>
                 </div>
               </div>
 
