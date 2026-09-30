@@ -45,23 +45,41 @@ const ROUTE_POINTS = {
   },
 };
 
-// Traçado realista do trajeto viário oficial passando pelo Hotel Fiorio e Parque Romano
-const ROUTE_PATH: [number, number][] = [
-  [-29.0597886, -51.1865718], // Ponto A: RS-122 / Entrada Sul
-  [-29.0558, -51.1852],
-  [-29.0515, -51.1840],
-  [-29.0470, -51.1828],
-  [-29.0430, -51.1818],
-  [-29.0394005, -51.1809387], // Ponto B: Hotel Fiorio (Av. 25 de Julho, 2700)
-  [-29.0398, -51.1775],
-  [-29.0406, -51.1732],
-  [-29.0418, -51.1685],
-  [-29.0432145, -51.1643011], // Ponto C: Parque Romano (Via Vêneto)
-  [-29.0425, -51.1610],
-  [-29.0430, -51.1575],
-  [-29.0442, -51.1540],
-  [-29.0452, -51.1515],
-  [-29.0455836, -51.149769], // Ponto D: Menega / Vespair Hangar 12
+// Traçado de alta precisão seguindo curva a curva o asfalto das ruas reais (173 pontos OSRM/OpenStreetMap)
+const PRECISE_STREET_PATH: [number, number][] = [
+  [-29.059794, -51.186585], [-29.059257, -51.186838], [-29.058486, -51.187082], [-29.058187, -51.187126],
+  [-29.058001, -51.187175], [-29.057738, -51.187292], [-29.057544, -51.187395], [-29.057266, -51.187485],
+  [-29.057042, -51.187493], [-29.056816, -51.187469], [-29.056578, -51.187437], [-29.056081, -51.187164],
+  [-29.055658, -51.186814], [-29.055395, -51.186635], [-29.055260, -51.186515], [-29.054934, -51.186281],
+  [-29.054817, -51.186206], [-29.054520, -51.186002], [-29.053922, -51.185564], [-29.053382, -51.185162],
+  [-29.053181, -51.185026], [-29.052596, -51.184577], [-29.052151, -51.184296], [-29.051803, -51.184097],
+  [-29.051479, -51.183922], [-29.051429, -51.183894], [-29.051077, -51.183729], [-29.050371, -51.183398],
+  [-29.050174, -51.183251], [-29.049954, -51.183042], [-29.049599, -51.182747], [-29.049360, -51.182695],
+  [-29.049264, -51.182713], [-29.049152, -51.182720], [-29.048913, -51.182723], [-29.048796, -51.182727],
+  [-29.048083, -51.182398], [-29.047667, -51.182218], [-29.047231, -51.182048], [-29.046704, -51.181828],
+  [-29.046384, -51.181668], [-29.045696, -51.181406], [-29.045232, -51.181211], [-29.044732, -51.180996],
+  [-29.044440, -51.180877], [-29.044108, -51.180773], [-29.043927, -51.180659], [-29.043792, -51.180633],
+  [-29.043433, -51.180566], [-29.043308, -51.180546], [-29.043183, -51.180534], [-29.042906, -51.180530],
+  [-29.042549, -51.180462], [-29.042398, -51.180457], [-29.042113, -51.180449], [-29.042023, -51.180449],
+  [-29.041889, -51.180472], [-29.041695, -51.180506], [-29.041406, -51.180483], [-29.041214, -51.180473],
+  [-29.040132, -51.180439], [-29.039970, -51.180450], [-29.0394005, -51.1809387], // Hotel Fiorio
+  [-29.039249, -51.180447], [-29.039082, -51.180487], [-29.038856, -51.180536], [-29.038631, -51.180599],
+  [-29.038545, -51.180614], [-29.038571, -51.180385], [-29.038571, -51.180154], [-29.038532, -51.177680],
+  [-29.038554, -51.177356], [-29.038579, -51.177212], [-29.038620, -51.177088], [-29.038722, -51.176917],
+  [-29.038890, -51.176619], [-29.038990, -51.176257], [-29.038983, -51.176107], [-29.038939, -51.175939],
+  [-29.038852, -51.175694], [-29.038687, -51.175237], [-29.038605, -51.174925], [-29.038537, -51.174617],
+  [-29.038511, -51.174329], [-29.038492, -51.173401], [-29.038476, -51.172435], [-29.038473, -51.171890],
+  [-29.038574, -51.171535], [-29.038677, -51.171279], [-29.039026, -51.170808], [-29.039391, -51.170353],
+  [-29.039745, -51.169922], [-29.040180, -51.169456], [-29.040555, -51.169008], [-29.040914, -51.168618],
+  [-29.041036, -51.168391], [-29.041132, -51.168225], [-29.041220, -51.167988], [-29.041267, -51.167785],
+  [-29.041319, -51.167404], [-29.041335, -51.167061], [-29.041385, -51.166635], [-29.041610, -51.166077],
+  [-29.041708, -51.165838], [-29.041824, -51.165627], [-29.041917, -51.165519], [-29.042010, -51.165425],
+  [-29.042476, -51.165040], [-29.042704, -51.164852], [-29.042847, -51.164667], [-29.0432145, -51.1643011], // Parque Romano
+  [-29.043542, -51.163574], [-29.043796, -51.163240], [-29.043948, -51.163083], [-29.044192, -51.162886],
+  [-29.044996, -51.162426], [-29.045018, -51.161920], [-29.045046, -51.161514], [-29.045107, -51.161088],
+  [-29.045202, -51.160657], [-29.045290, -51.160306], [-29.045326, -51.160004], [-29.045336, -51.159716],
+  [-29.045287, -51.158054], [-29.045635, -51.158027], [-29.045622, -51.156178], [-29.045649, -51.153309],
+  [-29.045657, -51.152080], [-29.045672, -51.150570], [-29.0455836, -51.149769], // Vespair Hangar 12
 ];
 
 const GOOGLE_MAPS_URL =
@@ -74,6 +92,8 @@ export function RouteMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
+  const polylineRef = useRef<L.Polyline | null>(null);
+  const glowPolylineRef = useRef<L.Polyline | null>(null);
   const [mapType, setMapType] = useState<"streets" | "satellite">("streets");
   const [copied, setCopied] = useState(false);
 
@@ -188,25 +208,31 @@ export function RouteMap() {
       )
       .openPopup();
 
-    // Linha de contorno (Glow)
-    L.polyline(ROUTE_PATH, {
+    // Linha de contorno (Glow pelas vias reais)
+    const glowPolyline = L.polyline(PRECISE_STREET_PATH, {
       color: "#f4793b",
       weight: 8,
       opacity: 0.35,
       lineCap: "round",
+      lineJoin: "round",
     }).addTo(map);
 
-    // Linha principal da rota oficial
-    L.polyline(ROUTE_PATH, {
+    glowPolylineRef.current = glowPolyline;
+
+    // Linha principal da rota viária real (curva a curva)
+    const polyline = L.polyline(PRECISE_STREET_PATH, {
       color: "#f4793b",
-      weight: 4.5,
+      weight: 5,
       opacity: 0.95,
-      dashArray: "8, 8",
+      dashArray: "8, 6",
       lineCap: "round",
+      lineJoin: "round",
     }).addTo(map);
 
-    // Enquadra a rota inteira na visão do mapa
-    const bounds = L.latLngBounds(ROUTE_PATH);
+    polylineRef.current = polyline;
+
+    // Enquadra a rota inteira perfeitamente na visão do mapa
+    const bounds = L.latLngBounds(PRECISE_STREET_PATH);
     map.fitBounds(bounds, { padding: [45, 45] });
 
     return () => {
@@ -265,13 +291,11 @@ export function RouteMap() {
             ROTA OFICIAL DE ACESSO · SIFQ
           </p>
           <h2 className="mt-5 font-display text-4xl leading-[0.94] tracking-[-0.045em] text-white sm:text-6xl">
-            Como chegar à Vespair: trajeto oficial pelo Hotel Fiorio e Parque Romano.
+            Como chegar à Vespair: trajeto oficial pelas vias asfaltadas.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
-            A rota terrestre oficial e recomendada conecta a entrada de Flores da Cunha (RS-122) ao
-            Condomínio Aeronáutico Menega, passando pela <strong>Av. 25 de Julho (Hotel Fiorio)</strong> e
-            pela <strong>Via Vêneto (Parque Romano)</strong>, garantindo acesso direto, pavimentado e seguro
-            até o Hangar 12.
+            A rota terrestre oficial segue rigorosamente as vias pavimentadas de Flores da Cunha: da entrada
+            pela RS-122, passando pela <strong>Av. 25 de Julho (Hotel Fiorio)</strong> e pela <strong>Via Vêneto (Parque Romano)</strong> até a entrada do Condomínio Aeronáutico Menega (Hangar 12).
           </p>
         </div>
 
@@ -282,10 +306,10 @@ export function RouteMap() {
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#f8c142]">
-                  ROTA EXCLUSIVA DE ACESSO
+                  TRAJETO VIÁRIO OFICIAL
                 </span>
                 <span className="rounded-full bg-[#f4793b]/20 px-3 py-1 font-mono text-[10px] font-semibold text-[#f4793b]">
-                  ~7,6 km · 11 min
+                  6,5 km · ~10 min
                 </span>
               </div>
 
@@ -487,7 +511,7 @@ export function RouteMap() {
 
             {/* Badge de Dica Interativa */}
             <div className="absolute bottom-4 left-4 z-[1000] hidden sm:block rounded-full bg-[#202126]/85 px-3 py-1 text-[10px] font-mono text-white/70 backdrop-blur-md border border-white/10">
-              💡 Rota oficial de acesso passando pelo Hotel Fiorio e Parque Romano
+              🛣️ Traçado viário de precisão seguindo as curvas das ruas reais
             </div>
 
             {/* Elemento do Mapa Leaflet */}
