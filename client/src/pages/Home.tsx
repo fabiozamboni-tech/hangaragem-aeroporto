@@ -33,7 +33,8 @@ const assets = {
   loungeCompleto: "./images/vespair-lounge-completo.jpg",
   loungeBar: "./images/vespair-lounge-bar.jpg",
   lounge: "./images/vespair-lounge-completo.jpg",
-  asa: "./images/vespair-asa.jpg",
+  aviaoPatio: "./images/vespair-aviao-patio-real.png",
+  asa: "./images/vespair-aviao-patio-real.png",
   logo: "./images/vespair-logo.svg",
 };
 
@@ -461,10 +462,22 @@ export default function Home() {
               </div>
             </div>
             <div className="reveal-up mt-12 grid gap-5 sm:grid-cols-[0.72fr_1.28fr] lg:mt-20">
-              <div className="scene-image parallax-frame relative min-h-[310px] overflow-hidden bg-[#414042]">
-                <img src={assets.asa} alt="Detalhe da asa de uma aeronave" className="parallax-media absolute inset-0 h-full w-full object-cover" data-parallax="6" />
-                <div className="absolute inset-0 bg-[#414042]/25" />
-                <div className="absolute bottom-5 left-5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/80">Precisão em cada etapa</div>
+              <div className="scene-image parallax-frame relative min-h-[320px] overflow-hidden rounded-2xl bg-[#414042]">
+                <img
+                  src={assets.aviaoPatio}
+                  alt="Aeronave turboélice no pátio pavimentado em frente à fachada do Hangar 12 Vespair"
+                  className="parallax-media absolute inset-0 h-full w-full object-cover object-[center_60%]"
+                  data-parallax="6"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/90 via-[#202126]/15 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/90 font-medium">
+                    Precisão em cada etapa
+                  </span>
+                  <span className="rounded bg-[#f4793b]/20 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#f4793b]">
+                    PÁTIO HANGAR 12
+                  </span>
+                </div>
               </div>
               <div className="relative flex min-h-[310px] flex-col justify-between overflow-hidden bg-[#e9e1d4] p-7 sm:p-9">
                 <div className="parallax-float absolute right-0 top-0 h-36 w-44 bg-[#f4793b] [clip-path:polygon(100%_0,100%_100%,0_0)]" />
