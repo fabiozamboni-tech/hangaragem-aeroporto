@@ -1,0 +1,61 @@
+# Vespair Serviços Aéreos
+
+> Hangaragem executiva, atendimento de solo, lounge VIP e conveniência para aviação executiva no Condomínio Aeronáutico Menega (ICAO: SIFQ) em Flores da Cunha, Serra Gaúcha, RS.
+
+## Informações Gerais da Empresa
+- **Nome Oficial:** Vespair Serviços Aéreos
+- **Nome Fantasia:** Hangar Vespair
+- **Website Oficial:** https://vespair.com.br
+- **Localização:** Condomínio Aeronáutico Menega, Flores da Cunha - RS, Brasil
+- **Endereço:** Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha / RS · CEP 95270-000
+- **Coordenadas GPS:** -29.0455836, -51.149769 (29°02'44"S / 051°08'59"W)
+- **Telefone / WhatsApp:** +55 54 99658-8180
+- **E-mail:** vespair@vespair.com.br
+- **Instagram:** https://instagram.com/hangarvespair (@hangarvespair)
+
+## Horários de Operação e Atendimento
+- **Operação em Solo e Pousos:** 24 horas por dia (mediante agendamento prévio).
+- **Atendimento Administrativo e Agendamento:** Segunda a Domingo, das 08:00 às 18:00.
+
+## Dados Técnicos do Aeródromo (SIFQ)
+- **Código ICAO:** SIFQ
+- **Nome:** Aeródromo Condomínio Menega
+- **Pista:** 1.022 m de extensão × 20 m de largura
+- **Cabeceiras:** 10 / 28
+- **Superfície:** Asfalto (ASPH)
+- **Elevação:** 763 m (2.503 ft)
+- **Frequência ATIS / Comunicação:** 135.70 MHz
+- **Regras de Voo:** VFR Diurno e VFR Noturno
+- **Circuito de Tráfego:** Setor E (Leste)
+- **Tipo:** Aeródromo Privado (PRIV)
+
+## Estrutura do Hangar Vespair
+- **Área Útil:** Mais de 500 m² de vão livre sem colunas centrais.
+- **Capacidade:** Aeronaves com até 18 metros de envergadura (monomotores, bimotores, turboélices e jatos leves).
+- **Piso:** Epóxi industrial espelhado de alta resistência química e mecânica com assepsia total.
+- **Portões:** Sistema automatizado de correr de grande abertura para movimentação suave.
+- **Pátio Frontal:** Área pavimentada privativa para manobras, reboque e desembarque direto.
+- **Proteção:** Isolamento termoacústico e proteção física contra granizo, geada e rajadas de vento da serra.
+
+## Serviços Oferecidos
+1. **Hangaragem Executiva:** Pernoites avulsos e contratos mensais de guarda e conservação de aeronaves.
+2. **Atendimento de Solo (Ground Handling):** Recepção imediata na cabeceira 10/taxiway, balizamento, calçamento, reboque e pré-voo.
+3. **Lounge VIP Climatizado:** Sala de estar e espera executiva para passageiros e tripulantes com Wi-Fi de alta velocidade, televisão e mesa de reuniões.
+4. **Espaço Bar & Café:** Máquina de café expresso, frigobar com bebidas selecionadas e copa de apoio.
+5. **Conveniência & Concierge:** Coordenação de abastecimento de combustível, limpeza técnica de aeronaves, transporte terrestre e alimentação sob medida.
+
+## Distâncias Terrestres a Partir do Aeródromo
+- **Caxias do Sul:** 22,5 km
+- **Bento Gonçalves:** 60,4 km
+- **Gramado / Canela:** 68,5 km
+- **Vacaria:** 98,6 km
+- **Porto Alegre:** 148 km
+
+## Links e Seções Principais
+- Início: https://vespair.com.br/#inicio
+- A Empresa: https://vespair.com.br/#vespair
+- Instalações & Galeria: https://vespair.com.br/#estrutura
+- Serviços de Solo: https://vespair.com.br/#servicos
+- Dados do Aeródromo: https://vespair.com.br/#aerodromo
+- Rota e Como Chegar: https://vespair.com.br/#localizacao
+- Agendamento & Contato: https://vespair.com.br/#contato

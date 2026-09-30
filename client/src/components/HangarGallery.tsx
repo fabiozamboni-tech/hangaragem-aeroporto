@@ -22,9 +22,9 @@ const HANGAR_PHOTOS: HangarPhoto[] = [
   {
     id: "fachada",
     src: "./images/vespair-hangar-fachada.jpg",
-    alt: "Fachada frontal do Hangar 12 da Vespair Serviços Aéreos no Aeródromo Menega",
+    alt: "Fachada frontal do Hangar Vespair no Aeródromo Menega",
     tag: "FACHADA PRINCIPAL",
-    title: "Fachada Principal do Hangar 12",
+    title: "Fachada Principal do Hangar Vespair",
     subtitle: "Aeródromo Condomínio Menega · SIFQ",
     description:
       "Arquitetura contemporânea com painéis amadeirados termoacústicos, letreiro corporativo em LED, vidros panorâmicos e portões automáticos deslizantes para movimentação de aeronaves.",
@@ -104,7 +104,7 @@ export function HangarGallery() {
           <div>
             <p className="eyebrow text-[#f8c142] flex items-center gap-2">
               <Building size={14} className="text-[#f4793b]" />
-              INSTALAÇÕES &amp; ESTRUTURA REAL · HANGAR 12
+              INSTALAÇÕES &amp; ESTRUTURA REAL · VESPAIR
             </p>
             <h2 className="mt-5 font-display text-4xl leading-[0.94] tracking-[-0.045em] text-white sm:text-6xl max-w-2xl">
               Conheça as instalações da Vespair em Flores da Cunha.
@@ -230,7 +230,7 @@ export function HangarGallery() {
               LOCALIZAÇÃO
             </span>
             <strong className="mt-3 font-display text-2xl text-white">
-              Hangar 12 · Pista SIFQ
+              Hangar Vespair · Pista SIFQ
             </strong>
             <p className="mt-2 text-xs text-white/60">
               Conexão imediata com a pista de 1.022 m por Taxiway pavimentada.

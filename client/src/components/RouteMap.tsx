@@ -43,8 +43,8 @@ const ROUTE_POINTS = {
     lat: -29.0455836,
     lng: -51.149769,
     title: "Condomínio Aeronáutico Menega",
-    description: "Vespair Serviços Aéreos · Hangar 12 (Pista SIFQ)",
-    badge: "DESTINO · VESPAIR HANGAR 12",
+    description: "Vespair Serviços Aéreos · Hangar Vespair (Pista SIFQ)",
+    badge: "DESTINO · HANGAR VESPAIR",
   },
 };
 
@@ -82,7 +82,7 @@ const PRECISE_STREET_PATH: [number, number][] = [
   [-29.044996, -51.162426], [-29.045018, -51.161920], [-29.045046, -51.161514], [-29.045107, -51.161088],
   [-29.045202, -51.160657], [-29.045290, -51.160306], [-29.045326, -51.160004], [-29.045336, -51.159716],
   [-29.045287, -51.158054], [-29.045635, -51.158027], [-29.045622, -51.156178], [-29.045649, -51.153309],
-  [-29.045657, -51.152080], [-29.045672, -51.150570], [-29.0455836, -51.149769], // Vespair Hangar 12
+  [-29.045657, -51.152080], [-29.045672, -51.150570], [-29.0455836, -51.149769], // Hangar Vespair
 ];
 
 const GOOGLE_MAPS_URL =
@@ -206,7 +206,7 @@ export function RouteMap() {
     L.marker([ROUTE_POINTS.dest.lat, ROUTE_POINTS.dest.lng], { icon: destIcon })
       .addTo(map)
       .bindPopup(
-        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f4793b;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;font-weight:bold;">Destino · Hangar 12</span><strong style="display:block;color:#ffffff;font-size:14px;margin-top:2px;">${ROUTE_POINTS.dest.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#f3f4f6;font-weight:600;">${ROUTE_POINTS.dest.description}</p><p style="margin:2px 0 0;font-size:11px;color:#9ca3af;">Flores da Cunha / RS · Pista SIFQ (1.022m)</p></div>`
+        `<div style="font-family:sans-serif;padding:4px;"><span style="color:#f4793b;font-size:10px;font-family:monospace;letter-spacing:1px;text-transform:uppercase;font-weight:bold;">Destino · Hangar Vespair</span><strong style="display:block;color:#ffffff;font-size:14px;margin-top:2px;">${ROUTE_POINTS.dest.title}</strong><p style="margin:4px 0 0;font-size:12px;color:#f3f4f6;font-weight:600;">${ROUTE_POINTS.dest.description}</p><p style="margin:2px 0 0;font-size:11px;color:#9ca3af;">Flores da Cunha / RS · Pista SIFQ (1.022m)</p></div>`
       )
       .openPopup();
 
@@ -293,7 +293,7 @@ export function RouteMap() {
           </h2>
           <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
             Abaixo você encontra a <strong>rota terrestre oficial</strong> para veículos e a{" "}
-            <strong>planta do aeródromo</strong> com o trajeto de taxiamento da aeronave até o Hangar 12.
+            <strong>planta do aeródromo</strong> com o trajeto de taxiamento da aeronave até o Hangar Vespair.
           </p>
         </div>
 
@@ -492,7 +492,7 @@ export function RouteMap() {
                 PLANTA INTERNA DO AERÓDROMO · SIFQ
               </p>
               <h3 className="mt-2 font-display text-2xl text-white sm:text-3xl">
-                Localização do Hangar 12 e Taxiway
+                Localização do Hangar Vespair e Taxiway
               </h3>
             </div>
             <div className="flex items-center gap-3">
@@ -514,7 +514,7 @@ export function RouteMap() {
             {/* Lado Esquerdo: Instruções de Taxiamento & Ficha Técnica */}
             <div className="space-y-6">
               <p className="text-sm leading-relaxed text-white/70 sm:text-base">
-                Ao pousar pela <strong>Cabeceira 10</strong> da pista asfaltada (1.022 m), o piloto deve livrar a pista à esquerda e seguir a linha guia amarela demarcada da <strong>Taxiway Norte</strong> diretamente até o pátio privativo e instalações do <strong>Hangar 12 da Vespair</strong>.
+                Ao pousar pela <strong>Cabeceira 10</strong> da pista asfaltada (1.022 m), o piloto deve livrar a pista à esquerda e seguir a linha guia amarela demarcada da <strong>Taxiway Norte</strong> diretamente até o pátio privativo e instalações do <strong>Hangar Vespair</strong>.
               </p>
 
               {/* Passos de Solo */}
@@ -553,7 +553,7 @@ export function RouteMap() {
                   </div>
                   <div>
                     <h5 className="text-xs font-bold uppercase tracking-wider text-white">
-                      3. Pátio do Hangar 12 (Vespair)
+                      3. Pátio do Hangar Vespair
                     </h5>
                     <p className="text-xs text-white/60">
                       Estacionamento seguro em piso epóxi, suporte de reboque, abastecimento e lounge VIP.
@@ -608,7 +608,7 @@ export function RouteMap() {
                   SIFQ · CABECEIRA 10
                 </span>
                 <span className="rounded-md border border-white/20 bg-[#202126]/90 px-3 py-1 font-mono text-[10px] font-bold text-[#f4793b] backdrop-blur-md">
-                  TAXIWAY ➔ HANGAR 12
+                  TAXIWAY ➔ HANGAR VESPAIR
                 </span>
               </div>
 
@@ -618,7 +618,7 @@ export function RouteMap() {
               >
                 <img
                   src="./images/vespair-mapa-hangar.png"
-                  alt="Planta técnica de localização do Hangar 12 da Vespair no Aeródromo Menega (SIFQ) com trajeto de Taxiway desde a Cabeceira 10"
+                  alt="Planta técnica de localização do Hangar Vespair no Aeródromo Menega (SIFQ) com trajeto de Taxiway desde a Cabeceira 10"
                   className="max-h-[460px] w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition-opacity group-hover:opacity-100">
@@ -630,7 +630,7 @@ export function RouteMap() {
 
               <div className="mt-2 flex items-center justify-between px-2 py-1 text-[11px] font-mono text-white/75">
                 <span>Pista Asfaltada 1.022m · Taxiway Norte</span>
-                <span className="text-[#f8c142] font-semibold">Vespair Serviços Aéreos · Hangar 12</span>
+                <span className="text-[#f8c142] font-semibold">Vespair Serviços Aéreos · Hangar Vespair</span>
               </div>
             </div>
           </div>
@@ -652,7 +652,7 @@ export function RouteMap() {
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
               <div className="flex items-center gap-2 font-mono text-xs text-white">
                 <Plane size={16} className="text-[#f4793b]" />
-                <span className="font-bold">Planta de Taxiamento e Localização do Hangar 12 · SIFQ</span>
+                <span className="font-bold">Planta de Taxiamento e Localização do Hangar Vespair · SIFQ</span>
               </div>
               <button
                 type="button"
@@ -666,7 +666,7 @@ export function RouteMap() {
             <div className="flex items-center justify-center p-2 bg-[#52604d] rounded-b-xl overflow-auto max-h-[80vh]">
               <img
                 src="./images/vespair-mapa-hangar.png"
-                alt="Planta detalhada do Hangar 12 Vespair no Aeródromo Menega"
+                alt="Planta detalhada do Hangar Vespair no Aeródromo Menega"
                 className="max-h-[78vh] w-auto object-contain rounded-lg"
               />
             </div>

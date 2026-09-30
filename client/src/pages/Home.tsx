@@ -14,8 +14,11 @@ import {
   Clock3,
   Coffee,
   Fuel,
+  Instagram,
+  MapPin,
   Menu,
   Plane,
+  Share2,
   ShieldCheck,
   Sparkles,
   UtensilsCrossed,
@@ -280,7 +283,7 @@ export default function Home() {
             <div className="hero-frame absolute inset-x-5 bottom-7 top-28 border border-white/10 sm:inset-x-8 lg:inset-x-10 lg:bottom-10 lg:top-32" />
             <div className="hero-route absolute left-0 top-[52%] h-px w-[61%] bg-gradient-to-r from-transparent via-[#ffd4bd] to-transparent opacity-85" />
             <span className="route-orb absolute left-[59%] top-[calc(52%-4px)] h-2 w-2 rounded-full bg-[#ffd4bd] shadow-[0_0_0_7px_rgba(244,121,59,0.22),0_0_26px_2px_rgba(255,212,189,0.6)]" />
-            <span className="hero-side-word absolute bottom-[15%] right-[-1.3rem] rotate-90 font-mono text-[9px] font-medium uppercase tracking-[0.45em] text-white/45 lg:right-[0.2rem]">Vespair / Hangar 12</span>
+            <span className="hero-side-word absolute bottom-[15%] right-[-1.3rem] rotate-90 font-mono text-[9px] font-medium uppercase tracking-[0.45em] text-white/45 lg:right-[0.2rem]">Vespair · SIFQ</span>
           </div>
 
           <div className="relative mx-auto flex min-h-[760px] max-w-[1440px] flex-col justify-end px-5 pb-10 pt-32 sm:min-h-[800px] sm:px-8 sm:pb-14 lg:min-h-[860px] lg:px-10 lg:pb-12">
@@ -465,7 +468,7 @@ export default function Home() {
               <div className="scene-image parallax-frame relative min-h-[320px] overflow-hidden rounded-2xl bg-[#414042]">
                 <img
                   src={assets.aviaoPatio}
-                  alt="Aeronave turboélice no pátio pavimentado em frente à fachada do Hangar 12 Vespair"
+                  alt="Aeronave turboélice no pátio pavimentado em frente à fachada do Hangar Vespair"
                   className="parallax-media absolute inset-0 h-full w-full object-cover object-center"
                   data-parallax="6"
                 />
@@ -475,7 +478,7 @@ export default function Home() {
                     Precisão em cada etapa
                   </span>
                   <span className="rounded bg-[#f4793b]/20 px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#f4793b]">
-                    PÁTIO HANGAR 12
+                    PÁTIO VESPAIR
                   </span>
                 </div>
               </div>
@@ -597,6 +600,57 @@ export default function Home() {
               <p className="eyebrow text-[#f4793b]">PRÓXIMA APROXIMAÇÃO</p>
               <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
               <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.</p>
+
+              {/* Informação Operacional e Atendimento */}
+              <div className="mt-8 rounded-2xl border border-[#414042]/15 bg-white/85 p-5 shadow-sm backdrop-blur-sm sm:p-6">
+                <div className="flex items-start gap-3.5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f4793b]/15 text-[#f4793b]">
+                    <Clock3 size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-[#414042]">
+                      HORÁRIOS DE OPERAÇÃO &amp; ATENDIMENTO
+                    </h3>
+                    <p className="mt-1 text-sm font-semibold text-[#202126]">
+                      Operação 24h mediante a agendamento prévio.
+                    </p>
+                    <p className="mt-0.5 text-xs text-[#5f6c7b]">
+                      Horário de atendimento para agendamento e informações das 8h às 18h.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Links Sociais e Compartilhamento */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://instagram.com/hangarvespair"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
+                >
+                  <Instagram size={15} className="text-[#e1306c]" />
+                  <span>@hangarvespair</span>
+                </a>
+                <a
+                  href="https://maps.app.goo.gl/YV1fE6kZc2k9wQ487"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
+                >
+                  <MapPin size={15} className="text-[#4285F4]" />
+                  <span>Google Maps (Meu Negócio)</span>
+                </a>
+                <a
+                  href="https://api.whatsapp.com/send?text=Vespair%20Servi%C3%A7os%20A%C3%A9reos%20%E2%80%94%20Hangaragem%20Executiva%20%26%20Atendimento%20no%20Aer%C3%B3dromo%20Menega%20(SIFQ)%3A%20https%3A%2F%2Fvespair.com.br"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#25D366] hover:text-[#25D366] shadow-sm"
+                >
+                  <Share2 size={15} className="text-[#25D366]" />
+                  <span>Compartilhar Página</span>
+                </a>
+              </div>
             </div>
             <div className="reveal-up contact-panel grid gap-3 bg-[#414042] p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-1">
               <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">OPERAÇÃO VESPAIR · SIFQ</p>
@@ -610,7 +664,7 @@ export default function Home() {
       <footer className="bg-[#202126] px-5 py-9 text-white/55 sm:px-8 lg:px-10">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 md:flex-row md:items-end">
           <img src={assets.logo} alt="Vespair Serviços Aéreos" className="h-auto w-[150px] object-contain" />
-          <p className="max-w-lg text-xs leading-relaxed md:text-right">Condomínio Aeronáutico Menega · Airport SIFQ · Hangar 12 · Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha/RS</p>
+          <p className="max-w-lg text-xs leading-relaxed md:text-right">Condomínio Aeronáutico Menega · Airport SIFQ · Hangar Vespair · Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha/RS</p>
         </div>
       </footer>
     </div>

@@ -1,0 +1,6 @@
+# robots.txt for Vespair Serviços Aéreos
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://vespair.com.br/sitemap.xml
