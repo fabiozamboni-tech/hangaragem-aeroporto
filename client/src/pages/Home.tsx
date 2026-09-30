@@ -595,14 +595,22 @@ export default function Home() {
 
         <section id="contato" className="relative overflow-hidden bg-[#f5f1e8] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
           <div className="absolute left-0 top-0 h-1 w-full bg-[#f4793b]" />
-          <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-center">
-            <div className="reveal-up">
+          <div className="relative mx-auto max-w-[1440px]">
+            {/* Cabeçalho da Seção */}
+            <div className="reveal-up max-w-4xl">
               <p className="eyebrow text-[#f4793b]">PRÓXIMA APROXIMAÇÃO</p>
-              <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
-              <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.</p>
+              <h2 className="mt-5 font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">
+                Planeje a chegada. Nós preparamos o restante.
+              </h2>
+              <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">
+                Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.
+              </p>
+            </div>
 
-              {/* Informação Operacional e Atendimento com Destaque */}
-              <div className="mt-8 rounded-2xl border-2 border-[#414042]/15 bg-white p-6 shadow-md backdrop-blur-sm sm:p-7">
+            {/* Linha dos Cards: Card Branco + Card Marrom Centralizados Verticalmente */}
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1.16fr_0.84fr] lg:items-center">
+              {/* Card Branco com Informação Operacional e Atendimento */}
+              <div className="reveal-up rounded-2xl border-2 border-[#414042]/15 bg-white p-6 shadow-md backdrop-blur-sm sm:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#414042]/10 pb-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f4793b] text-white shadow-sm">
@@ -632,41 +640,49 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Links Sociais e Compartilhamento */}
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                  href="https://instagram.com/hangarvespair"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
-                >
-                  <Instagram size={15} className="text-[#e1306c]" />
-                  <span>@hangarvespair</span>
+              {/* Card Marrom de Contato */}
+              <div className="reveal-up contact-panel grid gap-3 bg-[#414042] p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-1">
+                <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
+                  OPERAÇÃO VESPAIR · SIFQ
+                </p>
+                <a href="tel:+5554996588189" className="contact-link contact-link-inverse">
+                  54 99658.8189 <ArrowUpRight size={18} />
                 </a>
-                <a
-                  href="https://maps.app.goo.gl/YV1fE6kZc2k9wQ487"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
-                >
-                  <MapPin size={15} className="text-[#4285F4]" />
-                  <span>Google Maps (Meu Negócio)</span>
-                </a>
-                <a
-                  href="https://api.whatsapp.com/send?text=Vespair%20Servi%C3%A7os%20A%C3%A9reos%20%E2%80%94%20Hangaragem%20Executiva%20%26%20Atendimento%20no%20Aer%C3%B3dromo%20Menega%20(SIFQ)%3A%20https%3A%2F%2Fvespair.com.br"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#25D366] hover:text-[#25D366] shadow-sm"
-                >
-                  <Share2 size={15} className="text-[#25D366]" />
-                  <span>Compartilhar Página</span>
+                <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">
+                  vespair@vespair.com.br <ArrowUpRight size={18} />
                 </a>
               </div>
             </div>
-            <div className="reveal-up contact-panel grid gap-3 bg-[#414042] p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-1">
-              <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">OPERAÇÃO VESPAIR · SIFQ</p>
-              <a href="tel:+5554996588189" className="contact-link contact-link-inverse">54 99658.8189 <ArrowUpRight size={18} /></a>
-              <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">vespair@vespair.com.br <ArrowUpRight size={18} /></a>
+
+            {/* Links Sociais e Compartilhamento */}
+            <div className="reveal-up mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="https://instagram.com/hangarvespair"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
+              >
+                <Instagram size={15} className="text-[#e1306c]" />
+                <span>@hangarvespair</span>
+              </a>
+              <a
+                href="https://maps.app.goo.gl/YV1fE6kZc2k9wQ487"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#f4793b] hover:text-[#f4793b] shadow-sm"
+              >
+                <MapPin size={15} className="text-[#4285F4]" />
+                <span>Google Maps (Meu Negócio)</span>
+              </a>
+              <a
+                href="https://api.whatsapp.com/send?text=Vespair%20Servi%C3%A7os%20A%C3%A9reos%20%E2%80%94%20Hangaragem%20Executiva%20%26%20Atendimento%20no%20Aer%C3%B3dromo%20Menega%20(SIFQ)%3A%20https%3A%2F%2Fvespair.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#414042]/20 bg-white px-4 py-2.5 text-xs font-semibold text-[#414042] transition hover:border-[#25D366] hover:text-[#25D366] shadow-sm"
+              >
+                <Share2 size={15} className="text-[#25D366]" />
+                <span>Compartilhar Página</span>
+              </a>
             </div>
           </div>
         </section>
