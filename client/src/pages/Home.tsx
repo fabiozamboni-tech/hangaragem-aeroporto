@@ -595,7 +595,7 @@ export default function Home() {
 
         <section id="contato" className="relative overflow-hidden bg-[#f5f1e8] px-5 py-20 text-[#202126] sm:px-8 sm:py-28 lg:px-10 lg:py-32">
           <div className="absolute left-0 top-0 h-1 w-full bg-[#f4793b]" />
-          <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-end">
+          <div className="relative mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[1.16fr_0.84fr] lg:items-center">
             <div className="reveal-up">
               <p className="eyebrow text-[#f4793b]">PRÓXIMA APROXIMAÇÃO</p>
               <h2 className="mt-5 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">Planeje a chegada. Nós preparamos o restante.</h2>
@@ -624,7 +624,10 @@ export default function Home() {
                     AGENDAMENTOS &amp; INFORMAÇÕES
                   </span>
                   <p className="mt-1.5 text-base font-bold text-[#202126] sm:text-lg leading-snug">
-                    Horário de atendimento para agendamento e informações das 8h às 18h.
+                    Atendimento para agendamento das 8h00min às 18h00min
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-[#414042] sm:text-base">
+                    Fone/WhatsApp (54) 99658.8189
                   </p>
                 </div>
               </div>
@@ -662,7 +665,7 @@ export default function Home() {
             </div>
             <div className="reveal-up contact-panel grid gap-3 bg-[#414042] p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-1">
               <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">OPERAÇÃO VESPAIR · SIFQ</p>
-              <a href="tel:+5554996588180" className="contact-link contact-link-inverse">54 99658.8180 <ArrowUpRight size={18} /></a>
+              <a href="tel:+5554996588189" className="contact-link contact-link-inverse">54 99658.8189 <ArrowUpRight size={18} /></a>
               <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">vespair@vespair.com.br <ArrowUpRight size={18} /></a>
             </div>
           </div>
