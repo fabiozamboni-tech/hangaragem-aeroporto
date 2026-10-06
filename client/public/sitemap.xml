@@ -4,11 +4,11 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://vespair.com.br/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://vespair.com.br/images/vespair-hero.jpg</image:loc>
+      <image:loc>https://vespair.com.br/images/vespair-hero-sunset.jpg</image:loc>
       <image:title>Vespair Serviços Aéreos - Hangaragem e Atendimento no Aeródromo Menega SIFQ</image:title>
       <image:caption>Hangaragem executiva e apoio em solo no Aeródromo de Flores da Cunha, Serra Gaúcha</image:caption>
     </image:image>
