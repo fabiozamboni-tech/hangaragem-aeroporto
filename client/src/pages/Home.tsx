@@ -635,7 +635,7 @@ export default function Home() {
                     Atendimento para agendamento das 8h00min às 18h00min
                   </p>
                   <p className="mt-1 text-sm font-semibold text-[#414042] sm:text-base">
-                    Fone/WhatsApp (54) 9658-8180
+                    Fone/WhatsApp +55 54 996588180
                   </p>
                 </div>
               </div>
@@ -646,7 +646,7 @@ export default function Home() {
                   OPERAÇÃO VESPAIR · SIFQ
                 </p>
                 <a href="tel:+5554996588180" className="contact-link contact-link-inverse">
-                  54 9658-8180 <ArrowUpRight size={18} />
+                  +55 54 996588180 <ArrowUpRight size={18} />
                 </a>
                 <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">
                   vespair@vespair.com.br <ArrowUpRight size={18} />
