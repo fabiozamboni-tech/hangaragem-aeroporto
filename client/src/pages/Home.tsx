@@ -31,7 +31,7 @@ import { HangarGallery } from "@/components/HangarGallery";
 gsap.registerPlugin(ScrollTrigger);
 
 const assets = {
-  hero: "./images/vespair-hero-sunset.jpg",
+  hero: "./images/vespair-hero-hangar.jpg",
   aerodromo: "./images/vespair-aerodromo.jpg",
   loungeCompleto: "./images/vespair-lounge-completo.jpg",
   loungeBar: "./images/vespair-lounge-bar.jpg",
@@ -272,7 +272,7 @@ export default function Home() {
       <main>
         <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#202126] sm:min-h-[800px] lg:min-h-[860px]">
           <div className="hero-window absolute inset-0 overflow-hidden">
-            <img src={assets.hero} alt="Hangar Vespair iluminado ao pôr do sol com aeronave executiva no pátio" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[58%_center]" />
+            <img src={assets.hero} alt="Hangar Vespair iluminado com aeronave executiva no pátio e vista interna" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[62%_center]" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(32,33,38,0.94)_0%,rgba(32,33,38,0.78)_36%,rgba(244,121,59,0.22)_70%,rgba(32,33,38,0.25)_100%)]" />
             <div className="hero-orange-wash absolute inset-0 bg-[#f4793b]/18 mix-blend-color" />
             <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(32,33,38,0.68)_0%,transparent_32%,transparent_74%,rgba(32,33,38,0.25)_100%)]" />
