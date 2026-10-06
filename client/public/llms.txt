@@ -9,7 +9,7 @@
 - **Localização:** Condomínio Aeronáutico Menega, Flores da Cunha - RS, Brasil
 - **Endereço:** Rua Via Local Municipal, 1070 · Travessão Cavour · Flores da Cunha / RS · CEP 95270-000
 - **Coordenadas GPS:** -29.0455836, -51.149769 (29°02'44"S / 051°08'59"W)
-- **Telefone / WhatsApp:** +55 54 99658-8189
+- **Telefone / WhatsApp:** +55 54 9658-8180
 - **E-mail:** vespair@vespair.com.br
 - **Instagram:** https://instagram.com/hangarvespair (@hangarvespair)
 
@@ -25,7 +25,7 @@
 - **Superfície:** Asfalto (ASPH)
 - **Elevação:** 763 m (2.503 ft)
 - **Frequência ATIS / Comunicação:** 135.70 MHz
-- **Regras de Voo:** VFR Diurno e VFR Noturno
+- **Regras de Vôo:** VFR Diurno e VFR Noturno
 - **Circuito de Tráfego:** Setor E (Leste)
 - **Tipo:** Aeródromo Privado (PRIV)
 
@@ -39,7 +39,7 @@
 
 ## Serviços Oferecidos
 1. **Hangaragem Executiva:** Pernoites avulsos e contratos mensais de guarda e conservação de aeronaves.
-2. **Atendimento de Solo (Ground Handling):** Recepção imediata na cabeceira 10/taxiway, balizamento, calçamento, reboque e pré-voo.
+2. **Atendimento de Solo (Ground Handling):** Recepção imediata na cabeceira 10/taxiway, balizamento, calçamento, reboque e pré-vôo.
 3. **Lounge VIP Climatizado:** Sala de estar e espera executiva para passageiros e tripulantes com Wi-Fi de alta velocidade, televisão e mesa de reuniões.
 4. **Espaço Bar & Café:** Máquina de café expresso, frigobar com bebidas selecionadas e copa de apoio.
 5. **Conveniência & Concierge:** Coordenação de abastecimento de combustível, limpeza técnica de aeronaves, transporte terrestre e alimentação sob medida.

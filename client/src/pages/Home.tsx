@@ -53,7 +53,7 @@ const serviceCards = [
     number: "02",
     title: "Atendimento de solo",
     description:
-      "Apoio técnico e operacional para a aeronave, do pouso ao próximo plano de voo.",
+      "Apoio técnico e operacional para a aeronave, do pouso ao próximo plano de vôo.",
     icon: ShieldCheck,
   },
   {
@@ -332,7 +332,7 @@ export default function Home() {
                 </h2>
               </div>
               <div className="mt-12 hidden max-w-[250px] lg:block">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">Carta de voo</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">Carta de vôo</p>
                 <p className="mt-3 text-sm leading-relaxed text-[#5b5750]">Uma estrutura em solo pensada para encurtar a distância entre a pista e os seus compromissos.</p>
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function Home() {
             <div className="reveal-up flex flex-col justify-between gap-8 border-b border-white/15 pb-10 lg:flex-row lg:items-end">
               <div>
                 <p className="eyebrow text-[#f8c142]">O QUE PREPARAMOS</p>
-                <h2 className="mt-5 max-w-2xl font-display text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Uma operação que cuida do voo antes, durante e depois da pista.</h2>
+                <h2 className="mt-5 max-w-2xl font-display text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Uma operação que cuida do vôo antes, durante e depois da pista.</h2>
               </div>
               <p className="max-w-sm text-sm leading-relaxed text-white/60">Apoio em solo com a discrição de uma operação bem executada e a proximidade de quem conhece cada etapa da chegada.</p>
             </div>
@@ -635,7 +635,7 @@ export default function Home() {
                     Atendimento para agendamento das 8h00min às 18h00min
                   </p>
                   <p className="mt-1 text-sm font-semibold text-[#414042] sm:text-base">
-                    Fone/WhatsApp (54) 99658.8189
+                    Fone/WhatsApp (54) 9658-8180
                   </p>
                 </div>
               </div>
@@ -645,8 +645,8 @@ export default function Home() {
                 <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
                   OPERAÇÃO VESPAIR · SIFQ
                 </p>
-                <a href="tel:+5554996588189" className="contact-link contact-link-inverse">
-                  54 99658.8189 <ArrowUpRight size={18} />
+                <a href="tel:+5554996588180" className="contact-link contact-link-inverse">
+                  54 9658-8180 <ArrowUpRight size={18} />
                 </a>
                 <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">
                   vespair@vespair.com.br <ArrowUpRight size={18} />
