@@ -272,10 +272,9 @@ export default function Home() {
       <main>
         <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#43160e] sm:min-h-[800px] lg:min-h-[860px]">
           <div className="hero-window absolute inset-0 overflow-hidden">
-            <img src={assets.hero} alt="Aeronave executiva chegando a um hangar" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[66%_center]" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(65,64,66,0.97)_0%,rgba(65,64,66,0.82)_40%,rgba(244,121,59,0.25)_72%,rgba(65,64,66,0.34)_100%)]" />
-            <div className="hero-orange-wash absolute inset-0 bg-[#f4793b]/18 mix-blend-color" />
-            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(65,64,66,0.72)_0%,transparent_35%,transparent_74%,rgba(65,64,66,0.24)_100%)]" />
+            <img src={assets.hero} alt="Aeronave executiva no pátio do Hangar Vespair" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[center_55%]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(32,33,38,0.92)_0%,rgba(32,33,38,0.72)_42%,rgba(32,33,38,0.2)_72%,rgba(32,33,38,0.05)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(32,33,38,0.65)_0%,transparent_30%,transparent_75%,rgba(32,33,38,0.3)_100%)]" />
           </div>
           <div className="hero-foreground pointer-events-none absolute inset-0" aria-hidden="true">
             <div className="hero-door hero-door-left"><span className="hero-door-rule" /></div>
