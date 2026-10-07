@@ -101,13 +101,23 @@ export default function Home() {
   useEffect(() => {
     const applyCmsData = () => {
       if (typeof window === "undefined") return;
-      const cmsData = (window as unknown as { __VESPAIR_CONTENT__?: Record<string, {
+      let cmsData = (window as unknown as { __VESPAIR_CONTENT__?: Record<string, {
         html?: string;
         text?: string;
         src?: string;
         hidden?: boolean;
         styles?: { fontSize?: string; color?: string; fontWeight?: string; fontStyle?: string };
-      }> }).__VESPAIR_CONTENT__;
+      }> }).__VESPAIR_CONTENT__ || {};
+
+      try {
+        const stored = localStorage.getItem("vespair_cms_current");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed === "object") {
+            cmsData = { ...cmsData, ...parsed };
+          }
+        }
+      } catch (e) {}
 
       if (!cmsData || typeof cmsData !== "object") return;
 

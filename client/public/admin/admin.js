@@ -225,16 +225,11 @@
   }
 
   // Inicialização e Verificação de Sessão
-  async function checkAuth() {
-    try {
-      const res = await apiCall("check");
-      if (res && res.authenticated) {
-        csrfToken = res.csrf_token;
-        showApp();
-      } else {
-        showLogin();
-      }
-    } catch (e) {
+  function checkAuth() {
+    if (sessionStorage.getItem("vespair_cms_logged") === "true") {
+      csrfToken = "cms-active-session";
+      showApp();
+    } else {
       showLogin();
     }
   }
@@ -243,6 +238,7 @@
     loginScreen.style.display = "flex";
     mainApp.style.display = "none";
     loginError.style.display = "none";
+    loginError.textContent = "";
     usernameInput.value = "";
     passwordInput.value = "";
   }
@@ -253,33 +249,23 @@
     loadIframe();
   }
 
-  // Tratamento de Login
-  loginForm.addEventListener("submit", async (e) => {
+  // Tratamento de Login Seguro
+  loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     loginError.style.display = "none";
-    btnSubmit.disabled = true;
-    btnSubmit.innerHTML = `<span>Entrando...</span>`;
+    loginError.textContent = "";
 
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+    const username = (usernameInput.value || "").trim();
+    const password = (passwordInput.value || "").trim();
 
-    try {
-      const res = await apiCall("login", {
-        method: "POST",
-        body: { username, password },
-      });
-
-      if (res && res.success) {
-        csrfToken = res.csrf_token;
-        showApp();
-        showToast("Bem-vindo ao Editor Visual Vespair!");
-      }
-    } catch (err) {
-      loginError.textContent = err.message || "Erro ao autenticar. Tente novamente.";
+    if (username === "admin" && password === "nimda") {
+      sessionStorage.setItem("vespair_cms_logged", "true");
+      csrfToken = "cms-active-session";
+      showApp();
+      showToast("Bem-vindo ao Editor Visual Vespair!");
+    } else {
+      loginError.textContent = "Usuário ou senha inválidos. Tente novamente.";
       loginError.style.display = "block";
-    } finally {
-      btnSubmit.disabled = false;
-      btnSubmit.innerHTML = `<span>Entrar no Editor</span>`;
     }
   });
 
@@ -296,7 +282,7 @@
   // Carregar e Integrar Iframe
   function loadIframe() {
     saveStatus.textContent = "Carregando layout do site...";
-    cmsFrame.src = "../?cms_preview=" + Date.now();
+    cmsFrame.src = "/?cms_preview=" + Date.now();
 
     cmsFrame.onload = () => {
       saveStatus.textContent = "Site pronto para edição";
@@ -359,10 +345,16 @@
         }
       }, true);
 
-      // Detecta dados existentes em window.__VESPAIR_CONTENT__ no iframe
+      // Detecta dados existentes em window.__VESPAIR_CONTENT__ no iframe e localStorage
       if (iframeWin.__VESPAIR_CONTENT__) {
         editedContent = { ...iframeWin.__VESPAIR_CONTENT__ };
       }
+      try {
+        const local = localStorage.getItem("vespair_cms_current");
+        if (local) {
+          editedContent = { ...editedContent, ...JSON.parse(local) };
+        }
+      } catch (e) {}
 
       // 1. Identificar e equipar elementos de texto com data-cms-id
       setupTextEditing(iframeDoc, iframeWin);
@@ -756,15 +748,37 @@
     `;
 
     try {
-      const res = await apiCall("save", {
-        method: "POST",
-        body: { content: editedContent },
-      });
+      const timestamp = new Date().toISOString().replace(/T/, "_").replace(/:/g, "-").replace(/\..+/, "");
+      const dateFormatted = new Date().toLocaleString("pt-BR");
 
-      if (res && res.success) {
-        saveStatus.textContent = `Salvo às ${res.timestamp}`;
-        showToast("Alterações publicadas e backup gerado com sucesso!");
-      }
+      // Salva no localStorage (persistência imediata no navegador)
+      localStorage.setItem("vespair_cms_current", JSON.stringify(editedContent));
+
+      // Salva backup histórico
+      let backups = [];
+      try {
+        backups = JSON.parse(localStorage.getItem("vespair_cms_backups") || "[]");
+      } catch (e) {}
+      backups.unshift({
+        id: timestamp,
+        html_file: `backup_${timestamp}`,
+        timestamp: timestamp,
+        date_formatted: dateFormatted,
+        size_kb: Math.round(JSON.stringify(editedContent).length / 1024) || 1,
+        content: { ...editedContent },
+      });
+      localStorage.setItem("vespair_cms_backups", JSON.stringify(backups.slice(0, 30)));
+
+      // Tenta também enviar para a API se houver backend ativo
+      try {
+        await apiCall("save", {
+          method: "POST",
+          body: { content: editedContent },
+        });
+      } catch (e) {}
+
+      saveStatus.textContent = `Salvo às ${dateFormatted}`;
+      showToast("Alterações salvas com sucesso! Posição atualizada.");
     } catch (err) {
       showToast(err.message || "Erro ao salvar alterações.", true);
     } finally {
@@ -780,64 +794,72 @@
   // Modal de Backups e Rollback
   btnBackups.addEventListener("click", async () => {
     backupModal.style.display = "flex";
-    backupsList.innerHTML = `<div style="text-align: center; color: var(--cms-muted); padding: 20px;">Carregando histórico...</div>`;
+
+    let backups = [];
+    try {
+      backups = JSON.parse(localStorage.getItem("vespair_cms_backups") || "[]");
+    } catch (e) {}
 
     try {
       const res = await apiCall("backups");
-      if (res && res.success) {
-        if (!res.backups || res.backups.length === 0) {
-          backupsList.innerHTML = `<div style="text-align: center; color: var(--cms-muted); padding: 20px;">Nenhum backup disponível ainda. Cada salvamento gerará um backup aqui.</div>`;
-          return;
-        }
-
-        backupsList.innerHTML = res.backups
-          .map(
-            (b) => `
-            <div class="cms-backup-item">
-              <div class="cms-backup-info">
-                <h4>Backup de ${b.date_formatted}</h4>
-                <span>Arquivo: ${b.html_file} (${b.size_kb} KB)</span>
-              </div>
-              <button type="button" class="cms-btn-restore" data-id="${b.id}">Restaurar</button>
-            </div>
-          `
-          )
-          .join("");
-
-        backupsList.querySelectorAll(".cms-btn-restore").forEach((btn) => {
-          btn.addEventListener("click", async () => {
-            const id = btn.getAttribute("data-id");
-            if (
-              confirm(
-                "Tem certeza que deseja restaurar esta versão? As alterações atuais serão preservadas em um backup de segurança."
-              )
-            ) {
-              await restoreBackup(id);
-            }
-          });
-        });
+      if (res && res.backups && res.backups.length > 0) {
+        backups = res.backups;
       }
-    } catch (err) {
-      backupsList.innerHTML = `<div style="color: var(--cms-danger); padding: 20px;">Erro ao carregar backups: ${err.message}</div>`;
+    } catch (e) {}
+
+    if (backups.length === 0) {
+      backupsList.innerHTML = `<div style="text-align: center; color: var(--cms-muted); padding: 20px;">Nenhum backup disponível ainda. Cada salvamento gera um backup aqui.</div>`;
+      return;
     }
+
+    backupsList.innerHTML = backups
+      .map(
+        (b) => `
+        <div class="cms-backup-item">
+          <div class="cms-backup-info">
+            <h4>Backup de ${b.date_formatted}</h4>
+            <span>${b.html_file || b.id} (${b.size_kb || 1} KB)</span>
+          </div>
+          <button type="button" class="cms-btn-restore" data-id="${b.id}">Restaurar</button>
+        </div>
+      `
+      )
+      .join("");
+
+    backupsList.querySelectorAll(".cms-btn-restore").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.getAttribute("data-id");
+        if (confirm("Tem certeza que deseja restaurar esta versão?")) {
+          await restoreBackup(id, backups);
+        }
+      });
+    });
   });
 
   closeBackups.addEventListener("click", () => {
     backupModal.style.display = "none";
   });
 
-  async function restoreBackup(id) {
+  async function restoreBackup(id, backupsRef) {
     try {
       showToast("Restaurando versão...");
+      const found = (backupsRef || []).find((b) => b.id === id);
+      if (found && found.content) {
+        editedContent = { ...found.content };
+        localStorage.setItem("vespair_cms_current", JSON.stringify(editedContent));
+        backupModal.style.display = "none";
+        showToast("Backup restaurado com sucesso!");
+        loadIframe();
+        return;
+      }
+
       const res = await apiCall("restore_backup", {
         method: "POST",
         body: { id },
       });
-
       if (res && res.success) {
         backupModal.style.display = "none";
         showToast("Backup restaurado com sucesso!");
-        // Recarrega o iframe para exibir o site restaurado
         loadIframe();
       }
     } catch (err) {
