@@ -1,0 +1,8 @@
+# Proteger arquivos de backup contra download externo direto
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order Allow,Deny
+  Deny from all
+</IfModule>

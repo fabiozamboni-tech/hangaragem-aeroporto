@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vespair CMS | Editor Visual In-Layout</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+
+  <!-- Tela de Login Seguro -->
+  <div id="cms-login-screen" class="cms-login-wrap">
+    <div class="cms-login-box">
+      <img src="../images/vespair-logo.svg" alt="Vespair Logo" class="cms-login-logo">
+      <h1 class="cms-login-title">Painel Administrativo</h1>
+      <p class="cms-login-sub">Acesso restrito para gestão de conteúdo do site</p>
+      
+      <form id="cms-login-form">
+        <div class="cms-form-group">
+          <label class="cms-label" for="cms-username">Usuário</label>
+          <input type="text" id="cms-username" class="cms-input" autocomplete="username" required autofocus placeholder="admin">
+        </div>
+
+        <div class="cms-form-group">
+          <label class="cms-label" for="cms-password">Senha</label>
+          <input type="password" id="cms-password" class="cms-input" autocomplete="current-password" required placeholder="••••••••">
+        </div>
+
+        <button type="submit" id="cms-btn-submit" class="cms-btn-primary">
+          <span>Entrar no Editor</span>
+        </button>
+
+        <div id="cms-login-error" class="cms-login-error"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Layout Principal do CMS -->
+  <div id="cms-main-app" class="cms-app" style="display: none;">
+    <!-- Barra Superior Administrativa -->
+    <header class="cms-topbar">
+      <div class="cms-brand">
+        <img src="../images/vespair-logo.svg" alt="Vespair Logo" class="cms-brand-logo">
+        <span class="cms-brand-badge">Editor Visual CMS</span>
+        <span id="cms-save-status" style="font-size: 11px; color: var(--cms-muted); margin-left: 10px;"></span>
+      </div>
+
+      <div class="cms-actions">
+        <button id="cms-btn-backups" class="cms-btn" title="Histórico de Backups">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          <span>Backups</span>
+        </button>
+
+        <a href="../" target="_blank" rel="noopener noreferrer" class="cms-btn" title="Abrir site em nova aba">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span>Ver Site</span>
+        </a>
+
+        <button id="cms-btn-save" class="cms-btn cms-btn-save" title="Salvar todas as alterações">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Salvar Alterações</span>
+        </button>
+
+        <button id="cms-btn-logout" class="cms-btn" title="Sair da sessão">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Sair</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Visualização do Site em Tempo Real -->
+    <main class="cms-viewport-container">
+      <iframe id="cms-frame" src="../" title="Visualização In-Layout do Site Vespair"></iframe>
+    </main>
+
+    <!-- Barra de Formatação Flutuante Restrita (Sem alteração de fonte) -->
+    <div id="cms-float-toolbar" class="cms-float-toolbar">
+      <button type="button" class="cms-tool-btn" id="cms-tool-bold" title="Negrito (Ctrl+B)">
+        <strong>B</strong>
+      </button>
+      <button type="button" class="cms-tool-btn" id="cms-tool-italic" title="Itálico (Ctrl+I)">
+        <em>I</em>
+      </button>
+
+      <div class="cms-tool-divider"></div>
+
+      <!-- Tamanho da Fonte -->
+      <button type="button" class="cms-tool-btn" id="cms-tool-size-dec" title="Diminuir Fonte">
+        <span style="font-size: 11px;">A-</span>
+      </button>
+      <span id="cms-current-size" style="font-size: 11px; min-width: 28px; text-align: center; color: var(--cms-muted);">--</span>
+      <button type="button" class="cms-tool-btn" id="cms-tool-size-inc" title="Aumentar Fonte">
+        <span style="font-size: 14px; font-weight: bold;">A+</span>
+      </button>
+
+      <div class="cms-tool-divider"></div>
+
+      <!-- Paleta Restrita de Cores -->
+      <div class="cms-color-picker-wrap">
+        <button type="button" class="cms-color-swatch" data-color="#f4793b" style="background: #f4793b;" title="Cobre"></button>
+        <button type="button" class="cms-color-swatch" data-color="#f8c142" style="background: #f8c142;" title="Dourado"></button>
+        <button type="button" class="cms-color-swatch" data-color="#f5f1e8" style="background: #f5f1e8;" title="Marfim Claro"></button>
+        <button type="button" class="cms-color-swatch" data-color="#ffffff" style="background: #ffffff;" title="Branco"></button>
+        <button type="button" class="cms-color-swatch" data-color="#8d95a5" style="background: #8d95a5;" title="Muted / Cinza"></button>
+        <button type="button" class="cms-color-swatch" data-color="#202126" style="background: #202126;" title="Grafite Profundo"></button>
+        <input type="color" id="cms-custom-color" class="cms-custom-color" title="Cor personalizada">
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Backups e Restauração -->
+  <div id="cms-backup-modal" class="cms-modal-backdrop">
+    <div class="cms-modal">
+      <div class="cms-modal-header">
+        <h3 class="cms-modal-title">Histórico de Backups da Posição</h3>
+        <button type="button" class="cms-modal-close" id="cms-close-backups">&times;</button>
+      </div>
+      <div class="cms-modal-body">
+        <p style="font-size: 12px; color: var(--cms-muted); margin-bottom: 16px;">
+          Cada vez que as alterações são salvas, um backup completo é gerado automaticamente. Você pode restaurar qualquer versão anterior a qualquer momento.
+        </p>
+        <div id="cms-backups-list">
+          <div style="text-align: center; color: var(--cms-muted); padding: 20px;">Carregando histórico...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Troca / Ajuste de Imagem com Adaptação de Dimensões -->
+  <div id="cms-image-modal" class="cms-modal-backdrop">
+    <div class="cms-modal">
+      <div class="cms-modal-header">
+        <h3 class="cms-modal-title">Gerenciar Imagem</h3>
+        <button type="button" class="cms-modal-close" id="cms-close-image">&times;</button>
+      </div>
+      <div class="cms-modal-body">
+        <div class="cms-image-meta" id="cms-image-meta-text">
+          Dimensão original no layout: Carregando...
+        </div>
+
+        <div class="cms-image-preview-wrap">
+          <img id="cms-image-preview-img" src="" alt="Prévia">
+        </div>
+
+        <div class="cms-form-group">
+          <label class="cms-label" for="cms-image-file-input">Selecione nova imagem (JPG, PNG ou WebP)</label>
+          <input type="file" id="cms-image-file-input" accept="image/jpeg,image/png,image/webp" class="cms-input" style="padding-top: 10px;">
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" id="cms-btn-apply-image" class="cms-btn-primary" style="flex: 1;" disabled>
+            <span>Substituir &amp; Adaptar Dimensões</span>
+          </button>
+          <button type="button" id="cms-btn-delete-image" class="cms-btn" style="background: rgba(239, 68, 68, 0.2); border-color: var(--cms-danger); color: #fca5a5;">
+            <span>Excluir Imagem</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de Notificações -->
+  <div id="cms-toast" class="cms-toast">
+    <span id="cms-toast-msg">Mensagem</span>
+  </div>
+
+  <script src="./admin.js"></script>
+</body>
+</html>

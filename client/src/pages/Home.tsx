@@ -99,6 +99,49 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    const applyCmsData = () => {
+      if (typeof window === "undefined") return;
+      const cmsData = (window as unknown as { __VESPAIR_CONTENT__?: Record<string, {
+        html?: string;
+        text?: string;
+        src?: string;
+        hidden?: boolean;
+        styles?: { fontSize?: string; color?: string; fontWeight?: string; fontStyle?: string };
+      }> }).__VESPAIR_CONTENT__;
+
+      if (!cmsData || typeof cmsData !== "object") return;
+
+      Object.keys(cmsData).forEach((id) => {
+        const el = document.querySelector(`[data-cms-id="${id}"]`);
+        if (!el) return;
+        const item = cmsData[id];
+        if (item.hidden) {
+          (el as HTMLElement).style.display = "none";
+          return;
+        } else {
+          (el as HTMLElement).style.display = "";
+        }
+        if (item.src && el instanceof HTMLImageElement) {
+          el.src = item.src;
+        }
+        if (item.html !== undefined && !(el instanceof HTMLImageElement)) {
+          el.innerHTML = item.html;
+        } else if (item.text !== undefined && !(el instanceof HTMLImageElement)) {
+          el.textContent = item.text;
+        }
+        if (item.styles) {
+          if (item.styles.fontSize) (el as HTMLElement).style.fontSize = item.styles.fontSize;
+          if (item.styles.color) (el as HTMLElement).style.color = item.styles.color;
+          if (item.styles.fontWeight) (el as HTMLElement).style.fontWeight = item.styles.fontWeight;
+          if (item.styles.fontStyle) (el as HTMLElement).style.fontStyle = item.styles.fontStyle;
+        }
+      });
+    };
+
+    applyCmsData();
+  }, []);
+
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || !root.current) return;
 
@@ -272,7 +315,7 @@ export default function Home() {
       <main>
         <section id="inicio" className="hero-scene relative isolate min-h-[760px] overflow-hidden bg-[#202126] sm:min-h-[800px] lg:min-h-[860px]">
           <div className="hero-window absolute inset-0 overflow-hidden">
-            <img src={assets.hero} alt="Hangar Vespair iluminado com aeronave executiva no pátio e vista interna" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[62%_center]" />
+            <img data-cms-id="hero-img" src={assets.hero} alt="Hangar Vespair iluminado com aeronave executiva no pátio e vista interna" className="hero-main-image absolute inset-0 h-full w-full object-cover object-[62%_center]" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(32,33,38,0.94)_0%,rgba(32,33,38,0.78)_36%,rgba(244,121,59,0.22)_70%,rgba(32,33,38,0.25)_100%)]" />
             <div className="hero-orange-wash absolute inset-0 bg-[#f4793b]/18 mix-blend-color" />
             <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(32,33,38,0.68)_0%,transparent_32%,transparent_74%,rgba(32,33,38,0.25)_100%)]" />
@@ -288,16 +331,16 @@ export default function Home() {
 
           <div className="relative mx-auto flex min-h-[760px] max-w-[1440px] flex-col justify-end px-5 pb-10 pt-32 sm:min-h-[800px] sm:px-8 sm:pb-14 lg:min-h-[860px] lg:px-10 lg:pb-12">
             <div className="hero-hud absolute left-5 right-5 top-28 flex items-start justify-between text-white/55 sm:left-8 sm:right-8 lg:left-10 lg:right-10 lg:top-32">
-              <span className="font-mono text-[9px] uppercase tracking-[0.18em]">Operação em solo · 24h</span>
+              <span data-cms-id="hero-hud-text" className="font-mono text-[9px] uppercase tracking-[0.18em]">Operação em solo · 24h</span>
             </div>
             <div className="relative max-w-3xl">
               <h1 className="font-display text-[clamp(3.15rem,7.4vw,7.5rem)] leading-[0.86] tracking-[-0.055em] text-[#f9f6ef]">
-                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">Sua aeronave</span></span>
-                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block italic text-[#f8c142]">em solo.</span></span>
-                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">Sua agenda</span></span>
-                <span className="hero-title-clip block overflow-hidden"><span className="hero-title-line block">em movimento.</span></span>
+                <span className="hero-title-clip block overflow-hidden"><span data-cms-id="hero-title-line-1" className="hero-title-line block">Sua aeronave</span></span>
+                <span className="hero-title-clip block overflow-hidden"><span data-cms-id="hero-title-line-2" className="hero-title-line block italic text-[#f8c142]">em solo.</span></span>
+                <span className="hero-title-clip block overflow-hidden"><span data-cms-id="hero-title-line-3" className="hero-title-line block">Sua agenda</span></span>
+                <span className="hero-title-clip block overflow-hidden"><span data-cms-id="hero-title-line-4" className="hero-title-line block">em movimento.</span></span>
               </h1>
-              <p className="hero-copy mt-7 max-w-lg text-base leading-relaxed text-white/72 sm:text-lg">
+              <p data-cms-id="hero-copy-text" className="hero-copy mt-7 max-w-lg text-base leading-relaxed text-white/72 sm:text-lg">
                 Hangaragem e atendimento aeroportuário para que você aterrisse na Serra Gaúcha com tudo pronto para seguir.
               </p>
               <div className="hero-actions mt-8 flex flex-wrap gap-3">
@@ -313,7 +356,7 @@ export default function Home() {
               <div className="hero-meta mt-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-t border-white/15 pt-5 text-white/70 lg:mt-14">
               <div className="flex items-center gap-3">
                 <span className="grid h-8 w-8 place-items-center rounded-full border border-white/20"><Plane size={14} /></span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.13em]">Pista: 1.022 m × 20 m</span>
+                <span data-cms-id="hero-pista-spec" className="font-mono text-[10px] uppercase tracking-[0.13em]">Pista: 1.022 m × 20 m</span>
               </div>
               <button onClick={() => scrollToId("#vespair")} className="group flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.14em] text-white hover:text-[#f8c142]">
                 Role para aproximar <span className="grid h-8 w-8 place-items-center rounded-full border border-white/20 transition-transform group-hover:translate-y-1"><ArrowDownRight size={14} /></span>
@@ -326,37 +369,37 @@ export default function Home() {
           <div className="mx-auto grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-24 lg:px-10">
             <div className="reveal-up flex flex-col justify-between">
               <div>
-                <p className="eyebrow">BASE DE APOIO</p>
-                <h2 className="mt-5 max-w-md font-display text-5xl leading-[0.94] tracking-[-0.045em] text-[#414042] sm:text-6xl">
+                <p data-cms-id="vespair-eyebrow" className="eyebrow">BASE DE APOIO</p>
+                <h2 data-cms-id="vespair-heading" className="mt-5 max-w-md font-display text-5xl leading-[0.94] tracking-[-0.045em] text-[#414042] sm:text-6xl">
                   Uma chegada bem planejada começa antes do pouso.
                 </h2>
               </div>
               <div className="mt-12 hidden max-w-[250px] lg:block">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">Carta de vôo</p>
-                <p className="mt-3 text-sm leading-relaxed text-[#5b5750]">Uma estrutura em solo pensada para encurtar a distância entre a pista e os seus compromissos.</p>
+                <p data-cms-id="vespair-carta-title" className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">Carta de vôo</p>
+                <p data-cms-id="vespair-carta-desc" className="mt-3 text-sm leading-relaxed text-[#5b5750]">Uma estrutura em solo pensada para encurtar a distância entre a pista e os seus compromissos.</p>
               </div>
             </div>
             <div className="reveal-up">
-              <p className="max-w-2xl text-xl leading-[1.55] text-[#35363a] sm:text-2xl">
+              <p data-cms-id="vespair-desc" className="max-w-2xl text-xl leading-[1.55] text-[#35363a] sm:text-2xl">
                 Localizada no Aeródromo de Flores da Cunha, a Vespair combina proteção, agilidade e hospitalidade em um único ponto de apoio para aeronaves, tripulação e passageiros.
               </p>
               <div className="mt-10 grid gap-px overflow-hidden bg-[#d8d0c2] sm:grid-cols-3">
                 <div className="stat-block bg-[#f5f1e8]">
-                  <span className="stat-value">500<span>m²</span></span>
-                  <span className="stat-label">de área útil</span>
+                  <span data-cms-id="vespair-stat-1-val" className="stat-value">500<span>m²</span></span>
+                  <span data-cms-id="vespair-stat-1-label" className="stat-label">de área útil</span>
                 </div>
                 <div className="stat-block bg-[#f5f1e8]">
-                  <span className="stat-value">18<span>m</span></span>
-                  <span className="stat-label">de envergadura</span>
+                  <span data-cms-id="vespair-stat-2-val" className="stat-value">18<span>m</span></span>
+                  <span data-cms-id="vespair-stat-2-label" className="stat-label">de envergadura</span>
                 </div>
                 <div className="stat-block bg-[#f5f1e8]">
-                  <span className="stat-value">24<span>h</span></span>
-                  <span className="stat-label">operação e apoio</span>
+                  <span data-cms-id="vespair-stat-3-val" className="stat-value">24<span>h</span></span>
+                  <span data-cms-id="vespair-stat-3-label" className="stat-label">operação e apoio</span>
                 </div>
               </div>
               <div className="mt-10 flex items-center gap-4 border-l-2 border-[#f4793b] pl-5 text-sm leading-relaxed text-[#64605a]">
                 <Check size={17} className="shrink-0 text-[#f4793b]" />
-                <p>Atendimento para aviões com até 18 metros de envergadura.</p>
+                <p data-cms-id="vespair-check-note">Atendimento para aviões com até 18 metros de envergadura.</p>
               </div>
             </div>
           </div>
@@ -369,10 +412,10 @@ export default function Home() {
           <div className="relative mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-10">
             <div className="reveal-up flex flex-col justify-between gap-8 border-b border-white/15 pb-10 lg:flex-row lg:items-end">
               <div>
-                <p className="eyebrow text-[#f8c142]">O QUE PREPARAMOS</p>
-                <h2 className="mt-5 max-w-2xl font-display text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Uma operação que cuida do vôo antes, durante e depois da pista.</h2>
+                <p data-cms-id="servicos-eyebrow" className="eyebrow text-[#f8c142]">O QUE PREPARAMOS</p>
+                <h2 data-cms-id="servicos-heading" className="mt-5 max-w-2xl font-display text-5xl leading-[0.94] tracking-[-0.045em] sm:text-6xl">Uma operação que cuida do vôo antes, durante e depois da pista.</h2>
               </div>
-              <p className="max-w-sm text-sm leading-relaxed text-white/60">Apoio em solo com a discrição de uma operação bem executada e a proximidade de quem conhece cada etapa da chegada.</p>
+              <p data-cms-id="servicos-desc" className="max-w-sm text-sm leading-relaxed text-white/60">Apoio em solo com a discrição de uma operação bem executada e a proximidade de quem conhece cada etapa da chegada.</p>
             </div>
 
             <div className="services-grid grid border-l border-white/15 sm:grid-cols-2 lg:grid-cols-4">
@@ -382,8 +425,8 @@ export default function Home() {
                   <article key={service.number} className="service-card group relative min-h-[320px] border-b border-r border-white/15 p-6 sm:p-7 lg:min-h-[370px] lg:p-8">
                     <span className="font-mono text-[10px] tracking-[0.15em] text-[#f8c142]">{service.number}</span>
                     <Icon className="mt-12 text-white/75 transition duration-300 group-hover:-translate-y-1 group-hover:text-[#f8c142]" size={31} strokeWidth={1.25} />
-                    <h3 className="mt-8 font-display text-3xl tracking-[-0.035em]">{service.title}</h3>
-                    <p className="mt-4 text-sm leading-relaxed text-white/60">{service.description}</p>
+                    <h3 data-cms-id={`servicos-card-${service.number}-title`} className="mt-8 font-display text-3xl tracking-[-0.035em]">{service.title}</h3>
+                    <p data-cms-id={`servicos-card-${service.number}-desc`} className="mt-4 text-sm leading-relaxed text-white/60">{service.description}</p>
                     <span className="absolute bottom-7 right-7 text-white/25 transition duration-300 group-hover:text-[#f4793b]"><ArrowUpRight size={20} /></span>
                   </article>
                 );
@@ -405,6 +448,7 @@ export default function Home() {
                 {/* Foto 1: Lounge VIP Completo */}
                 <div className="scene-image parallax-frame reveal-up relative min-h-[440px] overflow-hidden rounded-2xl bg-[#414042] sm:min-h-[560px]">
                   <img
+                    data-cms-id="lounge-completo-img"
                     src={assets.loungeCompleto}
                     alt="Lounge VIP executivo da Vespair com poltronas, mesa de reuniões, televisão e ambiente climatizado"
                     className="parallax-media absolute inset-0 h-full w-full object-cover"
@@ -412,13 +456,13 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/95 via-[#202126]/25 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <span className="rounded bg-[#f8c142]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f8c142]">
+                    <span data-cms-id="lounge-completo-tag" className="rounded bg-[#f8c142]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f8c142]">
                       INTERVALO ENTRE DESTINOS
                     </span>
-                    <p className="mt-2.5 font-display text-2xl leading-tight text-white">
+                    <p data-cms-id="lounge-completo-title" className="mt-2.5 font-display text-2xl leading-tight text-white">
                       Um lugar tranquilo para a sua agenda continuar em terra.
                     </p>
-                    <p className="mt-1.5 text-xs text-white/70">
+                    <p data-cms-id="lounge-completo-desc" className="mt-1.5 text-xs text-white/70">
                       Ambiente climatizado, Wi-Fi de alta velocidade e espaço para reuniões executivas.
                     </p>
                   </div>
@@ -427,6 +471,7 @@ export default function Home() {
                 {/* Foto 2: Espaço Bar e Café com Logo Vespair */}
                 <div className="scene-image parallax-frame reveal-up relative min-h-[440px] overflow-hidden rounded-2xl bg-[#414042] sm:min-h-[560px] sm:translate-y-6">
                   <img
+                    data-cms-id="lounge-bar-img"
                     src={assets.loungeBar}
                     alt="Copa, frigobar e bar de café no Lounge VIP Vespair"
                     className="parallax-media absolute inset-0 h-full w-full object-cover"
@@ -434,13 +479,13 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#202126]/95 via-[#202126]/25 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <span className="rounded bg-[#f4793b]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f4793b]">
+                    <span data-cms-id="lounge-bar-tag" className="rounded bg-[#f4793b]/20 px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#f4793b]">
                       BAR &amp; CONVENIÊNCIA
                     </span>
-                    <p className="mt-2.5 font-display text-2xl leading-tight text-white">
+                    <p data-cms-id="lounge-bar-title" className="mt-2.5 font-display text-2xl leading-tight text-white">
                       Hospitalidade e conforto para passageiros e pilotos.
                     </p>
-                    <p className="mt-1.5 text-xs text-white/70">
+                    <p data-cms-id="lounge-bar-desc" className="mt-1.5 text-xs text-white/70">
                       Café expresso, bebidas selecionadas e copa de apoio exclusiva.
                     </p>
                   </div>
@@ -448,9 +493,9 @@ export default function Home() {
               </div>
 
               <div className="reveal-up flex flex-col justify-center py-4">
-                <p className="eyebrow">CONVENIÊNCIA DE SOLO</p>
-                <h2 className="mt-5 font-display text-5xl leading-[0.94] tracking-[-0.045em] text-[#414042] sm:text-6xl">Você desce. A Vespair segue cuidando.</h2>
-                <p className="mt-7 max-w-lg text-base leading-relaxed text-[#64605a]">A estrutura foi projetada para atender os detalhes que acompanham uma aeronave: a rotina operacional, a necessidade da tripulação e o tempo de quem viaja.</p>
+                <p data-cms-id="conveniencia-eyebrow" className="eyebrow">CONVENIÊNCIA DE SOLO</p>
+                <h2 data-cms-id="conveniencia-heading" className="mt-5 font-display text-5xl leading-[0.94] tracking-[-0.045em] text-[#414042] sm:text-6xl">Você desce. A Vespair segue cuidando.</h2>
+                <p data-cms-id="conveniencia-desc" className="mt-7 max-w-lg text-base leading-relaxed text-[#64605a]">A estrutura foi projetada para atender os detalhes que acompanham uma aeronave: a rotina operacional, a necessidade da tripulação e o tempo de quem viaja.</p>
                 <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-0 border-t border-[#d8d0c2]">
                   {serviceDetails.map((detail) => {
                     const Icon = detail.icon;
@@ -467,6 +512,7 @@ export default function Home() {
             <div className="reveal-up mt-12 grid gap-5 sm:grid-cols-[0.72fr_1.28fr] lg:mt-20">
               <div className="scene-image parallax-frame relative min-h-[320px] overflow-hidden rounded-2xl bg-[#414042]">
                 <img
+                  data-cms-id="patio-img"
                   src={assets.aviaoPatio}
                   alt="Aeronave turboélice no pátio pavimentado em frente à fachada do Hangar Vespair"
                   className="parallax-media absolute inset-0 h-full w-full object-cover object-center"
@@ -484,8 +530,8 @@ export default function Home() {
               </div>
               <div className="relative flex min-h-[310px] flex-col justify-between overflow-hidden bg-[#e9e1d4] p-7 sm:p-9">
                 <div className="parallax-float absolute right-0 top-0 h-36 w-44 bg-[#f4793b] [clip-path:polygon(100%_0,100%_100%,0_0)]" />
-                <span className="relative font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">ROTINA QUE LIBERA TEMPO</span>
-                <p className="relative max-w-2xl font-display text-3xl leading-[1.04] tracking-[-0.035em] text-[#414042] sm:text-4xl">Do abastecimento ao transporte, os próximos movimentos podem começar aqui.</p>
+                <span data-cms-id="conveniencia-banner-tag" className="relative font-mono text-[10px] uppercase tracking-[0.16em] text-[#f4793b]">ROTINA QUE LIBERA TEMPO</span>
+                <p data-cms-id="conveniencia-banner-title" className="relative max-w-2xl font-display text-3xl leading-[1.04] tracking-[-0.035em] text-[#414042] sm:text-4xl">Do abastecimento ao transporte, os próximos movimentos podem começar aqui.</p>
                 <button onClick={goToContact} className="relative mt-8 inline-flex w-fit items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#414042] transition hover:text-[#f4793b]">Fale com a operação <ArrowUpRight size={15} /></button>
               </div>
             </div>
@@ -496,6 +542,7 @@ export default function Home() {
           <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.95fr_1.05fr]">
             <div className="scene-image parallax-frame reveal-up relative min-h-[540px] overflow-hidden lg:min-h-[720px]">
               <img
+                data-cms-id="aerodromo-img"
                 src={assets.aerodromo}
                 alt="Vista aérea real da pista asfaltada de 1.022m e condomínio aeronáutico Menega SIFQ em Flores da Cunha"
                 className="parallax-media absolute inset-0 h-full w-full object-cover"
@@ -503,14 +550,14 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#414042]/95 via-[#414042]/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-7 sm:p-10">
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#f8c142]">COND. AERONÁUTICO MENEGA · SIFQ</p>
-                <p className="mt-2 text-sm text-white/80 font-medium">Pista Asfaltada 1.022m · Cabeceira 10 · Flores da Cunha / RS</p>
+                <p data-cms-id="aerodromo-tag" className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#f8c142]">COND. AERONÁUTICO MENEGA · SIFQ</p>
+                <p data-cms-id="aerodromo-sub" className="mt-2 text-sm text-white/80 font-medium">Pista Asfaltada 1.022m · Cabeceira 10 · Flores da Cunha / RS</p>
               </div>
             </div>
             <div className="reveal-up flex flex-col justify-center p-7 sm:p-12 lg:p-20">
-              <p className="eyebrow text-[#f8c142]">PONTO DE CHEGADA · SIFQ</p>
-              <h2 className="mt-5 max-w-xl font-display text-5xl leading-[0.93] tracking-[-0.045em] sm:text-6xl">No centro da Serra. Próximo ao que importa.</h2>
-              <p className="mt-7 max-w-lg text-base leading-relaxed text-white/67">O Aeródromo Condomínio Menega (SIFQ) oferece infraestrutura completa com pista asfaltada de 1.022 metros para pousos e decolagens com segurança e agilidade no coração da Serra Gaúcha.</p>
+              <p data-cms-id="aerodromo-eyebrow" className="eyebrow text-[#f8c142]">PONTO DE CHEGADA · SIFQ</p>
+              <h2 data-cms-id="aerodromo-heading" className="mt-5 max-w-xl font-display text-5xl leading-[0.93] tracking-[-0.045em] sm:text-6xl">No centro da Serra. Próximo ao que importa.</h2>
+              <p data-cms-id="aerodromo-desc" className="mt-7 max-w-lg text-base leading-relaxed text-white/67">O Aeródromo Condomínio Menega (SIFQ) oferece infraestrutura completa com pista asfaltada de 1.022 metros para pousos e decolagens com segurança e agilidade no coração da Serra Gaúcha.</p>
 
               {/* Ficha Técnica Aeronáutica da Pista */}
               <div className="mt-8 rounded-xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm">
@@ -598,11 +645,11 @@ export default function Home() {
           <div className="relative mx-auto max-w-[1440px]">
             {/* Cabeçalho da Seção */}
             <div className="reveal-up max-w-4xl">
-              <p className="eyebrow text-[#f4793b]">PRÓXIMA APROXIMAÇÃO</p>
-              <h2 className="mt-5 font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">
+              <p data-cms-id="contato-eyebrow" className="eyebrow text-[#f4793b]">PRÓXIMA APROXIMAÇÃO</p>
+              <h2 data-cms-id="contato-heading" className="mt-5 font-display text-5xl leading-[0.92] tracking-[-0.055em] text-[#414042] sm:text-7xl">
                 Planeje a chegada. Nós preparamos o restante.
               </h2>
-              <p className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">
+              <p data-cms-id="contato-desc" className="mt-7 max-w-xl text-base leading-relaxed text-[#4c5968] sm:text-lg">
                 Fale com a Vespair para organizar a hangaragem e o atendimento que acompanham sua aeronave na Serra Gaúcha.
               </p>
             </div>
@@ -617,10 +664,10 @@ export default function Home() {
                       <Clock3 size={22} />
                     </div>
                     <div>
-                      <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#f4793b]">
+                      <span data-cms-id="contato-regime-label" className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#f4793b]">
                         REGIME DE OPERAÇÃO
                       </span>
-                      <h3 className="font-display text-lg font-bold text-[#202126] sm:text-xl">
+                      <h3 data-cms-id="contato-regime-title" className="font-display text-lg font-bold text-[#202126] sm:text-xl">
                         Operação 24h <span className="text-sm font-normal text-[#5f6c7b]">(mediante agendamento prévio)</span>
                       </h3>
                     </div>
@@ -628,13 +675,13 @@ export default function Home() {
                 </div>
 
                 <div className="mt-4 rounded-xl bg-[#f5f1e8] border border-[#f4793b]/25 p-4 sm:p-5">
-                  <span className="block font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#f4793b]">
+                  <span data-cms-id="contato-atendimento-tag" className="block font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#f4793b]">
                     AGENDAMENTOS &amp; INFORMAÇÕES
                   </span>
-                  <p className="mt-1.5 text-base font-bold text-[#202126] sm:text-lg leading-snug">
+                  <p data-cms-id="contato-horario-texto" className="mt-1.5 text-base font-bold text-[#202126] sm:text-lg leading-snug">
                     Atendimento para agendamento das 8h00min às 18h00min
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-[#414042] sm:text-base">
+                  <p data-cms-id="contato-fone-texto" className="mt-1 text-sm font-semibold text-[#414042] sm:text-base">
                     Fone/WhatsApp +55 54 996588180
                   </p>
                 </div>
@@ -645,10 +692,10 @@ export default function Home() {
                 <p className="col-span-full font-mono text-[10px] uppercase tracking-[0.16em] text-[#f8c142]">
                   OPERAÇÃO VESPAIR · SIFQ
                 </p>
-                <a href="tel:+5554996588180" className="contact-link contact-link-inverse">
+                <a data-cms-id="contato-painel-fone" href="tel:+5554996588180" className="contact-link contact-link-inverse">
                   +55 54 996588180 <ArrowUpRight size={18} />
                 </a>
-                <a href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">
+                <a data-cms-id="contato-painel-email" href="mailto:vespair@vespair.com.br" className="contact-link contact-link-inverse">
                   vespair@vespair.com.br <ArrowUpRight size={18} />
                 </a>
               </div>

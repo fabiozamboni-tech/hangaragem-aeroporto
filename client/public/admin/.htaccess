@@ -1,0 +1,18 @@
+# Configurações de segurança da pasta /admin
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+# Impedir acesso a arquivos sensíveis ou ocultos
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Cabeçalhos de Segurança
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
