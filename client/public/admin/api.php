@@ -4,17 +4,11 @@
  * Autenticação isolada sem banco de dados, backups automáticos e proteção contra invasões.
  */
 
-// Configurações estritas de segurança de sessão
-ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_samesite', 'Strict');
-ini_set('session.use_only_cookies', 1);
+// Desativa exibição direta de erros para não corromper respostas JSON
+error_reporting(0);
+@ini_set('display_errors', '0');
 
-session_start();
-
-header('Content-Type: application/json; charset=UTF-8');
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: SAMEORIGIN');
-header('X-XSS-Protection: 1; mode=block');
+ob_start();
 
 // Configurações
 define('ADMIN_USER', 'admin');
@@ -32,6 +26,32 @@ if (!is_dir(BACKUP_DIR)) {
 if (!is_dir(IMAGES_DIR)) {
     @mkdir(IMAGES_DIR, 0755, true);
 }
+
+// Configura diretório próprio de sessões dentro de backups (evita erros em servidores com sessão global do cPanel inacessível)
+$session_dir = BACKUP_DIR . '/.sessions';
+if (!is_dir($session_dir)) {
+    @mkdir($session_dir, 0700, true);
+}
+if (is_dir($session_dir) && is_writable($session_dir)) {
+    @session_save_path($session_dir);
+}
+
+// Configurações estritas de segurança de sessão
+@ini_set('session.cookie_httponly', '1');
+@ini_set('session.cookie_samesite', 'Strict');
+@ini_set('session.use_only_cookies', '1');
+
+@session_start();
+
+// Limpa qualquer saída acidental antes de enviar cabeçalhos
+if (ob_get_length()) {
+    ob_clean();
+}
+
+header('Content-Type: application/json; charset=UTF-8');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('X-XSS-Protection: 1; mode=block');
 
 // Helpers de Rate Limiting contra Brute-Force
 function check_rate_limit() {
