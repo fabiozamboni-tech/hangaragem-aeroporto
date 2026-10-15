@@ -122,14 +122,16 @@ function require_auth() {
     }
 }
 
-// Roteamento de Ações
-$action = $_GET['action'] ?? $_POST['action'] ?? '';
+// Leitura e Roteamento de Ações
+$raw_input = file_get_contents('php://input');
+$json_input = !empty($raw_input) ? json_decode($raw_input, true) : [];
+$action = $_GET['action'] ?? $_POST['action'] ?? ($json_input['action'] ?? '');
 
 switch ($action) {
     case 'login':
         list($rate_file, $rate_data, $ip, $now) = check_rate_limit();
         
-        $input = json_decode(file_get_contents('php://input'), true);
+        $input = is_array($json_input) ? $json_input : [];
         $user = $input['username'] ?? $_POST['username'] ?? '';
         $pass = $input['password'] ?? $_POST['password'] ?? '';
 
