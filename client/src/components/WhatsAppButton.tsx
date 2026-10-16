@@ -51,6 +51,14 @@ export function WhatsAppButton({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            if (typeof window !== "undefined" && typeof (window as unknown as { gtag?: Function }).gtag === "function") {
+              (window as unknown as { gtag: Function }).gtag("event", "generate_lead", {
+                event_category: "contact",
+                event_label: "WhatsApp Floating Button",
+              });
+            }
+          }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           aria-label="Iniciar conversa no WhatsApp com a equipe da Vespair"
